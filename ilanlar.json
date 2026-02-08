@@ -3722,7 +3722,7 @@
       "first_seen_date": "2026-02-04"
     },
     "7113-346": {
-      "fiyat": "14.000.000 TL",
+      "fiyat": "13.850.000 TL",
       "tarih": "2026-02-04",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-villa-ML-7113-346",
       "title": "450 EVLERDE TAŞINMAYA HAZIR 6+1 VİLLA",
@@ -7937,11 +7937,11 @@
     },
     "2026-02-08": {
       "new": 5,
-      "price_changes": 0,
+      "price_changes": 1,
       "deleted": 0
     }
   },
-  "scan_sequence": 230,
-  "last_scan_timestamp": 1770556899.421116,
+  "scan_sequence": 231,
+  "last_scan_timestamp": 1770567696.4314845,
   "auto_scan_enabled": true
 }
