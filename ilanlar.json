@@ -8014,9 +8014,14 @@
       "new": 21,
       "price_changes": 16,
       "deleted": 14
+    },
+    "2026-02-10": {
+      "new": 0,
+      "price_changes": 0,
+      "deleted": 0
     }
   },
-  "scan_sequence": 235,
-  "last_scan_timestamp": 1770654162.7286146,
+  "scan_sequence": 236,
+  "last_scan_timestamp": 1770708088.0206997,
   "auto_scan_enabled": true
 }
