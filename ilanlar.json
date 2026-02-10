@@ -3422,7 +3422,7 @@
       "first_seen_date": "2026-02-02"
     },
     "6976-10": {
-      "fiyat": "5.130.000 TL",
+      "fiyat": "5.000.000 TL",
       "tarih": "2026-02-02",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokuzceltik-mah-satilik-daire-ML-6976-10",
       "title": "Fabrika mahallesinde RENSA PARADİSE 3,5+1 daire",
@@ -7612,7 +7612,7 @@
       "first_seen_date": "2026-02-09"
     },
     "3458-304": {
-      "fiyat": "4.380.000 TL",
+      "fiyat": "4.440.000 TL",
       "tarih": "2026-02-09",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-3458-304",
       "title": "STDAYUM YOLU ÜZERİNDE 2+1 ORTA KAT DAİRE ",
@@ -8067,11 +8067,11 @@
     },
     "2026-02-10": {
       "new": 13,
-      "price_changes": 1,
+      "price_changes": 3,
       "deleted": 8
     }
   },
-  "scan_sequence": 238,
-  "last_scan_timestamp": 1770729770.530933,
+  "scan_sequence": 239,
+  "last_scan_timestamp": 1770740628.663644,
   "auto_scan_enabled": true
 }
