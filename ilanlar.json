@@ -1322,7 +1322,7 @@
       "first_seen_date": "2026-01-24"
     },
     "3126-150": {
-      "fiyat": "4.100.000 TL",
+      "fiyat": "3.950.000 TL",
       "tarih": "2026-01-25",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-seyrantepe-sanayi-mah-satilik-daire-ML-3126-150",
       "title": "MERKEZ BÖLGE SEYRANTEPE KAVŞAĞINDA SATILIK 2.5+1 LÜKS DAİRE",
@@ -2468,7 +2468,7 @@
       "title": "KAPORA ALINDI",
       "scan_seq": 219,
       "timestamp": 1770373638.5321157,
-      "position": 70,
+      "position": 71,
       "first_seen_date": "2026-02-06"
     },
     "5493-42": {
@@ -2478,7 +2478,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ACİL SATILIK AHMET KAYA CADDESİNDE 2+1 YÜKSEK GİRİŞ DAİRE",
       "scan_seq": 219,
       "timestamp": 1770373639.594988,
-      "position": 72,
+      "position": 73,
       "first_seen_date": "2026-02-06"
     },
     "1656-700": {
@@ -2488,16 +2488,6 @@
       "title": "CEYLAN AVM ARKASI MERKEZİ KONUMDA SATILIK 4+1 GENİŞ FERAH DAİRE",
       "scan_seq": 219,
       "timestamp": 1770373640.6569107,
-      "position": 73,
-      "first_seen_date": "2026-02-06"
-    },
-    "9021-125": {
-      "fiyat": "5.150.000 TL",
-      "tarih": "2026-02-06",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-9021-125",
-      "title": "ACİL SATILIK  WİNSTOWN KARŞISINDA DAİRE",
-      "scan_seq": 219,
-      "timestamp": 1770373641.6678944,
       "position": 74,
       "first_seen_date": "2026-02-06"
     },
@@ -2638,7 +2628,7 @@
       "title": "BAĞCILAR HAVA ALANI KAVŞAĞINDA 3+1 LÜX DAİRE ",
       "scan_seq": 222,
       "timestamp": 1770394889.7520592,
-      "position": 68,
+      "position": 69,
       "first_seen_date": "2026-02-06"
     },
     "4441-408": {
@@ -2648,7 +2638,7 @@
       "title": "BAĞCILAR'DA SATILIK 2.5+1 DAİRE",
       "scan_seq": 222,
       "timestamp": 1770394891.0780559,
-      "position": 71,
+      "position": 72,
       "first_seen_date": "2026-02-06"
     },
     "1324-427": {
@@ -2668,7 +2658,7 @@
       "title": "Diyarbakır Yenişehir Dokuzçeltik Mahallesi  250 m İmarlı Arsa",
       "scan_seq": 223,
       "timestamp": 1770448277.726525,
-      "position": 61,
+      "position": 62,
       "first_seen_date": "2026-02-07"
     },
     "9021-127": {
@@ -2678,7 +2668,7 @@
       "title": "OFİS KASAPLAR DURAĞI 2.PARSELDE SIFIR 2+1 SATILIK DAİRE",
       "scan_seq": 223,
       "timestamp": 1770448278.9201155,
-      "position": 62,
+      "position": 63,
       "first_seen_date": "2026-02-07"
     },
     "6976-11": {
@@ -2688,7 +2678,7 @@
       "title": "HUZUR EVLERİNDE SATILIK 2+1 BAKIMLI DAİRE",
       "scan_seq": 223,
       "timestamp": 1770448279.98902,
-      "position": 63,
+      "position": 64,
       "first_seen_date": "2026-02-07"
     },
     "0429-314": {
@@ -2698,7 +2688,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR KAYA AMİD SİTESİNDE 2+1 SATILIK DAİRE",
       "scan_seq": 223,
       "timestamp": 1770448281.083061,
-      "position": 65,
+      "position": 66,
       "first_seen_date": "2026-02-07"
     },
     "7370-65": {
@@ -2708,7 +2698,7 @@
       "title": "KENT ORMAN TARAFINDA  3+1  FIRSAT SATILIK VİLLA",
       "scan_seq": 223,
       "timestamp": 1770448283.1172209,
-      "position": 69,
+      "position": 70,
       "first_seen_date": "2026-02-07"
     },
     "5479-109": {
@@ -2748,7 +2738,7 @@
       "title": "MAKROLİFE GAYRİMENKUL'DEN KAÇIRILMAZ 2+1 AMERİKAN MUTFAK  MUHTEŞEM LOKASYONDA SATILIK DAİRE",
       "scan_seq": 225,
       "timestamp": 1770459636.6455271,
-      "position": 64,
+      "position": 65,
       "first_seen_date": "2026-02-07"
     },
     "0429-313": {
@@ -2758,7 +2748,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR 808 TOKİ KONUTLARINDA YÜKSEK GİRİŞ 3+1 TOKİ DAİRESİ ",
       "scan_seq": 225,
       "timestamp": 1770459637.695255,
-      "position": 66,
+      "position": 67,
       "first_seen_date": "2026-02-07"
     },
     "1656-701": {
@@ -2768,7 +2758,7 @@
       "title": "OFİS MERKEZİ KONUMDA SATILIK 2+1 SIFIR FIRSAT DAİRE",
       "scan_seq": 225,
       "timestamp": 1770459638.548104,
-      "position": 67,
+      "position": 68,
       "first_seen_date": "2026-02-07"
     },
     "6621-204": {
@@ -2788,7 +2778,7 @@
       "title": "YENİŞEHİR DÖNÜMLÜ MAHALLESİNDE SATILIK 2+1 DAİRE",
       "scan_seq": 228,
       "timestamp": 1770535237.0125103,
-      "position": 53,
+      "position": 54,
       "first_seen_date": "2026-02-08"
     },
     "5469-39": {
@@ -2798,7 +2788,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN TESİSLER CADDE ÜZERİNDE SATILIK FULL+FULL 3+1 DAİRE",
       "scan_seq": 228,
       "timestamp": 1770535238.044922,
-      "position": 55,
+      "position": 56,
       "first_seen_date": "2026-02-08"
     },
     "5469-38": {
@@ -2808,7 +2798,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN URFA YOLUNA 2. PARSEL SATILIK 4+1 LUX DAİRE",
       "scan_seq": 228,
       "timestamp": 1770535238.9230018,
-      "position": 57,
+      "position": 58,
       "first_seen_date": "2026-02-08"
     },
     "5470-106": {
@@ -2818,7 +2808,7 @@
       "title": "WİNSTON CİVARI SATILIK 2+1 SIFIR DAİRE",
       "scan_seq": 229,
       "timestamp": 1770546032.5871205,
-      "position": 56,
+      "position": 57,
       "first_seen_date": "2026-02-08"
     },
     "1324-582": {
@@ -2828,7 +2818,7 @@
       "title": "BAĞCILAR HAVAALANI ULTRA LÜX HAVUZLU ACİL 3+1",
       "scan_seq": 232,
       "timestamp": 1770621645.864948,
-      "position": 47,
+      "position": 48,
       "first_seen_date": "2026-02-09"
     },
     "3458-305": {
@@ -2838,7 +2828,7 @@
       "title": "EMSALİNİN ALTINDA 2+1 YATIRIMLIK DAİRE",
       "scan_seq": 232,
       "timestamp": 1770621647.0605962,
-      "position": 49,
+      "position": 50,
       "first_seen_date": "2026-02-09"
     },
     "3458-304": {
@@ -2848,7 +2838,7 @@
       "title": "STDAYUM YOLU ÜZERİNDE 2+1 ORTA KAT DAİRE ",
       "scan_seq": 232,
       "timestamp": 1770621648.1746342,
-      "position": 50,
+      "position": 51,
       "first_seen_date": "2026-02-09"
     },
     "0533-100": {
@@ -2858,7 +2848,7 @@
       "title": "BAĞCILAR ÖĞRETMEN OKULLARI ARKASINDA SATILIK MASRAFSIZ 2+1 BÜYÜK TİP DAİRE",
       "scan_seq": 232,
       "timestamp": 1770621649.233684,
-      "position": 51,
+      "position": 52,
       "first_seen_date": "2026-02-09"
     },
     "5478-80": {
@@ -2868,7 +2858,7 @@
       "title": "SEYRANTEPE'DE BAKIMLI MERKEZİ KONUMDA 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 232,
       "timestamp": 1770621650.6184196,
-      "position": 52,
+      "position": 53,
       "first_seen_date": "2026-02-09"
     },
     "2450-142": {
@@ -2878,7 +2868,7 @@
       "title": "DAĞKAPI ORYIL MY OFFİCE'TE SATILIK 6+2 BÜRO",
       "scan_seq": 232,
       "timestamp": 1770621651.6730146,
-      "position": 54,
+      "position": 55,
       "first_seen_date": "2026-02-09"
     },
     "9021-128": {
@@ -2888,7 +2878,7 @@
       "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI CUMHURİYETTE 1200 m2 Müşterek Tarla",
       "scan_seq": 232,
       "timestamp": 1770621652.6663933,
-      "position": 59,
+      "position": 60,
       "first_seen_date": "2026-02-09"
     },
     "7117-18": {
@@ -2898,7 +2888,7 @@
       "title": "RIZVANAĞA CADDESİNDE SATILIK KELEPİR 2+1 DAİRE",
       "scan_seq": 232,
       "timestamp": 1770621653.6729665,
-      "position": 60,
+      "position": 61,
       "first_seen_date": "2026-02-09"
     },
     "1676-91": {
@@ -2908,7 +2898,7 @@
       "title": "75 YOLU ELAZIĞ CADDESİ'NE BAĞLAYAN NOKTADA EŞŞİZ VİLLAMIZ SATIŞTA",
       "scan_seq": 233,
       "timestamp": 1770632475.6928809,
-      "position": 40,
+      "position": 41,
       "first_seen_date": "2026-02-09"
     },
     "6887-102": {
@@ -2918,7 +2908,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ÜÇKUYULARDA 3+1SATILIK FIRSAT DAİRE",
       "scan_seq": 233,
       "timestamp": 1770632476.9832568,
-      "position": 42,
+      "position": 43,
       "first_seen_date": "2026-02-09"
     },
     "9021-132": {
@@ -2928,7 +2918,7 @@
       "title": "KANTAR KAVŞAĞI CİVARI SATILIK 2+1 DAİRE",
       "scan_seq": 233,
       "timestamp": 1770632478.286752,
-      "position": 44,
+      "position": 45,
       "first_seen_date": "2026-02-09"
     },
     "1798-450": {
@@ -2938,7 +2928,7 @@
       "title": "KENT ORMAN 41 VİLLALIK SİTE İÇERİSİNDE SATILIK DÜKKAN",
       "scan_seq": 233,
       "timestamp": 1770632479.3823028,
-      "position": 45,
+      "position": 46,
       "first_seen_date": "2026-02-09"
     },
     "1676-89": {
@@ -2948,7 +2938,7 @@
       "title": "CHERY BAYİ KARŞISI ALTINDAĞ KAYA YAPIDA SATILIK UYGUN FİYATLI 2+1 DAİRE",
       "scan_seq": 233,
       "timestamp": 1770632480.6064715,
-      "position": 46,
+      "position": 47,
       "first_seen_date": "2026-02-09"
     },
     "9021-130": {
@@ -2958,7 +2948,7 @@
       "title": "CEYLAN AVM CİVARI URFA YOLU CADDE ÜSTÜ SATILIK 600 M2 İŞYERİ",
       "scan_seq": 233,
       "timestamp": 1770632482.8597107,
-      "position": 48,
+      "position": 49,
       "first_seen_date": "2026-02-09"
     },
     "1798-460": {
@@ -2968,7 +2958,7 @@
       "title": "SUR KARABAŞTA FIRSAT SATILIK ARSA",
       "scan_seq": 234,
       "timestamp": 1770643327.349629,
-      "position": 41,
+      "position": 42,
       "first_seen_date": "2026-02-09"
     },
     "5482-138": {
@@ -2978,7 +2968,7 @@
       "title": "DİYARBAKIR YENİŞEHİR TANIŞIK MAHALLESİNDE 10 DÖNÜM SATILIK ARSA",
       "scan_seq": 234,
       "timestamp": 1770643328.4331253,
-      "position": 43,
+      "position": 44,
       "first_seen_date": "2026-02-09"
     },
     "0643-29": {
@@ -2988,7 +2978,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN YENİ CEZAEVİ CİVARI 2+1 KİRALIK DAİRE",
       "scan_seq": 234,
       "timestamp": 1770643330.6088629,
-      "position": 58,
+      "position": 59,
       "first_seen_date": "2026-02-09"
     },
     "5470-107": {
@@ -2998,7 +2988,7 @@
       "title": "ELAZIĞ YOLU ÜZERİ 2+1 SATILIK HAVUZLU SIFIR DAİRE",
       "scan_seq": 235,
       "timestamp": 1770654156.143808,
-      "position": 38,
+      "position": 39,
       "first_seen_date": "2026-02-09"
     },
     "5479-110": {
@@ -3018,7 +3008,7 @@
       "title": "MAKROLİFE'DEN BAĞLAR CEZAEVİ ALT KÖŞEDE SATILIK 3+1 DAİRE",
       "scan_seq": 237,
       "timestamp": 1770718898.030124,
-      "position": 28,
+      "position": 29,
       "first_seen_date": "2026-02-10"
     },
     "0429-315": {
@@ -3028,7 +3018,7 @@
       "title": "YENİŞEHİR FABRİKA MAHALLESİ RENSA YAPI 2+1 SATILIK DAİRE",
       "scan_seq": 237,
       "timestamp": 1770718899.2945032,
-      "position": 30,
+      "position": 31,
       "first_seen_date": "2026-02-10"
     },
     "2141-37": {
@@ -3038,7 +3028,7 @@
       "title": "EMEK CADDESİNDE SATILIK FULL YAPILI 3+1 DAİRE",
       "scan_seq": 237,
       "timestamp": 1770718900.301779,
-      "position": 31,
+      "position": 32,
       "first_seen_date": "2026-02-10"
     },
     "6976-13": {
@@ -3048,7 +3038,7 @@
       "title": "YENİ YOL'DA SATILIK 3+1 DAİRE",
       "scan_seq": 237,
       "timestamp": 1770718902.4612615,
-      "position": 32,
+      "position": 33,
       "first_seen_date": "2026-02-10"
     },
     "2141-36": {
@@ -3058,7 +3048,7 @@
       "title": "POLİS OKULUNDA İÇİ FULL 2+1 SATILIK DAİRE",
       "scan_seq": 237,
       "timestamp": 1770718903.439828,
-      "position": 33,
+      "position": 34,
       "first_seen_date": "2026-02-10"
     },
     "7446-208": {
@@ -3068,7 +3058,7 @@
       "title": "TANLAR ŞEHRİ TERASTA KİRALIK DÜKKAN",
       "scan_seq": 237,
       "timestamp": 1770718904.435928,
-      "position": 34,
+      "position": 35,
       "first_seen_date": "2026-02-10"
     },
     "5478-83": {
@@ -3078,7 +3068,7 @@
       "title": " TEMA PARK KARŞISI SATILIK 4.5+1 KAPALI HAVUZLU ULTRA LÜX DAİRE",
       "scan_seq": 237,
       "timestamp": 1770718905.5356033,
-      "position": 35,
+      "position": 36,
       "first_seen_date": "2026-02-10"
     },
     "5478-82": {
@@ -3088,7 +3078,7 @@
       "title": "SEYRANTEPE'DE BAKIMLI MERKEZİ KONUMDA 2+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 237,
       "timestamp": 1770718906.5397847,
-      "position": 36,
+      "position": 37,
       "first_seen_date": "2026-02-10"
     },
     "1707-191": {
@@ -3098,7 +3088,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK YENİ CEZAEVİ KARŞISI TUNÇ YAPIDA SIFIR AYARINDA !!!",
       "scan_seq": 237,
       "timestamp": 1770718907.5900724,
-      "position": 37,
+      "position": 38,
       "first_seen_date": "2026-02-10"
     },
     "3126-201": {
@@ -3108,7 +3098,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN KİRALIK İŞYERİ",
       "scan_seq": 237,
       "timestamp": 1770718908.6238372,
-      "position": 39,
+      "position": 40,
       "first_seen_date": "2026-02-10"
     },
     "4543-70": {
@@ -3118,7 +3108,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK ELAZIĞ YOLU ÜZERİ 2+1 KİRALIK HAVUZLU SIFIR DAİRE",
       "scan_seq": 238,
       "timestamp": 1770729757.437245,
-      "position": 26,
+      "position": 27,
       "first_seen_date": "2026-02-10"
     },
     "1676-92": {
@@ -3128,7 +3118,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN WELAT BLUE GARDENDE SATILIK 6+1 LÜX TRİPLEX VİLLA",
       "scan_seq": 238,
       "timestamp": 1770729758.5289035,
-      "position": 27,
+      "position": 28,
       "first_seen_date": "2026-02-10"
     },
     "6887-103": {
@@ -3138,7 +3128,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK SAĞLIK OCAĞINDA 3+1 FIRSAT DAİRE",
       "scan_seq": 238,
       "timestamp": 1770729759.6615188,
-      "position": 29,
+      "position": 30,
       "first_seen_date": "2026-02-10"
     },
     "7465-141": {
@@ -3148,7 +3138,7 @@
       "title": "DİCLEKENTTE SATILIK FIRSAT 3+1 DAİRE",
       "scan_seq": 240,
       "timestamp": 1770794791.2873826,
-      "position": 24,
+      "position": 25,
       "first_seen_date": "2026-02-11"
     },
     "7497-28": {
@@ -3158,7 +3148,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN TAŞKIN YAPI DA 3+1 KİRALIK DAİRE",
       "scan_seq": 240,
       "timestamp": 1770794792.687455,
-      "position": 25,
+      "position": 26,
       "first_seen_date": "2026-02-11"
     },
     "5493-43": {
@@ -3168,7 +3158,7 @@
       "title": "ACİL KİRALIKTIR  BAĞCILARIN GÖZDE KONUMU HAVALİMANI CADDESİNDE 3+1 LÜKS DAİREMİZ KİRALIKTIR",
       "scan_seq": 241,
       "timestamp": 1770805624.795837,
-      "position": 21,
+      "position": 22,
       "first_seen_date": "2026-02-11"
     },
     "0533-106": {
@@ -3178,7 +3168,7 @@
       "title": "HUZUREVLERİ İŞLEK CADDEDE YÜKSEK KİRA GETİRİLİ  SATILIK 400 M2 BODRUM DÜKKAN",
       "scan_seq": 241,
       "timestamp": 1770805626.0389504,
-      "position": 22,
+      "position": 23,
       "first_seen_date": "2026-02-11"
     },
     "0533-101": {
@@ -3188,7 +3178,7 @@
       "title": "ELAZIĞ YOLUNA YAKIN ACİL SATILIK 125 DÖNÜM SATILIK TARLA",
       "scan_seq": 241,
       "timestamp": 1770805627.0519795,
-      "position": 23,
+      "position": 24,
       "first_seen_date": "2026-02-11"
     },
     "7548-178": {
@@ -3198,7 +3188,7 @@
       "title": "BAĞCILAR HAVA ALANI KAVŞAĞI IĞRAKARAKOÇ DA 3+1 SATILIK HAVUZLU LÜX DAİRE",
       "scan_seq": 242,
       "timestamp": 1770816157.2252584,
-      "position": 7,
+      "position": 8,
       "first_seen_date": "2026-02-11"
     },
     "4441-410": {
@@ -3208,7 +3198,7 @@
       "title": "450 EVLERDE SATILIK 2+1 SIFIR DAİRE",
       "scan_seq": 242,
       "timestamp": 1770816158.3675227,
-      "position": 8,
+      "position": 9,
       "first_seen_date": "2026-02-11"
     },
     "4765-207": {
@@ -3218,7 +3208,7 @@
       "title": "KAYAPINAR SPOR KOMPLEKSİ YANI YAPILI 3+1 SATILIK DAİRE",
       "scan_seq": 242,
       "timestamp": 1770816159.339172,
-      "position": 17,
+      "position": 18,
       "first_seen_date": "2026-02-11"
     },
     "1143-04": {
@@ -3228,7 +3218,7 @@
       "title": "MAKRO LİFE GÜVENCESİYLE CHERY BAYİ CİVARINDA KİRALIK 2+1 DAİRE",
       "scan_seq": 242,
       "timestamp": 1770816160.2898972,
-      "position": 19,
+      "position": 20,
       "first_seen_date": "2026-02-11"
     },
     "6621-214": {
@@ -3238,7 +3228,7 @@
       "title": "ACİL SATILIK' BAĞCILAR GÖLETLİ PARK ARKASINDA 3+1 DAİRE",
       "scan_seq": 246,
       "timestamp": 1770831825.3509457,
-      "position": 1,
+      "position": 2,
       "first_seen_date": "2026-02-11"
     },
     "5478-84": {
@@ -3248,7 +3238,7 @@
       "title": "FABRİKA MAHALLESİNİN EN GÜZEL HAVUZLU 3.5+1 DAİRESİ SATIŞTA",
       "scan_seq": 246,
       "timestamp": 1770831826.758938,
-      "position": 3,
+      "position": 4,
       "first_seen_date": "2026-02-11"
     },
     "1375-308": {
@@ -3258,7 +3248,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK DUKKAN",
       "scan_seq": 246,
       "timestamp": 1770831827.9397438,
-      "position": 4,
+      "position": 5,
       "first_seen_date": "2026-02-11"
     },
     "6887-105": {
@@ -3268,7 +3258,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN YEDİİKLİM OKULLARI KAŞISINDA 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 246,
       "timestamp": 1770831829.054977,
-      "position": 5,
+      "position": 6,
       "first_seen_date": "2026-02-11"
     },
     "7548-179": {
@@ -3278,7 +3268,7 @@
       "title": "HATBOYUNDA DOĞAL GAZLI ASANSÖRLÜ 2+1 SATILIK DAİRE",
       "scan_seq": 246,
       "timestamp": 1770831830.2273226,
-      "position": 6,
+      "position": 7,
       "first_seen_date": "2026-02-11"
     },
     "0596-3": {
@@ -3288,7 +3278,7 @@
       "title": "Kantar kavşağı Merkezi Konumda, Lüx Plaza Katı  250 m Satılık Premium İşyeri",
       "scan_seq": 246,
       "timestamp": 1770831831.3389897,
-      "position": 12,
+      "position": 13,
       "first_seen_date": "2026-02-11"
     },
     "7416-127": {
@@ -3298,7 +3288,7 @@
       "title": "NESİBE AYDIN KOLEJİ KARŞISI 3+1  SATILIK DAİRE",
       "scan_seq": 246,
       "timestamp": 1770831832.4844744,
-      "position": 15,
+      "position": 16,
       "first_seen_date": "2026-02-11"
     },
     "3458-306": {
@@ -3308,7 +3298,7 @@
       "title": "DEVREN KİRALIK   DÖNER DÜKANI BAĞLARIN EN YOĞUN NOKTASI",
       "scan_seq": 246,
       "timestamp": 1770831833.7500396,
-      "position": 18,
+      "position": 19,
       "first_seen_date": "2026-02-11"
     },
     "7497-33": {
@@ -3318,7 +3308,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR FULL MASRAFLI 3+1 SATILIK DAİRE ",
       "scan_seq": 246,
       "timestamp": 1770831834.8701715,
-      "position": 20,
+      "position": 21,
       "first_seen_date": "2026-02-11"
     },
     "7119-505": {
@@ -3328,7 +3318,7 @@
       "title": "WİNSTOWN AVM ARKASI  SATILIK 2+1 FIRSAT DAİRE ",
       "scan_seq": 247,
       "timestamp": 1770880856.060748,
-      "position": 2,
+      "position": 3,
       "first_seen_date": "2026-02-12"
     },
     "3126-415": {
@@ -3338,7 +3328,7 @@
       "title": "BAĞCILAR'DA KELEPİR FİYATA SATILIK  3+1 DAİRE",
       "scan_seq": 247,
       "timestamp": 1770880857.9695182,
-      "position": 9,
+      "position": 10,
       "first_seen_date": "2026-02-12"
     },
     "3126-414": {
@@ -3348,7 +3338,7 @@
       "title": "TEMA PARK CİVARI 4,5+1 TEMİZ AİLE DAİRESİ",
       "scan_seq": 247,
       "timestamp": 1770880858.8494163,
-      "position": 10,
+      "position": 11,
       "first_seen_date": "2026-02-12"
     },
     "6887-104": {
@@ -3358,7 +3348,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN MEMURSEN TOKİ DE 3+1 ACİLL SATILIK FIRSAT DAİRE",
       "scan_seq": 247,
       "timestamp": 1770880859.717391,
-      "position": 11,
+      "position": 12,
       "first_seen_date": "2026-02-12"
     },
     "7119-501": {
@@ -3368,7 +3358,7 @@
       "title": "BAĞCILAR ARAÇ MUAYENE KARŞISI SATILIK 3,5+1 FIRSAT DAİRE",
       "scan_seq": 247,
       "timestamp": 1770880860.6104188,
-      "position": 13,
+      "position": 14,
       "first_seen_date": "2026-02-12"
     },
     "1143-06": {
@@ -3378,7 +3368,7 @@
       "title": "MAKROLİFE GÜVENCESİYLE LÜKS 3+1 KİRALIK DAİRE",
       "scan_seq": 247,
       "timestamp": 1770880861.5382516,
-      "position": 14,
+      "position": 15,
       "first_seen_date": "2026-02-12"
     },
     "1143-05": {
@@ -3388,7 +3378,7 @@
       "title": "MAKRO LİFE GÜVENCESİYLE CHERY BAYİ CİVARINDA LÜKS 2+1 SATILIK DAİRE",
       "scan_seq": 247,
       "timestamp": 1770880862.4551156,
-      "position": 16,
+      "position": 17,
       "first_seen_date": "2026-02-12"
     },
     "7113-347": {
@@ -3398,7 +3388,7 @@
       "title": "MAKRO LİFEDEN  50 MT YOLDA YATIRIMLIK 4.5+1 DAİRE SATILIKTIR",
       "scan_seq": 248,
       "timestamp": 1770891600.4286163,
-      "position": 0,
+      "position": 1,
       "first_seen_date": "2026-02-12"
     },
     "8674-141": {
@@ -4051,16 +4041,6 @@
       "position": 404,
       "first_seen_date": "2026-02-12"
     },
-    "3126-90": {
-      "fiyat": "4.100.000 TL",
-      "tarih": "2026-02-12",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-3126-90",
-      "title": "ACİL SATILIK' KAYAPINAR 50 METREDE 2+1 LÜKS DAİREMİZ SATILIKTIR",
-      "scan_seq": 250,
-      "timestamp": 1770904559.4155672,
-      "position": 405,
-      "first_seen_date": "2026-02-12"
-    },
     "5482-119": {
       "fiyat": "1.300.000 TL",
       "tarih": "2026-02-12",
@@ -4068,7 +4048,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN HUZUREVLERİNDE SATILIK 2+1 DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904560.506734,
-      "position": 406,
+      "position": 405,
       "first_seen_date": "2026-02-12"
     },
     "5482-118": {
@@ -4078,7 +4058,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN MEMURSEN TOKİ DE  3+1 KİRALIK DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904561.4586394,
-      "position": 407,
+      "position": 406,
       "first_seen_date": "2026-02-12"
     },
     "5482-117": {
@@ -4088,7 +4068,7 @@
       "title": "OFİS ASKERLIK SUBESI YANI 3+1 ACIL KİRALIK  DAIRE ",
       "scan_seq": 250,
       "timestamp": 1770904562.441274,
-      "position": 408,
+      "position": 407,
       "first_seen_date": "2026-02-12"
     },
     "3458-294": {
@@ -4098,7 +4078,7 @@
       "title": "ALTINDAĞ KARŞISINDA BYMEN YAPI KALİTESİYLE 2+1 SIFIR LÜKS DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904563.414791,
-      "position": 409,
+      "position": 408,
       "first_seen_date": "2026-02-12"
     },
     "1324-333": {
@@ -4108,7 +4088,7 @@
       "title": "NEVROZ ARKASI 2+1 ULTRA LÜX SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904564.3512166,
-      "position": 410,
+      "position": 409,
       "first_seen_date": "2026-02-12"
     },
     "1324-542": {
@@ -4118,7 +4098,7 @@
       "title": "WİSTOWN AWM 4.5+1 ULTRA LÜX ACİL SATILIKKK",
       "scan_seq": 250,
       "timestamp": 1770904565.3384917,
-      "position": 411,
+      "position": 410,
       "first_seen_date": "2026-02-12"
     },
     "2140-897": {
@@ -4128,7 +4108,7 @@
       "title": "WİNSTWON AWM CİVARI GÜNEYDOĞU KOOPERATİFLERİNDE ACİL SATILIK  3+1 DAİRE!  DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904566.349529,
-      "position": 412,
+      "position": 411,
       "first_seen_date": "2026-02-12"
     },
     "4765-201": {
@@ -4138,7 +4118,7 @@
       "title": "KAYAPINARDA ZANA DÜĞÜN SALONU KARŞISI 1+1 SATILIK BÜYÜK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904567.2910404,
-      "position": 413,
+      "position": 412,
       "first_seen_date": "2026-02-12"
     },
     "2140-528": {
@@ -4148,7 +4128,7 @@
       "title": "SUR KARABAŞTA  ÇOK ACİL SATILIK 1 DÖNÜM MÜSTAKİL ARSA",
       "scan_seq": 250,
       "timestamp": 1770904568.2025423,
-      "position": 414,
+      "position": 413,
       "first_seen_date": "2026-02-12"
     },
     "3458-293": {
@@ -4158,7 +4138,7 @@
       "title": "BAĞCILAR  AREM TİGRAN CADDESİ İKİNCİ PARSELİNDE 2+1 KİRALİK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904569.1008322,
-      "position": 415,
+      "position": 414,
       "first_seen_date": "2026-02-12"
     },
     "7548-167": {
@@ -4168,7 +4148,7 @@
       "title": "50 LİK YOLDA   4+1  LÜKS SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904570.1335452,
-      "position": 416,
+      "position": 415,
       "first_seen_date": "2026-02-12"
     },
     "4553-533": {
@@ -4178,7 +4158,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ERGANİDE SATILIK 3+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904571.0667973,
-      "position": 417,
+      "position": 416,
       "first_seen_date": "2026-02-12"
     },
     "4553-32": {
@@ -4188,7 +4168,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN STAD YANI ACİL SATILIK 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904572.0170202,
-      "position": 418,
+      "position": 417,
       "first_seen_date": "2026-02-12"
     },
     "4553-530": {
@@ -4198,7 +4178,7 @@
       "title": "YENİŞEHİRDE ACİL SATILIK FORUM KARŞISI KONUT İMARLI KUPON ARSA",
       "scan_seq": 250,
       "timestamp": 1770904572.9729974,
-      "position": 419,
+      "position": 418,
       "first_seen_date": "2026-02-12"
     },
     "4553-529": {
@@ -4208,7 +4188,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK ELAZIĞ YOLU ÜZERİ 2+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904573.8916352,
-      "position": 420,
+      "position": 419,
       "first_seen_date": "2026-02-12"
     },
     "4553-528": {
@@ -4218,7 +4198,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK 2+1 TOKİ",
       "scan_seq": 250,
       "timestamp": 1770904574.7999203,
-      "position": 421,
+      "position": 420,
       "first_seen_date": "2026-02-12"
     },
     "4553-527": {
@@ -4228,7 +4208,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN GÖLETLİ PARK CİVARI SATILIK 3+1 FIRSAT LÜX DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904575.7695365,
-      "position": 422,
+      "position": 421,
       "first_seen_date": "2026-02-12"
     },
     "4553-526": {
@@ -4238,7 +4218,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN NEVRUZ PARK CİVARI SATILIK 2+1 AMERİKAN MUTFAK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904576.7481127,
-      "position": 423,
+      "position": 422,
       "first_seen_date": "2026-02-12"
     },
     "4553-525": {
@@ -4248,7 +4228,7 @@
       "title": "VİLLA KONFORUNDA YENİ BİR HAYAT BAŞLIYOR!",
       "scan_seq": 250,
       "timestamp": 1770904577.7130375,
-      "position": 424,
+      "position": 423,
       "first_seen_date": "2026-02-12"
     },
     "4553-522": {
@@ -4258,7 +4238,7 @@
       "title": "URFA YOLUNDA KİRALIK  1+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904578.6603925,
-      "position": 425,
+      "position": 424,
       "first_seen_date": "2026-02-12"
     },
     "4765-199": {
@@ -4268,7 +4248,7 @@
       "title": "SUR'DA MÜSTAKİL VİLLA İMARLI İFRAZLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904579.5811677,
-      "position": 426,
+      "position": 425,
       "first_seen_date": "2026-02-12"
     },
     "4765-198": {
@@ -4278,7 +4258,7 @@
       "title": "SUR BÖLGESİNDE VİLLA İMARLI ACİL SATILIK ARSA",
       "scan_seq": 250,
       "timestamp": 1770904580.4887483,
-      "position": 427,
+      "position": 426,
       "first_seen_date": "2026-02-12"
     },
     "4765-197": {
@@ -4288,17 +4268,7 @@
       "title": "DİCLEKENT NASIR USTA ARKASI 3+1 ÇOK UYGUNN SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904581.56075,
-      "position": 428,
-      "first_seen_date": "2026-02-12"
-    },
-    "4765-196": {
-      "fiyat": "4.060.000 TL",
-      "tarih": "2026-02-12",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-4765-196",
-      "title": "BAĞCILAR MİLLET BAHÇESİ CİVARI CADDE ÜZERİ 3+1 ACİL SATILIK DAİRE",
-      "scan_seq": 250,
-      "timestamp": 1770904582.4578393,
-      "position": 429,
+      "position": 427,
       "first_seen_date": "2026-02-12"
     },
     "5478-71": {
@@ -4308,7 +4278,7 @@
       "title": "DİYARBAKIR'IN EN GÜZEL MANZARALI 4+1 FULL BAKIMLI DUBLEKS DAİRESİ SATIŞTA",
       "scan_seq": 250,
       "timestamp": 1770904583.3966362,
-      "position": 430,
+      "position": 428,
       "first_seen_date": "2026-02-12"
     },
     "7112-152": {
@@ -4318,7 +4288,7 @@
       "title": "DAĞKAPIDA SATILIK  OFİS  BÜRO  AVUKATLIK OFİSİNE UYGUN 3+1 GİRİŞ KAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904585.3982759,
-      "position": 431,
+      "position": 429,
       "first_seen_date": "2026-02-12"
     },
     "1324-241": {
@@ -4328,7 +4298,7 @@
       "title": "DİCLEKENT ANA CADDEYE SIFIR İÇİ YAPILI 3+1",
       "scan_seq": 250,
       "timestamp": 1770904586.3058772,
-      "position": 432,
+      "position": 430,
       "first_seen_date": "2026-02-12"
     },
     "7465-122": {
@@ -4338,7 +4308,7 @@
       "title": "DİCLEKENTİN EN GÜZEL KONUMUNDA SATILIK FUL YAPILI FIRSAT 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904587.2408402,
-      "position": 433,
+      "position": 431,
       "first_seen_date": "2026-02-12"
     },
     "7465-120": {
@@ -4348,7 +4318,7 @@
       "title": "ZÜMRÜT KENT KARŞISI SIFIR YATIRIMLIK SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904588.1828222,
-      "position": 434,
+      "position": 432,
       "first_seen_date": "2026-02-12"
     },
     "0643-19": {
@@ -4358,7 +4328,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK YATAY MİMARİ SIFIR 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904589.1447005,
-      "position": 435,
+      "position": 433,
       "first_seen_date": "2026-02-12"
     },
     "1798-210": {
@@ -4368,7 +4338,7 @@
       "title": "NCİTY BAYRAMOĞLU CİVARINDA 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904590.1249313,
-      "position": 436,
+      "position": 434,
       "first_seen_date": "2026-02-12"
     },
     "4543-59": {
@@ -4378,7 +4348,7 @@
       "title": "ARASTİRMA HASTANESİ İLERSİNDE OPET CHERY SERVİSİ KARŞISI AYTC YAPI'DA 2+1 YÜKSEK GİRİŞ KAT ACİL SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904591.1449142,
-      "position": 437,
+      "position": 435,
       "first_seen_date": "2026-02-12"
     },
     "4543-58": {
@@ -4388,7 +4358,7 @@
       "title": "HATBOYUNDA TESİSLERE YÜRÜME MESAFESİN DE FUL YAPILI FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904592.111781,
-      "position": 438,
+      "position": 436,
       "first_seen_date": "2026-02-12"
     },
     "2418-77": {
@@ -4398,7 +4368,7 @@
       "title": "BAĞCILAR NEWROZ ARKASI ESKİ SİVEREK CADDE ÜZERİ SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904593.1371672,
-      "position": 439,
+      "position": 437,
       "first_seen_date": "2026-02-12"
     },
     "7112-151": {
@@ -4408,7 +4378,7 @@
       "title": "OFİS BURGER KING SOKAĞINDA SATILIK  KARAKOÇ YAPI KALİTESİYLE 2+1 100MT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904594.2699933,
-      "position": 440,
+      "position": 438,
       "first_seen_date": "2026-02-12"
     },
     "7492-59": {
@@ -4418,7 +4388,7 @@
       "title": "BAĞCILARDA 3+1 SIFIR AYARINDA DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904595.3731456,
-      "position": 441,
+      "position": 439,
       "first_seen_date": "2026-02-12"
     },
     "7117-10": {
@@ -4428,7 +4398,7 @@
       "title": "DİCLEKENT CİVARI SATILIK YATIRIMLIK DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904596.2956643,
-      "position": 442,
+      "position": 440,
       "first_seen_date": "2026-02-12"
     },
     "4548-228": {
@@ -4438,7 +4408,7 @@
       "title": "ALTINDAĞ 5K YAPIDAN 2,5+1 KİRALIK LÜX DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904597.2606275,
-      "position": 443,
+      "position": 441,
       "first_seen_date": "2026-02-12"
     },
     "7117-09": {
@@ -4448,7 +4418,7 @@
       "title": "75 CADDE CİVARI SATILIK İŞ YERİ",
       "scan_seq": 250,
       "timestamp": 1770904598.243371,
-      "position": 444,
+      "position": 442,
       "first_seen_date": "2026-02-12"
     },
     "5493-38": {
@@ -4458,7 +4428,7 @@
       "title": "YENİŞEHİR FABRİKA MAHALLESİNİN GÖZDE 4+1 DAİRESİ",
       "scan_seq": 250,
       "timestamp": 1770904599.2390642,
-      "position": 445,
+      "position": 443,
       "first_seen_date": "2026-02-12"
     },
     "0533-092": {
@@ -4468,7 +4438,7 @@
       "title": "MAKROLIFE GAYRIMENKUL BAĞCILAR NEWROZ ARKASI SİVEREK CADDESİ ÜZERİ SIFIR 2+1 DAİRELER",
       "scan_seq": 250,
       "timestamp": 1770904600.301548,
-      "position": 446,
+      "position": 444,
       "first_seen_date": "2026-02-12"
     },
     "3126-124": {
@@ -4478,7 +4448,7 @@
       "title": "ELAZIĞ SİVRİCE'DE TATİL KÖYÜN'DE SATILIK 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904601.3545797,
-      "position": 447,
+      "position": 445,
       "first_seen_date": "2026-02-12"
     },
     "6954-102": {
@@ -4488,7 +4458,7 @@
       "title": "ÇEYSA YAPI KALİTESİ İLE 4.5+1 SATILIK LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904602.2423122,
-      "position": 448,
+      "position": 446,
       "first_seen_date": "2026-02-12"
     },
     "3448-131": {
@@ -4498,7 +4468,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN  TEKNOKENTTE ULTRA LÜX SATILIK 3.5+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904603.124532,
-      "position": 449,
+      "position": 447,
       "first_seen_date": "2026-02-12"
     },
     "0533-090": {
@@ -4508,7 +4478,7 @@
       "title": "MAKRO LIFE ARAŞTIRMA HASTANESİ ARKASIDA OTURMAYA HAZIR 2+1 DAİRE KİRALIYOR",
       "scan_seq": 250,
       "timestamp": 1770904604.090545,
-      "position": 450,
+      "position": 448,
       "first_seen_date": "2026-02-12"
     },
     "7117-07": {
@@ -4518,7 +4488,7 @@
       "title": "ELAZIĞ YOLUNDA YATIRIMLIK SATILIK 1+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904605.133989,
-      "position": 451,
+      "position": 449,
       "first_seen_date": "2026-02-12"
     },
     "1676-80": {
@@ -4528,7 +4498,7 @@
       "title": "TEKSTİL KENT'TE KİRALIK BOŞ FABRİKA",
       "scan_seq": 250,
       "timestamp": 1770904606.0830789,
-      "position": 452,
+      "position": 450,
       "first_seen_date": "2026-02-12"
     },
     "3448-130": {
@@ -4538,7 +4508,7 @@
       "title": "MAKRO LİFE GÜVENCESİYLE ALTINDAĞ TESİSLERİ KARŞISINDA 2,5+1 SIFIR SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904606.9834414,
-      "position": 453,
+      "position": 451,
       "first_seen_date": "2026-02-12"
     },
     "5478-68": {
@@ -4548,7 +4518,7 @@
       "title": "ÜÇKUYULAR'IN EN GÜZEL SİTESİNDE SATILIK 3+1 LÜX FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904607.94373,
-      "position": 454,
+      "position": 452,
       "first_seen_date": "2026-02-12"
     },
     "4548-227": {
@@ -4558,7 +4528,7 @@
       "title": "ŞEHİTLİKTE 2+1 SATILIK LÜX DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904608.8609154,
-      "position": 455,
+      "position": 453,
       "first_seen_date": "2026-02-12"
     },
     "7548-164": {
@@ -4568,7 +4538,7 @@
       "title": "TESİSLERDE ANA CADDE ÜSTÜNDE 3+1 SATILIK DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904609.8583915,
-      "position": 456,
+      "position": 454,
       "first_seen_date": "2026-02-12"
     },
     "1327-04": {
@@ -4578,7 +4548,7 @@
       "title": "AVEA CADEESİ İKİNCİ PARSELDE 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904610.8952286,
-      "position": 457,
+      "position": 455,
       "first_seen_date": "2026-02-12"
     },
     "5478-67": {
@@ -4588,7 +4558,7 @@
       "title": "HUZUREVLERİ SON DURAK ANA CADDE ÜZERİNDE 3+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904611.7972548,
-      "position": 458,
+      "position": 456,
       "first_seen_date": "2026-02-12"
     },
     "5478-66": {
@@ -4598,7 +4568,7 @@
       "title": "HUZUREVLERİ SON DURAK ANA CADDE ÜZERİ BAKIMLI 3+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904613.7632568,
-      "position": 459,
+      "position": 457,
       "first_seen_date": "2026-02-12"
     },
     "0429-290": {
@@ -4608,7 +4578,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN  ÖZ ODAK 12 SİTESİ 3+1 SATILIK DAİRE   ",
       "scan_seq": 250,
       "timestamp": 1770904614.6632404,
-      "position": 460,
+      "position": 458,
       "first_seen_date": "2026-02-12"
     },
     "5478-65": {
@@ -4618,7 +4588,7 @@
       "title": "75 CADDE'DE LUNAPARK BİTİŞİĞİ KAÇIRILMAYACAK HAVUZLU LÜX 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904615.6168697,
-      "position": 461,
+      "position": 459,
       "first_seen_date": "2026-02-12"
     },
     "4548-226": {
@@ -4628,7 +4598,7 @@
       "title": "YENİŞEHİR ÜÇKUYULARDA 2+1 SIFIR AYARINDA SATILIK BOŞ DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904616.5227017,
-      "position": 462,
+      "position": 460,
       "first_seen_date": "2026-02-12"
     },
     "0643-18": {
@@ -4638,7 +4608,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ÜÇKUYULARDA SATILIK 2+0 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904617.4253876,
-      "position": 463,
+      "position": 461,
       "first_seen_date": "2026-02-12"
     },
     "1707-184": {
@@ -4648,7 +4618,7 @@
       "title": "STADYUM KAVŞAGINDA EMSALSIZ 2.5+1 117 M2 NET KULLANIM ALANI !!!",
       "scan_seq": 250,
       "timestamp": 1770904618.3856335,
-      "position": 464,
+      "position": 462,
       "first_seen_date": "2026-02-12"
     },
     "7370-59": {
@@ -4658,7 +4628,7 @@
       "title": "GAZİLER ÇEŞME DURAĞI KARŞISINDA FIRSAT 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904619.2996445,
-      "position": 465,
+      "position": 463,
       "first_seen_date": "2026-02-12"
     },
     "6954-101": {
@@ -4668,7 +4638,7 @@
       "title": "WİNSTOWN CİVARI SATILIK 3,5+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904620.2031195,
-      "position": 466,
+      "position": 464,
       "first_seen_date": "2026-02-12"
     },
     "0533-089": {
@@ -4678,7 +4648,7 @@
       "title": "BATI HASTANESİ KARŞISI ACİL SATILIK FULL YAPILI 3+1",
       "scan_seq": 250,
       "timestamp": 1770904621.0883424,
-      "position": 467,
+      "position": 465,
       "first_seen_date": "2026-02-12"
     },
     "9985-18": {
@@ -4688,7 +4658,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN MALATYA MERKEZDE SATILIK SIFIR PLAZA FIRSATI!!!",
       "scan_seq": 250,
       "timestamp": 1770904621.9777298,
-      "position": 468,
+      "position": 466,
       "first_seen_date": "2026-02-12"
     },
     "7357-11": {
@@ -4698,7 +4668,7 @@
       "title": "MAKRO LİFE GAYRİMENKULDEN, TEKNOKENT ARKASINDA 2+1 LÜKS KONFORLÜ  SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904622.9076307,
-      "position": 469,
+      "position": 467,
       "first_seen_date": "2026-02-12"
     },
     "9985-17": {
@@ -4708,7 +4678,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN BÖLGENİN EN NİTELİKLİ TARIM, HAYVANCILIK VE ÇOK AMAÇLI YATIRIM ARAZİSİ",
       "scan_seq": 250,
       "timestamp": 1770904623.8778417,
-      "position": 470,
+      "position": 468,
       "first_seen_date": "2026-02-12"
     },
     "7465-118": {
@@ -4718,7 +4688,7 @@
       "title": "RADİSON OTEL ARKASI SATILIK FIRSAT 4+1 LÜX DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904624.8334908,
-      "position": 471,
+      "position": 469,
       "first_seen_date": "2026-02-12"
     },
     "9985-16": {
@@ -4728,7 +4698,7 @@
       "title": "BAYRAMOĞLU NCİTY AVM ARKASI 3+1 MASRAFSIZ SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904625.8266854,
-      "position": 472,
+      "position": 470,
       "first_seen_date": "2026-02-12"
     },
     "7394-19": {
@@ -4738,7 +4708,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL BEYAZ SARAY VİLLALARINDA SATILIK LÜKS VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904626.7985759,
-      "position": 473,
+      "position": 471,
       "first_seen_date": "2026-02-12"
     },
     "7548-163": {
@@ -4748,7 +4718,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR FULL MASRAFLI 3+1 SATILIK DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904627.7879884,
-      "position": 474,
+      "position": 472,
       "first_seen_date": "2026-02-12"
     },
     "9021-120": {
@@ -4758,7 +4728,7 @@
       "title": "450 EVLER DE SATILIK 6+1 TRİPLEKS VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904628.7372391,
-      "position": 475,
+      "position": 473,
       "first_seen_date": "2026-02-12"
     },
     "7548-162": {
@@ -4768,7 +4738,7 @@
       "title": "NEVROZ PARK ARKASINDA ENÇ YAPI KALİTESİ İLE 2+1 SIFIR DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904629.6310754,
-      "position": 476,
+      "position": 474,
       "first_seen_date": "2026-02-12"
     },
     "8674-138": {
@@ -4778,7 +4748,7 @@
       "title": "OTOGAR ARKASINDA DİYARBAKIRIN EN BÜYÜK 2+1 ARA KAT DAİRESİ",
       "scan_seq": 250,
       "timestamp": 1770904630.5965326,
-      "position": 477,
+      "position": 475,
       "first_seen_date": "2026-02-12"
     },
     "1324-99": {
@@ -4788,7 +4758,7 @@
       "title": "OFİS KOOPERATİF MAHALLESİNDE MİLLET BAHÇESİNE SIFIR ESKİ STAD CİVARI GENİŞ VE FERAH 4+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904631.5732567,
-      "position": 478,
+      "position": 476,
       "first_seen_date": "2026-02-12"
     },
     "7117-05": {
@@ -4798,7 +4768,7 @@
       "title": "KAPLAN CİTY CİVARI SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904632.4724588,
-      "position": 479,
+      "position": 477,
       "first_seen_date": "2026-02-12"
     },
     "0508-74": {
@@ -4808,7 +4778,7 @@
       "title": "KAYAPINARDA DAİRE FİYATINA ACİLL SATILIK DUBLEKS VİLLA ",
       "scan_seq": 250,
       "timestamp": 1770904633.3905516,
-      "position": 480,
+      "position": 478,
       "first_seen_date": "2026-02-12"
     },
     "4553-521": {
@@ -4818,7 +4788,7 @@
       "title": "450 EVLERDE SATILIK 3+1 BOŞ DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904634.3581662,
-      "position": 481,
+      "position": 479,
       "first_seen_date": "2026-02-12"
     },
     "3942-02": {
@@ -4828,7 +4798,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN BAĞLAR ORYIL'DA 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904635.2927237,
-      "position": 482,
+      "position": 480,
       "first_seen_date": "2026-02-12"
     },
     "7119-71": {
@@ -4838,7 +4808,7 @@
       "title": "KANTAR AZEL PLAZADA SATILIK İŞYERİ",
       "scan_seq": 250,
       "timestamp": 1770904636.2076442,
-      "position": 483,
+      "position": 481,
       "first_seen_date": "2026-02-12"
     },
     "0643-10": {
@@ -4848,7 +4818,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN DİCLEKENT'TE 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904637.1968937,
-      "position": 484,
+      "position": 482,
       "first_seen_date": "2026-02-12"
     },
     "5495-63": {
@@ -4858,7 +4828,7 @@
       "title": "HATBOYU CADDESİNE SIFR 3+1 DAİREMİZ SATIŞTA",
       "scan_seq": 250,
       "timestamp": 1770904638.1630843,
-      "position": 485,
+      "position": 483,
       "first_seen_date": "2026-02-12"
     },
     "2141-20": {
@@ -4868,7 +4838,7 @@
       "title": "DİCLEKENT VİLALALARI KARŞISINDA 4+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904639.2596924,
-      "position": 486,
+      "position": 484,
       "first_seen_date": "2026-02-12"
     },
     "7416-117": {
@@ -4878,7 +4848,7 @@
       "title": "NİL KOLEJİ KARŞISI ANAYOL ÜSTÜ SATILIK DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904640.2743795,
-      "position": 487,
+      "position": 485,
       "first_seen_date": "2026-02-12"
     },
     "5495-62": {
@@ -4888,7 +4858,7 @@
       "title": "YETİŞEN ALIR  ARAŞTIRMA KAVŞAGINDA  3+1 DAİREMİZ SATIŞTADIR",
       "scan_seq": 250,
       "timestamp": 1770904641.186679,
-      "position": 488,
+      "position": 486,
       "first_seen_date": "2026-02-12"
     },
     "1324-562": {
@@ -4898,7 +4868,7 @@
       "title": "ALTINDAĞ KARŞISI 2+1 ULTRA LÜX HAVUZLU SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904642.1710687,
-      "position": 489,
+      "position": 487,
       "first_seen_date": "2026-02-12"
     },
     "2418-74": {
@@ -4908,7 +4878,7 @@
       "title": "CEZA EVİ ALT KÖŞE'DE SATILIK  DAİRESİ",
       "scan_seq": 250,
       "timestamp": 1770904643.2104328,
-      "position": 490,
+      "position": 488,
       "first_seen_date": "2026-02-12"
     },
     "3448-128": {
@@ -4918,7 +4888,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ÇÖLGÜZELİNDE 3+1 KİRALIK TOKİ DAİRESİ",
       "scan_seq": 250,
       "timestamp": 1770904644.2665186,
-      "position": 491,
+      "position": 489,
       "first_seen_date": "2026-02-12"
     },
     "0300-03": {
@@ -4928,7 +4898,7 @@
       "title": "BAĞCILARDA 4+1 LÜKS SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904645.274833,
-      "position": 492,
+      "position": 490,
       "first_seen_date": "2026-02-12"
     },
     "4553-520": {
@@ -4938,7 +4908,7 @@
       "title": "WİNSTOWN AVM CİVARI 2.5+1 SATILIK LÜX DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904646.244344,
-      "position": 493,
+      "position": 491,
       "first_seen_date": "2026-02-12"
     },
     "7416-116": {
@@ -4948,7 +4918,7 @@
       "title": " SATILIK MODERN OFİS  BÜRO 2+1",
       "scan_seq": 250,
       "timestamp": 1770904647.1329165,
-      "position": 494,
+      "position": 492,
       "first_seen_date": "2026-02-12"
     },
     "7416-115": {
@@ -4958,7 +4928,7 @@
       "title": " 4 SANAYİ SİTESİNDE 150 M2 TAM DÜKKAN ",
       "scan_seq": 250,
       "timestamp": 1770904648.115514,
-      "position": 495,
+      "position": 493,
       "first_seen_date": "2026-02-12"
     },
     "7465-117": {
@@ -4968,7 +4938,7 @@
       "title": "FORUM AWM KARŞISINDA SATILIK LÜX 3.5+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904649.058076,
-      "position": 496,
+      "position": 494,
       "first_seen_date": "2026-02-12"
     },
     "4548-224": {
@@ -4978,7 +4948,7 @@
       "title": "FABRİKA MAHALLESİNDE 2+1 YÜKSEK METREKARELİ DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904649.960885,
-      "position": 497,
+      "position": 495,
       "first_seen_date": "2026-02-12"
     },
     "2067-01": {
@@ -4988,7 +4958,7 @@
       "title": "DİKENTEPE SATILIK MÜSTAKİL ARAZİ",
       "scan_seq": 250,
       "timestamp": 1770904650.9543488,
-      "position": 498,
+      "position": 496,
       "first_seen_date": "2026-02-12"
     },
     "7446-204": {
@@ -4998,7 +4968,7 @@
       "title": "BAĞCILARIN GÖZDE KONUMUNDA 3+1  DAİREMİZ SATIŞTADIR",
       "scan_seq": 250,
       "timestamp": 1770904651.8566198,
-      "position": 499,
+      "position": 497,
       "first_seen_date": "2026-02-12"
     },
     "2409-122": {
@@ -5008,7 +4978,7 @@
       "title": "KANTAR CİVARI  SIFIR, LÜKS 1+1 DAİRE!",
       "scan_seq": 250,
       "timestamp": 1770904652.752448,
-      "position": 500,
+      "position": 498,
       "first_seen_date": "2026-02-12"
     },
     "2409-121": {
@@ -5018,7 +4988,7 @@
       "title": "KANTAR CİVARI  YERDEN ISITMALI, SIFIR LÜKS 1+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904653.76625,
-      "position": 501,
+      "position": 499,
       "first_seen_date": "2026-02-12"
     },
     "1324-454": {
@@ -5028,7 +4998,7 @@
       "title": "WİNSTOWN AWM İLERİSİ 2+1 63M2 SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904654.7424467,
-      "position": 502,
+      "position": 500,
       "first_seen_date": "2026-02-12"
     },
     "1324-644": {
@@ -5038,7 +5008,7 @@
       "title": "MASTFROŞ CİVARI 2+1 63M2 ULTRA LÜX SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904655.6026137,
-      "position": 503,
+      "position": 501,
       "first_seen_date": "2026-02-12"
     },
     "7117-03": {
@@ -5048,7 +5018,7 @@
       "title": "MARDİN YOLU ÜZERİNDE 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904656.5788324,
-      "position": 504,
+      "position": 502,
       "first_seen_date": "2026-02-12"
     },
     "1324-231": {
@@ -5058,7 +5028,7 @@
       "title": "WİNSTOWN AWM YANI 3.5+1 ULTRA LÜX SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904657.619645,
-      "position": 505,
+      "position": 503,
       "first_seen_date": "2026-02-12"
     },
     "7548-155": {
@@ -5068,7 +5038,7 @@
       "title": "TEKNOKENT ARKASINDA  3+1  SATILIK LÜKS DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904658.5802453,
-      "position": 506,
+      "position": 504,
       "first_seen_date": "2026-02-12"
     },
     "7492-57": {
@@ -5078,7 +5048,7 @@
       "title": "OĞLAKLI TOKİLERE YAKIN MESAFEDE SATILIK MÜSTAKİL ARAZİ",
       "scan_seq": 250,
       "timestamp": 1770904659.5195267,
-      "position": 507,
+      "position": 505,
       "first_seen_date": "2026-02-12"
     },
     "4553-518": {
@@ -5088,7 +5058,7 @@
       "title": "YENİŞEHİR İŞKUR CİVARI SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904660.4627905,
-      "position": 508,
+      "position": 506,
       "first_seen_date": "2026-02-12"
     },
     "7113-325": {
@@ -5098,7 +5068,7 @@
       "title": "BATI HASTANESİ YANINDA UYGUN FİYATLI 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904661.4352345,
-      "position": 509,
+      "position": 507,
       "first_seen_date": "2026-02-12"
     },
     "6887-92": {
@@ -5108,7 +5078,7 @@
       "title": "WİNSTOWN AVM KARŞI ÇAPRAZINDA MERVAN DA 4+1 SATILIK SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904662.523715,
-      "position": 510,
+      "position": 508,
       "first_seen_date": "2026-02-12"
     },
     "5482-116": {
@@ -5118,7 +5088,7 @@
       "title": "ALATOSUN 205 PARSELDE SATILIK 24000 M2 KELEPİR ARSA",
       "scan_seq": 250,
       "timestamp": 1770904663.5031347,
-      "position": 511,
+      "position": 509,
       "first_seen_date": "2026-02-12"
     },
     "0598-86": {
@@ -5128,7 +5098,7 @@
       "title": "WİNSTOWN AVM YANINDA AY YAPI KALİTESİYLE 2+1 YATIRIMLIK SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904664.4671354,
-      "position": 512,
+      "position": 510,
       "first_seen_date": "2026-02-12"
     },
     "0598-84": {
@@ -5138,7 +5108,7 @@
       "title": "WİNSTOWN CİVARINDA ZANA KALİTESİYLE 2,5+1 ACİL SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904665.4087746,
-      "position": 513,
+      "position": 511,
       "first_seen_date": "2026-02-12"
     },
     "7117-01": {
@@ -5148,7 +5118,7 @@
       "title": "WİNSTWON AVM YÜRÜME MESAFESİNDE SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904666.3423703,
-      "position": 514,
+      "position": 512,
       "first_seen_date": "2026-02-12"
     },
     "7119-68": {
@@ -5158,7 +5128,7 @@
       "title": "KANTAR KAVŞAĞI BELLONA ARKASI SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904667.339909,
-      "position": 515,
+      "position": 513,
       "first_seen_date": "2026-02-12"
     },
     "7119-67": {
@@ -5168,7 +5138,7 @@
       "title": "75 CADDEYE 2 . PARSELDE SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904668.2898252,
-      "position": 516,
+      "position": 514,
       "first_seen_date": "2026-02-12"
     },
     "4441-308": {
@@ -5178,7 +5148,7 @@
       "title": "DİCLE VADİSİ'NİN İNCİSİ SATILIK MUHTEŞEM 5.5+1 LÜKS VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904669.2285616,
-      "position": 517,
+      "position": 515,
       "first_seen_date": "2026-02-12"
     },
     "5479-96": {
@@ -5188,7 +5158,7 @@
       "title": "ZÜMRÜT KENT KARŞISI SIFIR YATIRIMLIK SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904670.1890986,
-      "position": 518,
+      "position": 516,
       "first_seen_date": "2026-02-12"
     },
     "2140-561": {
@@ -5198,7 +5168,7 @@
       "title": "ARAŞTIRMA YANI 635 TOKİ KONUTLARINDA",
       "scan_seq": 250,
       "timestamp": 1770904671.1830587,
-      "position": 519,
+      "position": 517,
       "first_seen_date": "2026-02-12"
     },
     "0533-086": {
@@ -5208,7 +5178,7 @@
       "title": "SEYRANTEPE TOKİ'DE  3+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904672.085324,
-      "position": 520,
+      "position": 518,
       "first_seen_date": "2026-02-12"
     },
     "0533-085": {
@@ -5218,7 +5188,7 @@
       "title": "HUZUREVLERİ MEHMET İÇKALE ORTAOKULU YANI BAKIMLI 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904673.0280411,
-      "position": 521,
+      "position": 519,
       "first_seen_date": "2026-02-12"
     },
     "1676-78": {
@@ -5228,7 +5198,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ÇETİNLER DİYARLAND'TA KİRALIK 2+1 BÜRO ",
       "scan_seq": 250,
       "timestamp": 1770904674.036725,
-      "position": 522,
+      "position": 520,
       "first_seen_date": "2026-02-12"
     },
     "1707-182": {
@@ -5238,7 +5208,7 @@
       "title": "DİYARBAKIRIN EN GÜZEL MANZARALI 3+1 KİRALIK DAİRESİ",
       "scan_seq": 250,
       "timestamp": 1770904674.966096,
-      "position": 523,
+      "position": 521,
       "first_seen_date": "2026-02-12"
     },
     "1707-181": {
@@ -5248,7 +5218,7 @@
       "title": "KANTAR KAVŞAĞINDA ACİL SATILIK 3+1 ARA KAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904675.9058828,
-      "position": 524,
+      "position": 522,
       "first_seen_date": "2026-02-12"
     },
     "1707-180": {
@@ -5258,7 +5228,7 @@
       "title": "NİNOVA AVM ARKASINDA ACİL SATILIK 3+1 BAKIMLI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904676.8843093,
-      "position": 525,
+      "position": 523,
       "first_seen_date": "2026-02-12"
     },
     "4548-223": {
@@ -5268,7 +5238,7 @@
       "title": "SEYRANTEPE TOPLUKONUT 3.ETAPTA  3+1 SATILIK DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904677.7761486,
-      "position": 526,
+      "position": 524,
       "first_seen_date": "2026-02-12"
     },
     "4548-222": {
@@ -5278,7 +5248,7 @@
       "title": "TEKNOKENT ARKASI BUBYA HEVSEL PARK 4,5+1 KİRALIK LÜX DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904678.6938753,
-      "position": 527,
+      "position": 525,
       "first_seen_date": "2026-02-12"
     },
     "5482-115": {
@@ -5288,7 +5258,7 @@
       "title": "ŞEHRİN YENİ POPÜLER YERİ CUMHURİYETTE MÜSTAKİL KELEPİR ARSA",
       "scan_seq": 250,
       "timestamp": 1770904679.5887432,
-      "position": 528,
+      "position": 526,
       "first_seen_date": "2026-02-12"
     },
     "5482-114": {
@@ -5298,7 +5268,7 @@
       "title": "Diyarbakır Yenişehir Ekinciler Köyünde Doğayla İç İçe, 47 Dönümlük Yatırım Fırsatı",
       "scan_seq": 250,
       "timestamp": 1770904680.5311816,
-      "position": 529,
+      "position": 527,
       "first_seen_date": "2026-02-12"
     },
     "2141-13": {
@@ -5308,7 +5278,7 @@
       "title": "ZÜMRÜTKENT CİVARI 2+1 AMERİKAN MUTFAK  SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904681.5311806,
-      "position": 530,
+      "position": 528,
       "first_seen_date": "2026-02-12"
     },
     "2141-12": {
@@ -5318,7 +5288,7 @@
       "title": "OFİS KÜTÜPHANE ÇAPRAZI 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904682.458334,
-      "position": 531,
+      "position": 529,
       "first_seen_date": "2026-02-12"
     },
     "0300-01": {
@@ -5328,7 +5298,7 @@
       "title": "STADYUM  CİVARINDA 4+1 LÜKS SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904683.552483,
-      "position": 532,
+      "position": 530,
       "first_seen_date": "2026-02-12"
     },
     "7357-08": {
@@ -5338,7 +5308,7 @@
       "title": "NCİTY AVM CİVARINDA 3+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904684.6115472,
-      "position": 533,
+      "position": 531,
       "first_seen_date": "2026-02-12"
     },
     "2450-132": {
@@ -5348,7 +5318,7 @@
       "title": "ALTINDAĞ'DA BYMEN YAPIDA KİRALIK 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904685.630271,
-      "position": 534,
+      "position": 532,
       "first_seen_date": "2026-02-12"
     },
     "5482-113": {
@@ -5358,7 +5328,7 @@
       "title": "Diyarbakır Yenişehir Ekinciler Köyünde Doğayla İç İçe, 33 Dönümlük Yatırım Fırsatı",
       "scan_seq": 250,
       "timestamp": 1770904686.5584965,
-      "position": 535,
+      "position": 533,
       "first_seen_date": "2026-02-12"
     },
     "7394-12": {
@@ -5368,7 +5338,7 @@
       "title": "MASTFORŞTA KAYALAR ELSİUM LİFE 3+1 LÜKS SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904687.478373,
-      "position": 536,
+      "position": 534,
       "first_seen_date": "2026-02-12"
     },
     "1676-79": {
@@ -5378,7 +5348,7 @@
       "title": "OFİS AKKOYUNLU 4.SOKAK'TA SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904688.8913665,
-      "position": 537,
+      "position": 535,
       "first_seen_date": "2026-02-12"
     },
     "7446-203": {
@@ -5388,7 +5358,7 @@
       "title": "SANAT SOKAĞININ EN GÜZEL KONUMUNDA 3+1 ACİLL SATILIK",
       "scan_seq": 250,
       "timestamp": 1770904689.8022785,
-      "position": 538,
+      "position": 536,
       "first_seen_date": "2026-02-12"
     },
     "7394-13": {
@@ -5398,7 +5368,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK BY MEN KALİTESİYLE 2+1 SIFIR LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904690.7070901,
-      "position": 539,
+      "position": 537,
       "first_seen_date": "2026-02-12"
     },
     "7492-56": {
@@ -5408,7 +5378,7 @@
       "title": "ARAŞTIRMA CİVAR AGC YAPIDA 2,5+1 SATILIK SIFIR LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904691.5869744,
-      "position": 540,
+      "position": 538,
       "first_seen_date": "2026-02-12"
     },
     "2418-71": {
@@ -5418,7 +5388,7 @@
       "title": "URFA YOLU ÜZERİ TESİSLER KAVŞAĞINDA SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904692.490305,
-      "position": 541,
+      "position": 539,
       "first_seen_date": "2026-02-12"
     },
     "4543-55": {
@@ -5428,7 +5398,7 @@
       "title": "YENİHEŞİR FABRİKA MAH  3+1 FYATINA  4+1  SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904693.4249585,
-      "position": 542,
+      "position": 540,
       "first_seen_date": "2026-02-12"
     },
     "7497-15": {
@@ -5438,7 +5408,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN HUZUREVLERİN DE  3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904694.2913053,
-      "position": 543,
+      "position": 541,
       "first_seen_date": "2026-02-12"
     },
     "5493-36": {
@@ -5448,7 +5418,7 @@
       "title": "BATMANIN GÖZDE İLÇESİ CEVİZ VE BAL DİYARI SASONDA YATIRIMLIK FIRSAT 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904695.2151752,
-      "position": 544,
+      "position": 542,
       "first_seen_date": "2026-02-12"
     },
     "7497-13": {
@@ -5458,7 +5428,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN DİCLEKENTTE 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904696.133336,
-      "position": 545,
+      "position": 543,
       "first_seen_date": "2026-02-12"
     },
     "5495-60": {
@@ -5468,7 +5438,7 @@
       "title": "!!! MASTFROŞ'TA  ULTRA LÜKS 4 +1 DAİREMİZ SATIŞTA !!!",
       "scan_seq": 250,
       "timestamp": 1770904696.9847383,
-      "position": 546,
+      "position": 544,
       "first_seen_date": "2026-02-12"
     },
     "1676-76": {
@@ -5478,7 +5448,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN GÖLETLİ PARK CİVARI SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904697.9353292,
-      "position": 547,
+      "position": 545,
       "first_seen_date": "2026-02-12"
     },
     "2450-131": {
@@ -5488,7 +5458,7 @@
       "title": "FABRİKA MAHALLESİNDE LÜX 4+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904698.8284848,
-      "position": 548,
+      "position": 546,
       "first_seen_date": "2026-02-12"
     },
     "7112-146": {
@@ -5498,7 +5468,7 @@
       "title": "DİYARBAKIR  ÇINAR YOLU ÜZERİ  BEŞPINAR KARŞISINDA ANA YOL ÜZERİ ASFALTA SIFIR",
       "scan_seq": 250,
       "timestamp": 1770904699.805517,
-      "position": 549,
+      "position": 547,
       "first_seen_date": "2026-02-12"
     },
     "2450-129": {
@@ -5508,7 +5478,7 @@
       "title": "MEZOPOTAMYA KENT PARKI YANINDA SATILIK 2+0 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904700.7684834,
-      "position": 550,
+      "position": 548,
       "first_seen_date": "2026-02-12"
     },
     "7548-154": {
@@ -5518,7 +5488,7 @@
       "title": "FABRİKA MAHALLESİNDE   SATILIK 3+1 ULTRA LÜX HAVUZLU  DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904701.7394485,
-      "position": 551,
+      "position": 549,
       "first_seen_date": "2026-02-12"
     },
     "0508-48": {
@@ -5528,7 +5498,7 @@
       "title": "DİYARBAKIR  ÇINAR YOLU ÜZERİ  BEŞPINAR KARŞISINDA ANA YOL ÜZERİ ASFALTA SIFIR",
       "scan_seq": 250,
       "timestamp": 1770904702.700493,
-      "position": 552,
+      "position": 550,
       "first_seen_date": "2026-02-12"
     },
     "7548-153": {
@@ -5538,7 +5508,7 @@
       "title": "GÖLETLİ PARK KARŞISINDA   3+1 SATILIK FIRSAT DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904703.6870494,
-      "position": 553,
+      "position": 551,
       "first_seen_date": "2026-02-12"
     },
     "7548-151": {
@@ -5548,7 +5518,7 @@
       "title": "OTOGAR ARKASINDA ŞEHİR HASTANESİ YANINDA 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904704.6590154,
-      "position": 554,
+      "position": 552,
       "first_seen_date": "2026-02-12"
     },
     "1707-176": {
@@ -5558,7 +5528,7 @@
       "title": "YENİYOLDA GENİŞ FERAH BAKIMLI 3+1 ACİL SATILIK FIRSAT DAİRE!!!",
       "scan_seq": 250,
       "timestamp": 1770904705.6418407,
-      "position": 555,
+      "position": 553,
       "first_seen_date": "2026-02-12"
     },
     "8674-131": {
@@ -5568,7 +5538,7 @@
       "title": "KENT MEYDANI DIBINDE FULL YAPILI ACİL SATILIK GENİŞ FERAH 3+1 !!!",
       "scan_seq": 250,
       "timestamp": 1770904706.6128292,
-      "position": 556,
+      "position": 554,
       "first_seen_date": "2026-02-12"
     },
     "7548-149": {
@@ -5578,7 +5548,7 @@
       "title": "STADYUM KARŞISI  4+1 ULTRA LÜX SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904707.5238194,
-      "position": 557,
+      "position": 555,
       "first_seen_date": "2026-02-12"
     },
     "4441-307": {
@@ -5588,7 +5558,7 @@
       "title": "GÜLEÇOBA DA SATILIK FIRSAT ARSA",
       "scan_seq": 250,
       "timestamp": 1770904708.5294774,
-      "position": 558,
+      "position": 556,
       "first_seen_date": "2026-02-12"
     },
     "4441-303": {
@@ -5598,7 +5568,7 @@
       "title": "DİYARBAKIR KAYAPINAR GÜLEÇOBA'DA MÜKEMMEL YATIRIM FIRSATI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904709.448647,
-      "position": 559,
+      "position": 557,
       "first_seen_date": "2026-02-12"
     },
     "0598-82": {
@@ -5608,7 +5578,7 @@
       "title": "KANTAR KAVŞAĞINDA SATILIK 3+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904710.4299634,
-      "position": 560,
+      "position": 558,
       "first_seen_date": "2026-02-12"
     },
     "3621-27": {
@@ -5618,7 +5588,7 @@
       "title": "SEYRANTEPE TOPLU KONUTLARDA 3+1 OTURUMA HAZIR KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904711.3345134,
-      "position": 561,
+      "position": 559,
       "first_seen_date": "2026-02-12"
     },
     "3942-1": {
@@ -5628,7 +5598,7 @@
       "title": "MAKROLİFE GAYRİMENKULDEN EVLENDİRME DAİRESİ TARAFINDA  3+1 SATILIK  DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904712.3348422,
-      "position": 562,
+      "position": 560,
       "first_seen_date": "2026-02-12"
     },
     "4765-193": {
@@ -5638,7 +5608,7 @@
       "title": "ÜÇKUYULAR CADDE ÜZERİ ARSA PAYINDAN 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904713.3634434,
-      "position": 563,
+      "position": 561,
       "first_seen_date": "2026-02-12"
     },
     "4548-214": {
@@ -5648,7 +5618,7 @@
       "title": "YENİŞEHİR 450 EVLERDE LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904714.2493584,
-      "position": 564,
+      "position": 562,
       "first_seen_date": "2026-02-12"
     },
     "4271-01": {
@@ -5658,7 +5628,7 @@
       "title": "GAZİLER 75 E YAKIN 3+1 ARA KATA SİTELİ KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904715.1747212,
-      "position": 565,
+      "position": 563,
       "first_seen_date": "2026-02-12"
     },
     "7548-148": {
@@ -5668,7 +5638,7 @@
       "title": "KAYAPINARDA 50LİK YOLA YAKIN 150 M2 DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904716.1099262,
-      "position": 566,
+      "position": 564,
       "first_seen_date": "2026-02-12"
     },
     "7112-142": {
@@ -5678,7 +5648,7 @@
       "title": "BİSMİL  DİYARBAKIR YOLU ÜZERİ ANA YOLA CEPHELİ 26.743 m MÜSTAKİL ARSA",
       "scan_seq": 250,
       "timestamp": 1770904717.0803328,
-      "position": 567,
+      "position": 565,
       "first_seen_date": "2026-02-12"
     },
     "3126-1111": {
@@ -5688,7 +5658,7 @@
       "title": "TEKSTİL İHTİSAS ORGANİZE SANAYİ BÖLGESİNDE SATILIK HAZIR FABRİKA",
       "scan_seq": 250,
       "timestamp": 1770904718.0251477,
-      "position": 568,
+      "position": 566,
       "first_seen_date": "2026-02-12"
     },
     "4548-213": {
@@ -5698,7 +5668,7 @@
       "title": "BAĞCILAR EVRİM ALATAŞ CADDESİNDE 4+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904718.9416094,
-      "position": 569,
+      "position": 567,
       "first_seen_date": "2026-02-12"
     },
     "1706-122": {
@@ -5708,7 +5678,7 @@
       "title": "DİYARBAKIR  YENİŞEHİR  TEKSTİL İHTİSAS OSBDE SATILIK FABRİKA",
       "scan_seq": 250,
       "timestamp": 1770904719.8122644,
-      "position": 570,
+      "position": 568,
       "first_seen_date": "2026-02-12"
     },
     "2140-597": {
@@ -5718,7 +5688,7 @@
       "title": "     HUZUREVLERİ ANA CADDE ÜZERİ SATILIK 3+1 DAİRE!",
       "scan_seq": 250,
       "timestamp": 1770904720.876303,
-      "position": 571,
+      "position": 569,
       "first_seen_date": "2026-02-12"
     },
     "5482-112": {
@@ -5728,7 +5698,7 @@
       "title": "ÜÇKUYULARDA İMAR İFRAZLI  SATILIK KELEPİR  274 M2 FIRSAT ARSA",
       "scan_seq": 250,
       "timestamp": 1770904721.846327,
-      "position": 572,
+      "position": 570,
       "first_seen_date": "2026-02-12"
     },
     "1798-152": {
@@ -5738,7 +5708,7 @@
       "title": " ARAŞTIRMA HASTANESİ YANINDA AY YAPI CORNER ALTINDA SATILIK YATIRIMLIK DÜKKAN! ",
       "scan_seq": 250,
       "timestamp": 1770904722.7488139,
-      "position": 573,
+      "position": 571,
       "first_seen_date": "2026-02-12"
     },
     "5495-49": {
@@ -5748,7 +5718,7 @@
       "title": "ELAZIĞ YOLU ÜZERİ 420 M2 SATILIK KUPON ARSA",
       "scan_seq": 250,
       "timestamp": 1770904723.6958137,
-      "position": 574,
+      "position": 572,
       "first_seen_date": "2026-02-12"
     },
     "1707-175": {
@@ -5758,7 +5728,7 @@
       "title": "LUNAPARK KARŞISI SATILIK 3+1 LÜX DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904724.6756446,
-      "position": 575,
+      "position": 573,
       "first_seen_date": "2026-02-12"
     },
     "1707-174": {
@@ -5768,7 +5738,7 @@
       "title": "HUZUREVLERİ ÇÜNGÜŞLÜLER YAS EVİ ÜSTÜ SATILIK 3+1 BAKIMLI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904725.9634144,
-      "position": 576,
+      "position": 574,
       "first_seen_date": "2026-02-12"
     },
     "6621-193": {
@@ -5778,7 +5748,7 @@
       "title": "ACİL SATILIK' ABI HAYAT YAPI KALİTESİYLE 3.5+1 LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904726.960049,
-      "position": 577,
+      "position": 575,
       "first_seen_date": "2026-02-12"
     },
     "6954-96": {
@@ -5788,7 +5758,7 @@
       "title": "ÇÖLGÜZELİ TOKİDE 2+1 ETRAFI AÇIK EN GÜZEL KONUMDA  SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904727.8861256,
-      "position": 578,
+      "position": 576,
       "first_seen_date": "2026-02-12"
     },
     "7416-108": {
@@ -5798,7 +5768,7 @@
       "title": "kapora alındı ARAŞTIRMA ARKASI  , GENİŞ VE KULLANIŞLI 4+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904728.8433993,
-      "position": 579,
+      "position": 577,
       "first_seen_date": "2026-02-12"
     },
     "4548-210": {
@@ -5808,7 +5778,7 @@
       "title": "STAD YOLU ÜZERİ ABI HAYAT SİTESİNDE 3,5+1 ULTRA LÜX SATILIK DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904729.822327,
-      "position": 580,
+      "position": 578,
       "first_seen_date": "2026-02-12"
     },
     "5493-33": {
@@ -5818,7 +5788,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK BAĞCILAR AVEA CADDESİNDE  3+1 EKSTRALI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904730.826455,
-      "position": 581,
+      "position": 579,
       "first_seen_date": "2026-02-12"
     },
     "1324-11": {
@@ -5828,7 +5798,7 @@
       "title": "WİNSTOWN KARŞISI 3+1 ULTRA LÜX SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904731.8786619,
-      "position": 582,
+      "position": 580,
       "first_seen_date": "2026-02-12"
     },
     "2418-67": {
@@ -5838,7 +5808,7 @@
       "title": "KURU ÇEŞME'DE KAVŞAĞINDA SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904733.911373,
-      "position": 583,
+      "position": 581,
       "first_seen_date": "2026-02-12"
     },
     "5478-60": {
@@ -5848,7 +5818,7 @@
       "title": "SEYRANTEPE TOKİ'DE  3+1 FULL BAKIMLI FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904734.9175253,
-      "position": 584,
+      "position": 582,
       "first_seen_date": "2026-02-12"
     },
     "3458-284": {
@@ -5858,7 +5828,7 @@
       "title": "75 CADDESİ 2.PARSELİNDE ÇEYSA CADDE 75 PLAZA ARKASI 3+1 DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904735.8899357,
-      "position": 585,
+      "position": 583,
       "first_seen_date": "2026-02-12"
     },
     "8674-127": {
@@ -5868,7 +5838,7 @@
       "title": "TESİSLER KAVSAĞINDA ACİL SATILIK 3+1 DAİİRE",
       "scan_seq": 250,
       "timestamp": 1770904736.8564649,
-      "position": 586,
+      "position": 584,
       "first_seen_date": "2026-02-12"
     },
     "5439-122": {
@@ -5878,7 +5848,7 @@
       "title": "BAĞCILAR MAKİNA İKMAL BULVARI 2+1 KİRALIK MANZARALI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904737.8438091,
-      "position": 587,
+      "position": 585,
       "first_seen_date": "2026-02-12"
     },
     "6954-94": {
@@ -5888,7 +5858,7 @@
       "title": " DİCLEKENT MEDYA KAVŞAĞI FIRSAT 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904738.73495,
-      "position": 588,
+      "position": 586,
       "first_seen_date": "2026-02-12"
     },
     "7465-92": {
@@ -5898,7 +5868,7 @@
       "title": "ACİLL!!! KOŞUYOLU ORYIL PETROL CİVARI SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904739.644962,
-      "position": 589,
+      "position": 587,
       "first_seen_date": "2026-02-12"
     },
     "7465-91": {
@@ -5908,7 +5878,7 @@
       "title": "TEMA PARK KARŞISI SATILIK ULTRA LÜX 4+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904740.580849,
-      "position": 590,
+      "position": 588,
       "first_seen_date": "2026-02-12"
     },
     "2140-336": {
@@ -5918,7 +5888,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK 720 TOKİ KONUTLARINDA 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904741.548842,
-      "position": 591,
+      "position": 589,
       "first_seen_date": "2026-02-12"
     },
     "1324-546": {
@@ -5928,7 +5898,7 @@
       "title": "ÜÇKUYU TOKİDE 65M2 NET İÇİ YAPILI 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904742.493701,
-      "position": 592,
+      "position": 590,
       "first_seen_date": "2026-02-12"
     },
     "1324-423": {
@@ -5938,7 +5908,7 @@
       "title": "URFA YOLU ÜZERİ 4+1 ORTA KAT SIFIR AYARINDA ACİL SATILIK",
       "scan_seq": 250,
       "timestamp": 1770904743.4417565,
-      "position": 593,
+      "position": 591,
       "first_seen_date": "2026-02-12"
     },
     "7446-9": {
@@ -5948,7 +5918,7 @@
       "title": "DİYARBAKIRIN TURİSTİK BÖLGESİNDE KÖŞK HAVASINDA 3+1 2 KATLI VİLLAMIZ SİZLERLE ",
       "scan_seq": 250,
       "timestamp": 1770904744.337426,
-      "position": 594,
+      "position": 592,
       "first_seen_date": "2026-02-12"
     },
     "7397-6": {
@@ -5958,7 +5928,7 @@
       "title": "MEVLANA HALİT MAHALLESİNDE BAKIMLI 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904745.3601081,
-      "position": 595,
+      "position": 593,
       "first_seen_date": "2026-02-12"
     },
     "7370-55": {
@@ -5968,7 +5938,7 @@
       "title": "POLİS OKULU ARKA TARAFINDA FULL BAKIMLI KOOPERATİF 3+1 SATILIK DAİRE  DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904746.453887,
-      "position": 596,
+      "position": 594,
       "first_seen_date": "2026-02-12"
     },
     "1706-121": {
@@ -5978,7 +5948,7 @@
       "title": "ÜÇKUYULARDA TAŞINMAYA HAZIR TEK BOLOKLU SATILIK 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904747.4313364,
-      "position": 597,
+      "position": 595,
       "first_seen_date": "2026-02-12"
     },
     "3448-115": {
@@ -5988,7 +5958,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN  ESKİ CUPPA CAFE KAVŞAĞINDA SATILIK 4+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904748.5243118,
-      "position": 598,
+      "position": 596,
       "first_seen_date": "2026-02-12"
     },
     "3126-110": {
@@ -5998,7 +5968,7 @@
       "title": "ACİL SATILIK' FABRİKA MAHALLESİNDE 3+1 LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904749.548734,
-      "position": 599,
+      "position": 597,
       "first_seen_date": "2026-02-12"
     },
     "3126-821": {
@@ -6008,7 +5978,7 @@
       "title": "KENT ORMAN ARKASI HAVUZLU TRİPLEKS 6+1 LÜKS VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904750.4646761,
-      "position": 600,
+      "position": 598,
       "first_seen_date": "2026-02-12"
     },
     "6621-191": {
@@ -6018,7 +5988,7 @@
       "title": "BU FIRSAT KAÇMAZ' FORUM AVM YANINDA 3+1 DAİREMİZ SATIŞTADIR",
       "scan_seq": 250,
       "timestamp": 1770904751.3832517,
-      "position": 601,
+      "position": 599,
       "first_seen_date": "2026-02-12"
     },
     "6621-187": {
@@ -6028,7 +5998,7 @@
       "title": "ACİL SATILIK BAĞCILAR HESKİF CADDESİNDE 3+1 LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904752.2822003,
-      "position": 602,
+      "position": 600,
       "first_seen_date": "2026-02-12"
     },
     "1707-170": {
@@ -6038,7 +6008,7 @@
       "title": "YENİYOL PARK ORMAN KARŞISI ACİL SATILIK FULL BAKIMLI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904753.149072,
-      "position": 603,
+      "position": 601,
       "first_seen_date": "2026-02-12"
     },
     "7394-10": {
@@ -6048,7 +6018,7 @@
       "title": "TESİSLERDE CADDE ÜZERİ FULL YAPILI 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904754.0592284,
-      "position": 604,
+      "position": 602,
       "first_seen_date": "2026-02-12"
     },
     "2140-513": {
@@ -6058,7 +6028,7 @@
       "title": "ÖZEL TASARIMLI  2+1 LÜKS KONUT 100 M NET ALAN , TEZGEL KALİTESİYLE SATILIK !",
       "scan_seq": 250,
       "timestamp": 1770904755.061392,
-      "position": 605,
+      "position": 603,
       "first_seen_date": "2026-02-12"
     },
     "9985-14": {
@@ -6068,7 +6038,7 @@
       "title": "MAKROLİFE GAYRİMENKUL'DEN 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904756.0098977,
-      "position": 606,
+      "position": 604,
       "first_seen_date": "2026-02-12"
     },
     "5439-121": {
@@ -6078,7 +6048,7 @@
       "title": "KAYAPINAR GAZİLERDE İÇİ FUL YAPILI  ÜNÜ AÇIK, GENİŞ, FERAH SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904756.9640963,
-      "position": 607,
+      "position": 605,
       "first_seen_date": "2026-02-12"
     },
     "7112-139": {
@@ -6088,7 +6058,7 @@
       "title": "DAĞKAPI GALERİA ARKASI FULL + FULL YAPILI MASRAFSIZ ARA KAT BÜRO OFİS",
       "scan_seq": 250,
       "timestamp": 1770904757.8969269,
-      "position": 608,
+      "position": 606,
       "first_seen_date": "2026-02-12"
     },
     "1375-286": {
@@ -6098,7 +6068,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904758.818142,
-      "position": 609,
+      "position": 607,
       "first_seen_date": "2026-02-12"
     },
     "7492-8": {
@@ -6108,7 +6078,7 @@
       "title": "HUZUREVLERİ CAMİ KÖŞESİ 2+1 ACİL SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904759.7216809,
-      "position": 610,
+      "position": 608,
       "first_seen_date": "2026-02-12"
     },
     "5495-44": {
@@ -6118,7 +6088,7 @@
       "title": "BAĞCILAR GÖLETLİ CİVARI SATILIK 2+1 SIFIR DAİRE!!!",
       "scan_seq": 250,
       "timestamp": 1770904760.6829865,
-      "position": 611,
+      "position": 609,
       "first_seen_date": "2026-02-12"
     },
     "5482-111": {
@@ -6128,7 +6098,7 @@
       "title": "SUR BÖLGESİNDE MÜSTAKİL VİLLA İMARLI İFRAZLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904761.7495933,
-      "position": 612,
+      "position": 610,
       "first_seen_date": "2026-02-12"
     },
     "5482-110": {
@@ -6138,7 +6108,7 @@
       "title": "SUR BÖLGESİNDE MÜSTAKİL VİLLA İMARLI İFRAZLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904762.6920054,
-      "position": 613,
+      "position": 611,
       "first_seen_date": "2026-02-12"
     },
     "0429-171": {
@@ -6148,7 +6118,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR  720 TOKİ KONUTLARINDA 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904763.8202763,
-      "position": 614,
+      "position": 612,
       "first_seen_date": "2026-02-12"
     },
     "7397-04": {
@@ -6158,7 +6128,7 @@
       "title": "EMEK CADDESİNE YÜRÜME MESAFESİNDE SATILIK 2+1 FERAH DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904764.7455602,
-      "position": 615,
+      "position": 613,
       "first_seen_date": "2026-02-12"
     },
     "7113-319": {
@@ -6168,7 +6138,7 @@
       "title": "FORUM AVM'NİN YANINDA ACİL SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904765.6631193,
-      "position": 616,
+      "position": 614,
       "first_seen_date": "2026-02-12"
     },
     "7394-8": {
@@ -6178,7 +6148,7 @@
       "title": "GAZİLER ŞEHMUS ALTO CİVARİ  3+1 KELEPİR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904766.568343,
-      "position": 617,
+      "position": 615,
       "first_seen_date": "2026-02-12"
     },
     "2418-65": {
@@ -6188,7 +6158,7 @@
       "title": "MAKROLİFE GAYRİMENKUL'DEN BAĞCILAR HESKİF CADDESİNDE SATILIK 2,5+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904767.4708362,
-      "position": 618,
+      "position": 616,
       "first_seen_date": "2026-02-12"
     },
     "5478-57": {
@@ -6198,7 +6168,7 @@
       "title": "OTOGAR ARKASI SATILIK ULTRA LÜX 4+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904768.3805928,
-      "position": 619,
+      "position": 617,
       "first_seen_date": "2026-02-12"
     },
     "3458-281": {
@@ -6208,7 +6178,7 @@
       "title": "OTOGAR KARŞI HESKİF CADDESİ ÜZERİNDE KURUMSAL KİRACILI YATIRIMLIK DÜKKAN ",
       "scan_seq": 250,
       "timestamp": 1770904769.45938,
-      "position": 620,
+      "position": 618,
       "first_seen_date": "2026-02-12"
     },
     "5495-41": {
@@ -6218,7 +6188,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN URFA YOLU ÜZERİ CEYLANLAR KARŞISI SATLIK 3+1 MASRAFLI GENİŞ DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904770.3503203,
-      "position": 621,
+      "position": 619,
       "first_seen_date": "2026-02-12"
     },
     "7492-6": {
@@ -6228,7 +6198,7 @@
       "title": "KENT MEYDANI CİVARI 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904771.2789872,
-      "position": 622,
+      "position": 620,
       "first_seen_date": "2026-02-12"
     },
     "7394-7": {
@@ -6238,7 +6208,7 @@
       "title": "KENT MEYDANI CİVARI 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904773.217604,
-      "position": 623,
+      "position": 621,
       "first_seen_date": "2026-02-12"
     },
     "1706-117": {
@@ -6248,7 +6218,7 @@
       "title": "ÜÇKUYULAR ANA CADDE ÜZERİNDE TARHAN ASMİR ALTINDA SATILLIK DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904774.1789122,
-      "position": 624,
+      "position": 622,
       "first_seen_date": "2026-02-12"
     },
     "2450-124": {
@@ -6258,7 +6228,7 @@
       "title": "MEZOPOTAMYA KENT PARKI YANINDA KİRALIK 2+0 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904775.133229,
-      "position": 625,
+      "position": 623,
       "first_seen_date": "2026-02-12"
     },
     "7119-59": {
@@ -6268,7 +6238,7 @@
       "title": "BAĞCILAR AHMET KAYA CADDESİNDE SATILIK 3+1 FIRSAT DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904776.0934463,
-      "position": 626,
+      "position": 624,
       "first_seen_date": "2026-02-12"
     },
     "7397-2": {
@@ -6278,7 +6248,7 @@
       "title": "NCİTY KARŞISI 3+1 SATILIK KONFORLU FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904777.0198753,
-      "position": 627,
+      "position": 625,
       "first_seen_date": "2026-02-12"
     },
     "5495-39": {
@@ -6288,7 +6258,7 @@
       "title": "HUZUR EVLERİ ESKİ NİL KOLEJİ CİVARI SATILIK 3+1 DAİRE!!!!!",
       "scan_seq": 250,
       "timestamp": 1770904777.9973047,
-      "position": 628,
+      "position": 626,
       "first_seen_date": "2026-02-12"
     },
     "7497-04": {
@@ -6298,7 +6268,7 @@
       "title": "MARKO LİFE GAYRİMENKULDEN DİCLEKENT NASIR USTA ARKASI  SATILIK 4+1  DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904778.9804747,
-      "position": 629,
+      "position": 627,
       "first_seen_date": "2026-02-12"
     },
     "7111-60": {
@@ -6308,7 +6278,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904779.903469,
-      "position": 630,
+      "position": 628,
       "first_seen_date": "2026-02-12"
     },
     "5972-43": {
@@ -6318,7 +6288,7 @@
       "title": "KILIÇ YAPI KALİTESİYLE KENT MEYDANI 3.5+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904780.8427095,
-      "position": 631,
+      "position": 629,
       "first_seen_date": "2026-02-12"
     },
     "2140-669": {
@@ -6328,7 +6298,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK 450 EVLERDE  BEYAZ SARAY VİLLARINDA HAZIR SIFIR  7+1 TRİPLEX VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904781.869857,
-      "position": 632,
+      "position": 630,
       "first_seen_date": "2026-02-12"
     },
     "3126-862": {
@@ -6338,7 +6308,7 @@
       "title": "450 EVLER'DE SIFIR HAZIR 6+1 SIFIR VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904782.8297198,
-      "position": 633,
+      "position": 631,
       "first_seen_date": "2026-02-12"
     },
     "3126-531": {
@@ -6348,7 +6318,7 @@
       "title": "SİLVAN YOLU ÜZERİ GENİŞ PEYZAJ ALANIYLA HAZIR 5+1 VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904783.8136983,
-      "position": 634,
+      "position": 632,
       "first_seen_date": "2026-02-12"
     },
     "3126-521": {
@@ -6358,7 +6328,7 @@
       "title": "450 EVLERDE FIRSAT 3,5+1  SIFIR DAİRELER ",
       "scan_seq": 250,
       "timestamp": 1770904784.799507,
-      "position": 635,
+      "position": 633,
       "first_seen_date": "2026-02-12"
     },
     "1324-416": {
@@ -6368,7 +6338,7 @@
       "title": "STAD YANI ÖZAYDA 2+1 ABONE TAPU ÖDENDİ ACİLLL",
       "scan_seq": 250,
       "timestamp": 1770904785.916452,
-      "position": 636,
+      "position": 634,
       "first_seen_date": "2026-02-12"
     },
     "3733-84": {
@@ -6378,7 +6348,7 @@
       "title": "GÖLETLİ CİVARI 3+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904786.9014244,
-      "position": 637,
+      "position": 635,
       "first_seen_date": "2026-02-12"
     },
     "7416-100": {
@@ -6388,7 +6358,7 @@
       "title": "DİYARBAKIRIN EN LÜKS  5+1 DAİRESİ",
       "scan_seq": 250,
       "timestamp": 1770904787.8987372,
-      "position": 638,
+      "position": 636,
       "first_seen_date": "2026-02-12"
     },
     "1375-282": {
@@ -6398,7 +6368,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL DEN 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904788.8621438,
-      "position": 639,
+      "position": 637,
       "first_seen_date": "2026-02-12"
     },
     "1324-234": {
@@ -6408,7 +6378,7 @@
       "title": "ÜÇKUYU İÇİNDE 2+1 ULTRA LÜX 2 YILLIK ACİLDİRRR",
       "scan_seq": 250,
       "timestamp": 1770904789.8394177,
-      "position": 640,
+      "position": 638,
       "first_seen_date": "2026-02-12"
     },
     "4553-504": {
@@ -6418,7 +6388,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904790.8107517,
-      "position": 641,
+      "position": 639,
       "first_seen_date": "2026-02-12"
     },
     "2418-62": {
@@ -6428,7 +6398,7 @@
       "title": "BAĞCILAR TRAFİK EĞİTİM PARKI KARŞISI SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904791.7429426,
-      "position": 642,
+      "position": 640,
       "first_seen_date": "2026-02-12"
     },
     "5482-108": {
@@ -6438,7 +6408,7 @@
       "title": "HATBOYU CADDESİ ÜZERİ SATILIK 3+1 FERAH DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904792.7126496,
-      "position": 643,
+      "position": 641,
       "first_seen_date": "2026-02-12"
     },
     "1324-23": {
@@ -6448,7 +6418,7 @@
       "title": "WİNSTOWN KARŞISI 3+1 2 YILLIK ULTRA LÜX BU FİYATA YOKKK",
       "scan_seq": 250,
       "timestamp": 1770904793.8546212,
-      "position": 644,
+      "position": 642,
       "first_seen_date": "2026-02-12"
     },
     "7114-57": {
@@ -6458,7 +6428,7 @@
       "title": "CEYSA PLAZADA ACİL SATILIK 2+1 ODA BÜRO ",
       "scan_seq": 250,
       "timestamp": 1770904794.9298286,
-      "position": 645,
+      "position": 643,
       "first_seen_date": "2026-02-12"
     },
     "3458-278": {
@@ -6468,7 +6438,7 @@
       "title": "NCİTY AVM YANİ 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904795.7792964,
-      "position": 646,
+      "position": 644,
       "first_seen_date": "2026-02-12"
     },
     "1324-768": {
@@ -6478,7 +6448,7 @@
       "title": "ÜÇKUYUDA 2+1 ULTRA LÜX YATIRIMLIK SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904796.6900713,
-      "position": 647,
+      "position": 645,
       "first_seen_date": "2026-02-12"
     },
     "1324-392": {
@@ -6488,7 +6458,7 @@
       "title": "2+1 ULTRA LÜX SIFIR FABRİKA MAH. ACİL SATILIKKK",
       "scan_seq": 250,
       "timestamp": 1770904797.6722603,
-      "position": 648,
+      "position": 646,
       "first_seen_date": "2026-02-12"
     },
     "6887-85": {
@@ -6498,7 +6468,7 @@
       "title": "HUZUREVLERİNDE 3+1 SATILIK KOPERATİF DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904798.6076405,
-      "position": 649,
+      "position": 647,
       "first_seen_date": "2026-02-12"
     },
     "7113-312": {
@@ -6508,7 +6478,7 @@
       "title": "CEYSA PLAZADA EN GÜZEL KAT VE EN GÜZEL CEPHEDE TAŞINMAYA HAZIR BÜRO",
       "scan_seq": 250,
       "timestamp": 1770904799.4991097,
-      "position": 650,
+      "position": 648,
       "first_seen_date": "2026-02-12"
     },
     "7113-309": {
@@ -6518,7 +6488,7 @@
       "title": "STADYUM İLE ŞEHİR HASTANESİ ARASINDA  LÜX 4.5+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904800.4683785,
-      "position": 651,
+      "position": 649,
       "first_seen_date": "2026-02-12"
     },
     "0533-075": {
@@ -6528,7 +6498,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK DUBLEKS 2+1 OFİS",
       "scan_seq": 250,
       "timestamp": 1770904801.4180226,
-      "position": 652,
+      "position": 650,
       "first_seen_date": "2026-02-12"
     },
     "1798-148": {
@@ -6538,7 +6508,7 @@
       "title": "ALTINDAĞ CİVARI BYMEN AVZEM 2+1 HAVUZLU ARA KAT KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904802.415551,
-      "position": 653,
+      "position": 651,
       "first_seen_date": "2026-02-12"
     },
     "4543-41": {
@@ -6548,7 +6518,7 @@
       "title": "CHERY SERVİSİ KARŞISI AYTC YAPI'DA 2+1 YÜKSEK  GİRİŞ",
       "scan_seq": 250,
       "timestamp": 1770904803.5096688,
-      "position": 654,
+      "position": 652,
       "first_seen_date": "2026-02-12"
     },
     "2418-61": {
@@ -6558,7 +6528,7 @@
       "title": "50 LİK YOLDA TEMA PARK MANZARALI SATILIK ULTRA LÜKS 4.5+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904804.7533133,
-      "position": 655,
+      "position": 653,
       "first_seen_date": "2026-02-12"
     },
     "1324-326": {
@@ -6568,7 +6538,7 @@
       "title": "WİNSTOWN KARŞISI 3.5+1 ULTRA LÜX SIFIR AYARINDA",
       "scan_seq": 250,
       "timestamp": 1770904805.8670652,
-      "position": 656,
+      "position": 654,
       "first_seen_date": "2026-02-12"
     },
     "6623-1": {
@@ -6578,7 +6548,7 @@
       "title": "SEYRANTEPE TOPLU KONUT'DA KİRALIK DAİRE 3+1",
       "scan_seq": 250,
       "timestamp": 1770904807.0669951,
-      "position": 657,
+      "position": 655,
       "first_seen_date": "2026-02-12"
     },
     "4548-201": {
@@ -6588,7 +6558,7 @@
       "title": "HUZUREVLERİNDE 3+1 BÜYÜKLÜĞÜNDE 2+1 SATILIK BAKIMLI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904808.128919,
-      "position": 658,
+      "position": 656,
       "first_seen_date": "2026-02-12"
     },
     "5478-54": {
@@ -6598,7 +6568,7 @@
       "title": "SEYRANTEPE TOKİ'NİN EN GÜZEL 3+1 DAİRESİ SATIŞTA",
       "scan_seq": 250,
       "timestamp": 1770904809.1116223,
-      "position": 659,
+      "position": 657,
       "first_seen_date": "2026-02-12"
     },
     "1324-654": {
@@ -6608,7 +6578,7 @@
       "title": "CEZAEVİ YOLU ÜZERİ 3.5+1 ULTRA LÜX ACİL 2 DAİRE ÜZERİ",
       "scan_seq": 250,
       "timestamp": 1770904810.0290008,
-      "position": 660,
+      "position": 658,
       "first_seen_date": "2026-02-12"
     },
     "1324-323": {
@@ -6618,7 +6588,7 @@
       "title": "ÜÇKUYU CİVARINDA 3+1 ULTRA LÜX SIFIR AYARINDA DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904811.0702584,
-      "position": 661,
+      "position": 659,
       "first_seen_date": "2026-02-12"
     },
     "5482-107": {
@@ -6628,7 +6598,7 @@
       "title": "DİCLE NEHRİ KIYISINDA MEZOPOTAMYANIN KALBİNDE EŞSİZ ARSA FIRSATI",
       "scan_seq": 250,
       "timestamp": 1770904812.1775699,
-      "position": 662,
+      "position": 660,
       "first_seen_date": "2026-02-12"
     },
     "2450-115": {
@@ -6638,7 +6608,7 @@
       "title": "RIZVAN AĞA CADDESİ'NDE SATILIK İŞYERİ",
       "scan_seq": 250,
       "timestamp": 1770904813.315107,
-      "position": 663,
+      "position": 661,
       "first_seen_date": "2026-02-12"
     },
     "9021-110": {
@@ -6648,7 +6618,7 @@
       "title": "MERSİN ERDEMLİ TÖMÜK'TE 3,5+1 SATILIK DUBLEKS VİLLAİLLA",
       "scan_seq": 250,
       "timestamp": 1770904814.806244,
-      "position": 664,
+      "position": 662,
       "first_seen_date": "2026-02-12"
     },
     "4548-198": {
@@ -6658,7 +6628,7 @@
       "title": "CAREL YAPI'DAN ACİL SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904815.7539685,
-      "position": 665,
+      "position": 663,
       "first_seen_date": "2026-02-12"
     },
     "0598-80": {
@@ -6668,7 +6638,7 @@
       "title": "LÜKS VE KONFORUN YENİ ADRESİ YENİ ŞEHİR HASTANESİ YANI SATILIK AY YAPI KALİTESİYLE FOURLEKS VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904816.7257075,
-      "position": 666,
+      "position": 664,
       "first_seen_date": "2026-02-12"
     },
     "4553-484": {
@@ -6678,7 +6648,7 @@
       "title": "ÇELİKEVLERDE SATILIK 3+1 FULLYAPILI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904817.7018404,
-      "position": 667,
+      "position": 665,
       "first_seen_date": "2026-02-12"
     },
     "4553-483": {
@@ -6688,7 +6658,7 @@
       "title": "GÖLETLİ PARK CİVARI SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904818.6386113,
-      "position": 668,
+      "position": 666,
       "first_seen_date": "2026-02-12"
     },
     "7113-310": {
@@ -6698,7 +6668,7 @@
       "title": "KANTAR CİVARI POLATLAR SİTESİNDE 4+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904819.687179,
-      "position": 669,
+      "position": 667,
       "first_seen_date": "2026-02-12"
     },
     "4441-299": {
@@ -6708,7 +6678,7 @@
       "title": "KAYAPINAR'IN PARLAYAN YILDIZI BARIŞ MAHALLESİ'NDE EŞSİZ ARSA FIRSATI! ",
       "scan_seq": 250,
       "timestamp": 1770904820.6649687,
-      "position": 670,
+      "position": 668,
       "first_seen_date": "2026-02-12"
     },
     "1324-92": {
@@ -6718,7 +6688,7 @@
       "title": "WİNSTOWN AVM CİVARINDA SATILIK 3,5+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904821.70064,
-      "position": 671,
+      "position": 669,
       "first_seen_date": "2026-02-12"
     },
     "0598-79": {
@@ -6728,7 +6698,7 @@
       "title": "DOĞUM HASTANESİ YANINDA 2+1 KİRALIK BÜRO",
       "scan_seq": 250,
       "timestamp": 1770904822.6615055,
-      "position": 672,
+      "position": 670,
       "first_seen_date": "2026-02-12"
     },
     "1324-843": {
@@ -6738,7 +6708,7 @@
       "title": "WİNSTWON ARKASI 3.5+1 ULTRA LÜX SIFIR DAİRE ACİLDİR",
       "scan_seq": 250,
       "timestamp": 1770904823.6784296,
-      "position": 673,
+      "position": 671,
       "first_seen_date": "2026-02-12"
     },
     "1324-327": {
@@ -6748,7 +6718,7 @@
       "title": "MASTFROŞTA 2.5+1 ULTRA LÜX ACİL SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904824.6669343,
-      "position": 674,
+      "position": 672,
       "first_seen_date": "2026-02-12"
     },
     "3448-113": {
@@ -6758,7 +6728,7 @@
       "title": "ÇÖLGÜZELİNDE GELECEĞİNİZE DEĞER KATACAK  341  M2 İMARLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904825.9858289,
-      "position": 675,
+      "position": 673,
       "first_seen_date": "2026-02-12"
     },
     "3448-112": {
@@ -6768,7 +6738,7 @@
       "title": "ÇÖLGÜZELİNDE GELECEĞİNİZE DEĞER KATACAK  2022  M2 İMARLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904826.958932,
-      "position": 676,
+      "position": 674,
       "first_seen_date": "2026-02-12"
     },
     "6621-177": {
@@ -6778,7 +6748,7 @@
       "title": "ACİL KİRALIK' KAYAPINAR ŞEHİR HASTANESİ YANINDA 2+0 SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904827.9215982,
-      "position": 677,
+      "position": 675,
       "first_seen_date": "2026-02-12"
     },
     "1676-65": {
@@ -6788,7 +6758,7 @@
       "title": "MEZOPOTAMYA KENT PARKI YANINDA 2+1 OTURMAYA HAZIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904828.993876,
-      "position": 678,
+      "position": 676,
       "first_seen_date": "2026-02-12"
     },
     "5482-106": {
@@ -6798,7 +6768,7 @@
       "title": "ÇÖLGÜZELİNDE GELECEĞİNİZE DEĞER KATACAK 661M2 İMARLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904829.9191296,
-      "position": 679,
+      "position": 677,
       "first_seen_date": "2026-02-12"
     },
     "5482-105": {
@@ -6808,7 +6778,7 @@
       "title": "DİYARBAKIRIN YENİ YATIRIM BÖLGESİNDE  SATILIK ARSA",
       "scan_seq": 250,
       "timestamp": 1770904830.9363892,
-      "position": 680,
+      "position": 678,
       "first_seen_date": "2026-02-12"
     },
     "7113-301": {
@@ -6818,7 +6788,7 @@
       "title": "URFA YOLUNA SIFIR KONUMDA  SIFIR YAPI 2+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904831.9291205,
-      "position": 681,
+      "position": 679,
       "first_seen_date": "2026-02-12"
     },
     "1676-64": {
@@ -6828,7 +6798,7 @@
       "title": "FOUR'S PLAZA ARKASI'NDA SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904833.1508489,
-      "position": 682,
+      "position": 680,
       "first_seen_date": "2026-02-12"
     },
     "5482-104": {
@@ -6838,7 +6808,7 @@
       "title": "DİYARBAKIR'IN KALBİNDE 2+1  SATILIK LÜKS BÜRO",
       "scan_seq": 250,
       "timestamp": 1770904834.0914853,
-      "position": 683,
+      "position": 681,
       "first_seen_date": "2026-02-12"
     },
     "0429-253": {
@@ -6848,7 +6818,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR YENİ TOKİ 277 YÜKSEK GİRİŞ  3+1 ULTRA SATILIK DAİRE ",
       "scan_seq": 250,
       "timestamp": 1770904835.053292,
-      "position": 684,
+      "position": 682,
       "first_seen_date": "2026-02-12"
     },
     "3126-177": {
@@ -6858,7 +6828,7 @@
       "title": "ACİLL SIFIR TEKNOKENT ARKASI 2,5+1 HAZIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904835.9970984,
-      "position": 685,
+      "position": 683,
       "first_seen_date": "2026-02-12"
     },
     "3126-176": {
@@ -6868,7 +6838,7 @@
       "title": "YETİŞEN ALIR  SIFIR TEKNOKENT ARKASI 4,5+1 HAZIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904837.009067,
-      "position": 686,
+      "position": 684,
       "first_seen_date": "2026-02-12"
     },
     "4441-297": {
@@ -6878,7 +6848,7 @@
       "title": "İzmir Bornova Eğridere Mahallesi'nde Satılık Arsa Fırsatı",
       "scan_seq": 250,
       "timestamp": 1770904837.9184127,
-      "position": 687,
+      "position": 685,
       "first_seen_date": "2026-02-12"
     },
     "1324-64": {
@@ -6888,7 +6858,7 @@
       "title": "KENT MEYDANI ABONDE ÖDENDİ 2+1 SIFIR ORTA KAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904838.9088287,
-      "position": 688,
+      "position": 686,
       "first_seen_date": "2026-02-12"
     },
     "0598-77": {
@@ -6898,7 +6868,7 @@
       "title": "MERKEZİ KONUMDA FULL BAKIMLI 3+1 ACİL SATILIK DAİRE FIRSATI",
       "scan_seq": 250,
       "timestamp": 1770904839.8954504,
-      "position": 689,
+      "position": 687,
       "first_seen_date": "2026-02-12"
     },
     "1324-954": {
@@ -6908,7 +6878,7 @@
       "title": "WİNSTWON AWM KARŞISI 3.5+1 ULTRA LÜX SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904840.7895162,
-      "position": 690,
+      "position": 688,
       "first_seen_date": "2026-02-12"
     },
     "9021-108": {
@@ -6918,7 +6888,7 @@
       "title": "KAYAPINAR YENİYOL'DA 3+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904841.6961014,
-      "position": 691,
+      "position": 689,
       "first_seen_date": "2026-02-12"
     },
     "7465-86": {
@@ -6928,7 +6898,7 @@
       "title": "DİCLEKENTİN CAMİ CİVARI 3+1 FULL BAKIMLI DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904842.6371655,
-      "position": 692,
+      "position": 690,
       "first_seen_date": "2026-02-12"
     },
     "5478-46": {
@@ -6938,7 +6908,7 @@
       "title": "75 PARK KARŞISI SATILIK 4+1 EMSALSİZ DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904843.5833201,
-      "position": 693,
+      "position": 691,
       "first_seen_date": "2026-02-12"
     },
     "1324-96": {
@@ -6948,7 +6918,7 @@
       "title": "WİNSTOWN AWM ARKASI 4.5+1 ULTRA LÜX HAVUZLU DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904844.5023105,
-      "position": 694,
+      "position": 692,
       "first_seen_date": "2026-02-12"
     },
     "4765-184": {
@@ -6958,7 +6928,7 @@
       "title": "ÜÇKUYULARDA ACİL SATILIK CADDE ÜSTÜ FIRSAT İMARLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904845.4698184,
-      "position": 695,
+      "position": 693,
       "first_seen_date": "2026-02-12"
     },
     "7416-078": {
@@ -6968,7 +6938,7 @@
       "title": "ÜÇKUYULAR  3+1  LÜKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904846.703454,
-      "position": 696,
+      "position": 694,
       "first_seen_date": "2026-02-12"
     },
     "3126-175": {
@@ -6978,7 +6948,7 @@
       "title": "SIFIR TEKNOKENT HAZIR LÜKS  3.5+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904847.922395,
-      "position": 697,
+      "position": 695,
       "first_seen_date": "2026-02-12"
     },
     "1324-956": {
@@ -6988,7 +6958,7 @@
       "title": "WİNSTOWN AWM KARŞISI 4.5+1 ULTRA LÜX HAVUZLU SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904848.999265,
-      "position": 698,
+      "position": 696,
       "first_seen_date": "2026-02-12"
     },
     "5479-77": {
@@ -6998,7 +6968,7 @@
       "title": "MİLANO PARK VİLLALARI TANYA YAPIDA 5+1 SATILIK TRİPLEX VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904850.0098448,
-      "position": 699,
+      "position": 697,
       "first_seen_date": "2026-02-12"
     },
     "4543-36": {
@@ -7008,7 +6978,7 @@
       "title": "URFA YOLUNA YAKIN CEYLANLAR AVM YANINDA GENİŞ VE FERAH 4+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904850.955225,
-      "position": 700,
+      "position": 698,
       "first_seen_date": "2026-02-12"
     },
     "6954-84": {
@@ -7018,7 +6988,7 @@
       "title": "GAZİLER ENERGY SPOR SALONU KARŞISI 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904851.9108975,
-      "position": 701,
+      "position": 699,
       "first_seen_date": "2026-02-12"
     },
     "3448-105": {
@@ -7028,7 +6998,7 @@
       "title": "MİLANO PARK VİLLALARI TANYA YAPIDA 5+1 KİRALIK TRİPLEX VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904852.9838648,
-      "position": 702,
+      "position": 700,
       "first_seen_date": "2026-02-12"
     },
     "7113-291": {
@@ -7038,7 +7008,7 @@
       "title": "DİCLEKENT MEMORİAL HASTANESİ KARŞISI ULTRA LÜX 4.5+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904853.916305,
-      "position": 703,
+      "position": 701,
       "first_seen_date": "2026-02-12"
     },
     "7113-290": {
@@ -7048,7 +7018,7 @@
       "title": "ESKİ SİVEREK CADDESİNE SIFIR KONUMDA 3+1 SATILIK  DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904854.8292093,
-      "position": 704,
+      "position": 702,
       "first_seen_date": "2026-02-12"
     },
     "7111-42": {
@@ -7058,7 +7028,7 @@
       "title": "NİNOVA AVM ARKASINDA FULL YAPILI 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904855.9369588,
-      "position": 705,
+      "position": 703,
       "first_seen_date": "2026-02-12"
     },
     "6887-76": {
@@ -7068,7 +7038,7 @@
       "title": "NİNOVA AVM ARKASINDA FULL YAPILI 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904856.9491065,
-      "position": 706,
+      "position": 704,
       "first_seen_date": "2026-02-12"
     },
     "2140-232": {
@@ -7078,7 +7048,7 @@
       "title": "ARAŞTIRMA HASTANESİ YANI SATILIK 2+1 LÜKS DAİRE!",
       "scan_seq": 250,
       "timestamp": 1770904858.063611,
-      "position": 707,
+      "position": 705,
       "first_seen_date": "2026-02-12"
     },
     "2418-54": {
@@ -7088,7 +7058,7 @@
       "title": "OFİS YÜKSEL TAKSİ DURAĞI KARŞISI SATILIK 2 KATLI İŞ YERİ",
       "scan_seq": 250,
       "timestamp": 1770904859.1183002,
-      "position": 708,
+      "position": 706,
       "first_seen_date": "2026-02-12"
     },
     "4548-193": {
@@ -7098,7 +7068,7 @@
       "title": "ŞEHİR HASTANESİ KARŞISI SATILIK DÜKKAN ",
       "scan_seq": 250,
       "timestamp": 1770904860.1476116,
-      "position": 709,
+      "position": 707,
       "first_seen_date": "2026-02-12"
     },
     "7111-65": {
@@ -7108,7 +7078,7 @@
       "title": "ÇEYSA TWİN TWORSDA 3+1 EŞYALI SATILIK BÜRO",
       "scan_seq": 250,
       "timestamp": 1770904861.165845,
-      "position": 710,
+      "position": 708,
       "first_seen_date": "2026-02-12"
     },
     "0429-238": {
@@ -7118,7 +7088,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR 1.ETAP TOKİ KONUTLARIDA  3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904862.1773806,
-      "position": 711,
+      "position": 709,
       "first_seen_date": "2026-02-12"
     },
     "7111-41": {
@@ -7128,7 +7098,7 @@
       "title": "NİNOVA AVM ARKASINDA 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904863.1570537,
-      "position": 712,
+      "position": 710,
       "first_seen_date": "2026-02-12"
     },
     "8674-109": {
@@ -7138,7 +7108,7 @@
       "title": "URFA YOLU ÜSTÜNDE ZANA DÜĞÜN SALONU YANINDA GENİŞ 2+1 FIRSAT!",
       "scan_seq": 250,
       "timestamp": 1770904864.240657,
-      "position": 713,
+      "position": 711,
       "first_seen_date": "2026-02-12"
     },
     "7114-55": {
@@ -7148,7 +7118,7 @@
       "title": "MARDİN YOLU ÜZERİNDE KAÇMAZ FIRSAT 4.5+1 SATILIK DUBLEKS VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904865.214534,
-      "position": 714,
+      "position": 712,
       "first_seen_date": "2026-02-12"
     },
     "2409-94": {
@@ -7158,7 +7128,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR DA FIRSAT ARSA",
       "scan_seq": 250,
       "timestamp": 1770904866.2183585,
-      "position": 715,
+      "position": 713,
       "first_seen_date": "2026-02-12"
     },
     "7111-36": {
@@ -7168,7 +7138,7 @@
       "title": "HUZUREVLERİN DE FULL BAKIMLI 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904867.2265441,
-      "position": 716,
+      "position": 714,
       "first_seen_date": "2026-02-12"
     },
     "2140-222": {
@@ -7178,7 +7148,7 @@
       "title": "ELAZIĞ YOLU ÜZERİ KAYALARDA 4.SANAYİ CİVARINDA SATILIK 1+1 DAİRELER!",
       "scan_seq": 250,
       "timestamp": 1770904868.23438,
-      "position": 717,
+      "position": 715,
       "first_seen_date": "2026-02-12"
     },
     "1324-43": {
@@ -7188,7 +7158,7 @@
       "title": "WİNSTOWN AWM KARŞISI 4.5+1 ULTRA LÜX DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904869.2144134,
-      "position": 718,
+      "position": 716,
       "first_seen_date": "2026-02-12"
     },
     "7111-35": {
@@ -7198,7 +7168,7 @@
       "title": "SIFIR TEKNOKENT ARKASI HAVUZLU YERDEN ISITMALI 3.5+1  DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904870.1013823,
-      "position": 719,
+      "position": 717,
       "first_seen_date": "2026-02-12"
     },
     "7111-34": {
@@ -7208,7 +7178,7 @@
       "title": "ACİLL SATILIK YOLA YAKIN SIFIR AYARINDA TERTEMİZ 5+1 LÜX VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904871.1483688,
-      "position": 720,
+      "position": 718,
       "first_seen_date": "2026-02-12"
     },
     "5439-59": {
@@ -7218,7 +7188,7 @@
       "title": "BAĞLAR KAYNARTEPE MAH. TERASLI  VE DAMLI  2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904872.1032214,
-      "position": 721,
+      "position": 719,
       "first_seen_date": "2026-02-12"
     },
     "4548-189": {
@@ -7228,7 +7198,7 @@
       "title": "TESİSLER KAVŞAĞI CİVARI FULL BAKIMLI 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904873.0855982,
-      "position": 722,
+      "position": 720,
       "first_seen_date": "2026-02-12"
     },
     "7119-14": {
@@ -7238,7 +7208,7 @@
       "title": "ARAM TİGRAN'DA CADDE ÜZERİ SATILIK 4+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904874.2440228,
-      "position": 723,
+      "position": 721,
       "first_seen_date": "2026-02-12"
     },
     "6887-57": {
@@ -7248,7 +7218,7 @@
       "title": "ÇEYSA CENROPELDE 3+1 KİRALIK BÜRO",
       "scan_seq": 250,
       "timestamp": 1770904875.4644692,
-      "position": 724,
+      "position": 722,
       "first_seen_date": "2026-02-12"
     },
     "5482-10": {
@@ -7258,7 +7228,7 @@
       "title": "YILMAZ GÜNEY CADDESİNDE SATILIK 4+1 GENİŞ FERAH DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904876.5137026,
-      "position": 725,
+      "position": 723,
       "first_seen_date": "2026-02-12"
     },
     "1375-267": {
@@ -7268,7 +7238,7 @@
       "title": "MAKROLIFE GAYRIMENKULDEN SATILIK 3+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904877.56303,
-      "position": 726,
+      "position": 724,
       "first_seen_date": "2026-02-12"
     },
     "7446-07": {
@@ -7278,7 +7248,7 @@
       "title": "DİYARBAKIRIN EN GÖZDE SİTESİ SATIŞTA  ERBAB YAŞAM 2 YAPI KALİTESİYLE SATILIK ULTRA LÜKS 4+3 DUBLEKS DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904878.5522492,
-      "position": 727,
+      "position": 725,
       "first_seen_date": "2026-02-12"
     },
     "2418-52": {
@@ -7288,7 +7258,7 @@
       "title": "BAĞLAR SAĞLIK OCAĞI SALI PAZARINDA SATILIK DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904879.528322,
-      "position": 728,
+      "position": 726,
       "first_seen_date": "2026-02-12"
     },
     "7416-09": {
@@ -7298,7 +7268,7 @@
       "title": "SATILIK MODERN OFİS  BÜRO 2+1",
       "scan_seq": 250,
       "timestamp": 1770904880.5649967,
-      "position": 729,
+      "position": 727,
       "first_seen_date": "2026-02-12"
     },
     "4441-291": {
@@ -7308,7 +7278,7 @@
       "title": "KAYAPINAR YOLBOYU SATILIK FIRSAT ARSA",
       "scan_seq": 250,
       "timestamp": 1770904881.540679,
-      "position": 730,
+      "position": 728,
       "first_seen_date": "2026-02-12"
     },
     "5482-06": {
@@ -7318,7 +7288,7 @@
       "title": "ARAŞTIRMA HASTANESİ YANI AY CORNER PLAZA'DA KİRALIK 3+1 LÜKS BÜRO",
       "scan_seq": 250,
       "timestamp": 1770904882.5243115,
-      "position": 731,
+      "position": 729,
       "first_seen_date": "2026-02-12"
     },
     "7119-10": {
@@ -7328,7 +7298,7 @@
       "title": "BAĞLAR SAĞLIK OCAĞI CİVARI SATILIK 2+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904883.6248507,
-      "position": 732,
+      "position": 730,
       "first_seen_date": "2026-02-12"
     },
     "4543-32": {
@@ -7338,7 +7308,7 @@
       "title": "BAĞLARDA SATILIK YATIRIMLIK DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904884.7588272,
-      "position": 733,
+      "position": 731,
       "first_seen_date": "2026-02-12"
     },
     "4553-462": {
@@ -7348,7 +7318,7 @@
       "title": "DİYARBAKIRIN KALBİ KANTARDA SIFIR  SATILIK 3+1 OFİS",
       "scan_seq": 250,
       "timestamp": 1770904885.7218409,
-      "position": 734,
+      "position": 732,
       "first_seen_date": "2026-02-12"
     },
     "3126-256": {
@@ -7358,7 +7328,7 @@
       "title": "NİNOVA ARKASI 160 METRE KARE 2 ADET KUPON DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904886.7586725,
-      "position": 735,
+      "position": 733,
       "first_seen_date": "2026-02-12"
     },
     "5479-64": {
@@ -7368,7 +7338,7 @@
       "title": "75 YOL BİTİMİ SATILIK 4,5+1 FULL MASRAFLI SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904887.782416,
-      "position": 736,
+      "position": 734,
       "first_seen_date": "2026-02-12"
     },
     "2140-444": {
@@ -7378,7 +7348,7 @@
       "title": "ELAZIĞ YOLU ÜZERİNDE DOĞA CİTYDE SATILIK 1+1 LÜKS DAİRE!",
       "scan_seq": 250,
       "timestamp": 1770904889.087944,
-      "position": 737,
+      "position": 735,
       "first_seen_date": "2026-02-12"
     },
     "2151-05": {
@@ -7388,7 +7358,7 @@
       "title": "KOŞUYOLU PARKI KARŞISINDA SATILIK 3+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904890.098794,
-      "position": 738,
+      "position": 736,
       "first_seen_date": "2026-02-12"
     },
     "5482-05": {
@@ -7398,7 +7368,7 @@
       "title": "BAĞLAR KOLLUDEREDE YATIRIMA UYGUN ÇEVRE YOLLUNA SIFIR  8.800 M2 SATILIK ARAZİ",
       "scan_seq": 250,
       "timestamp": 1770904891.2600126,
-      "position": 739,
+      "position": 737,
       "first_seen_date": "2026-02-12"
     },
     "2151-03": {
@@ -7408,7 +7378,7 @@
       "title": "YENİŞEHİR ŞEHİTLİKTE 2+1  SATILIK KELEPİR  DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904892.2632146,
-      "position": 740,
+      "position": 738,
       "first_seen_date": "2026-02-12"
     },
     "4441-287": {
@@ -7418,7 +7388,7 @@
       "title": "OĞLAKLI TOKİ DİBİNDE SATILIK FIRSAT ARSA",
       "scan_seq": 250,
       "timestamp": 1770904893.2250345,
-      "position": 741,
+      "position": 739,
       "first_seen_date": "2026-02-12"
     },
     "5482-04": {
@@ -7428,7 +7398,7 @@
       "title": "KARAHANDA GELECEĞİNİZE DEĞER KATACAK 4.500 DÖNÜM  M2 YATIRIMLIK ARSA",
       "scan_seq": 250,
       "timestamp": 1770904894.2505875,
-      "position": 742,
+      "position": 740,
       "first_seen_date": "2026-02-12"
     },
     "5482-03": {
@@ -7438,7 +7408,7 @@
       "title": "OĞLAKLIDA GELECEĞİNİZE DEĞER KATACAK 3 DÖNÜM 715 M2 YATIRIMLIK ARSA",
       "scan_seq": 250,
       "timestamp": 1770904895.4586325,
-      "position": 743,
+      "position": 741,
       "first_seen_date": "2026-02-12"
     },
     "6887-94": {
@@ -7448,7 +7418,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ZANA ROSİBA KALİTESİYLE SATILIK 6,5+1 TRİPLEX VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904896.6657019,
-      "position": 744,
+      "position": 742,
       "first_seen_date": "2026-02-12"
     },
     "4543-24": {
@@ -7458,7 +7428,7 @@
       "title": "FİYAT DÜŞTÜÜÜ   YENİHEŞİR FABRİKA MAH  4+1  SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904897.6107304,
-      "position": 745,
+      "position": 743,
       "first_seen_date": "2026-02-12"
     },
     "3733-75": {
@@ -7468,7 +7438,7 @@
       "title": "SATILIK ARSA  GÜLEÇOBA MAHALLESİ  KAYAPINAR  DİYARBAKIR",
       "scan_seq": 250,
       "timestamp": 1770904898.6286032,
-      "position": 746,
+      "position": 744,
       "first_seen_date": "2026-02-12"
     },
     "4441-286": {
@@ -7478,7 +7448,7 @@
       "title": "KAYAPINAR YENİYOL'DA   3+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904899.545786,
-      "position": 747,
+      "position": 745,
       "first_seen_date": "2026-02-12"
     },
     "4543-23": {
@@ -7488,7 +7458,7 @@
       "title": "ŞEHİTLİKTE 3+1 ACİL SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904900.6311138,
-      "position": 748,
+      "position": 746,
       "first_seen_date": "2026-02-12"
     },
     "6887-97": {
@@ -7498,7 +7468,7 @@
       "title": "GENELSİS HASTANESİ YANINDA 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904901.62166,
-      "position": 749,
+      "position": 747,
       "first_seen_date": "2026-02-12"
     },
     "4441-285": {
@@ -7508,7 +7478,7 @@
       "title": "PEYAS MAH. SATILIK İKİ KATLI EV",
       "scan_seq": 250,
       "timestamp": 1770904902.5930285,
-      "position": 750,
+      "position": 748,
       "first_seen_date": "2026-02-12"
     },
     "7465-95": {
@@ -7518,7 +7488,7 @@
       "title": "MERSİNDE DENİZE YÜRÜME MESAFESİNDE SATILIK ULTRA LÜX 1+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904903.5184758,
-      "position": 751,
+      "position": 749,
       "first_seen_date": "2026-02-12"
     },
     "4548-181": {
@@ -7528,7 +7498,7 @@
       "title": "AY OFFİCE BUSINESS SATILIK BÜRO VE İŞYERİ",
       "scan_seq": 250,
       "timestamp": 1770904904.48238,
-      "position": 752,
+      "position": 750,
       "first_seen_date": "2026-02-12"
     },
     "4548-180": {
@@ -7538,7 +7508,7 @@
       "title": "AY OFFİCE BUSINESS SATILIK BÜROİŞYERİ",
       "scan_seq": 250,
       "timestamp": 1770904905.4913886,
-      "position": 753,
+      "position": 751,
       "first_seen_date": "2026-02-12"
     },
     "1798-21": {
@@ -7548,7 +7518,7 @@
       "title": "MEGA SANAYİDE 400M2 SATILIK FIRSAT DÜKKAN",
       "scan_seq": 250,
       "timestamp": 1770904906.513795,
-      "position": 754,
+      "position": 752,
       "first_seen_date": "2026-02-12"
     },
     "4441-282": {
@@ -7558,7 +7528,7 @@
       "title": "KENT ORMAN ARKASI SATILIK 5.5+1 VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904907.493151,
-      "position": 755,
+      "position": 753,
       "first_seen_date": "2026-02-12"
     },
     "0429-211": {
@@ -7568,7 +7538,7 @@
       "title": " YENİŞEHİR ÜÇKUYULAR BUBYA TEK BLOKLU SİTE 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904908.5228662,
-      "position": 756,
+      "position": 754,
       "first_seen_date": "2026-02-12"
     },
     "5479-54": {
@@ -7578,7 +7548,7 @@
       "title": "KOCAHASANLI'DA DENİZ MANZARALI TEMELDEN 1+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904909.5350795,
-      "position": 757,
+      "position": 755,
       "first_seen_date": "2026-02-12"
     },
     "5479-53": {
@@ -7588,7 +7558,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK HAVUZLU FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904910.5418372,
-      "position": 758,
+      "position": 756,
       "first_seen_date": "2026-02-12"
     },
     "4548-178": {
@@ -7598,7 +7568,7 @@
       "title": "BAĞCILARDA 4+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904911.5402117,
-      "position": 759,
+      "position": 757,
       "first_seen_date": "2026-02-12"
     },
     "7113-263": {
@@ -7608,7 +7578,7 @@
       "title": "TEKNO KENT ARKASINDA TAKASA AÇIK 2+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904912.5510492,
-      "position": 760,
+      "position": 758,
       "first_seen_date": "2026-02-12"
     },
     "7416-88": {
@@ -7618,7 +7588,7 @@
       "title": "EGİL YOLUNA YAKIN 100 DÖNÜM MÜSTAKİL ARAZİ",
       "scan_seq": 250,
       "timestamp": 1770904913.566992,
-      "position": 761,
+      "position": 759,
       "first_seen_date": "2026-02-12"
     },
     "1798-114": {
@@ -7628,7 +7598,7 @@
       "title": "SİLVAN YOLU ÜZERİ 7 DÖNÜM SATILIK ARSA",
       "scan_seq": 250,
       "timestamp": 1770904914.5774481,
-      "position": 762,
+      "position": 760,
       "first_seen_date": "2026-02-12"
     },
     "1798-113": {
@@ -7638,7 +7608,7 @@
       "title": "SEYRANTEPE TOKİ 3+1 MASRAFSIZ TEMİZ DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904915.702179,
-      "position": 763,
+      "position": 761,
       "first_seen_date": "2026-02-12"
     },
     "5439-38": {
@@ -7648,7 +7618,7 @@
       "title": "BAĞLAR NÜKHET ÇOŞKUN CADDESİNDE 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904916.9111755,
-      "position": 764,
+      "position": 762,
       "first_seen_date": "2026-02-12"
     },
     "1324-85": {
@@ -7658,7 +7628,7 @@
       "title": "MASTFROŞTA 2.5+1 ULTRA LÜX SIFIR DAİRE KAYALAR",
       "scan_seq": 250,
       "timestamp": 1770904917.9230433,
-      "position": 765,
+      "position": 763,
       "first_seen_date": "2026-02-12"
     },
     "4543-8": {
@@ -7668,7 +7638,7 @@
       "title": "BAĞLAR ÇARŞAMBA PAZARINDA SATILIK 2+1",
       "scan_seq": 250,
       "timestamp": 1770904918.9126275,
-      "position": 766,
+      "position": 764,
       "first_seen_date": "2026-02-12"
     },
     "5972-17": {
@@ -7678,7 +7648,7 @@
       "title": "SATILIK LÜKS VİLLA  MUHTEŞEM MANZARA  HAVUZLU",
       "scan_seq": 250,
       "timestamp": 1770904919.9832456,
-      "position": 767,
+      "position": 765,
       "first_seen_date": "2026-02-12"
     },
     "4543-6": {
@@ -7688,7 +7658,7 @@
       "title": "GÖÇMENLER CADDESİNDE SATILIK 2+1",
       "scan_seq": 250,
       "timestamp": 1770904920.9707186,
-      "position": 768,
+      "position": 766,
       "first_seen_date": "2026-02-12"
     },
     "4543-2": {
@@ -7698,7 +7668,7 @@
       "title": "YOLBOYUNDA SATILIK 2 DÖNÜM TARLA",
       "scan_seq": 250,
       "timestamp": 1770904922.0871882,
-      "position": 769,
+      "position": 767,
       "first_seen_date": "2026-02-12"
     },
     "4543-1": {
@@ -7708,7 +7678,7 @@
       "title": "TEKNOKET KAYA YAPI DA SATILIK 2+1 DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904923.0923533,
-      "position": 770,
+      "position": 768,
       "first_seen_date": "2026-02-12"
     },
     "3126-233": {
@@ -7718,7 +7688,7 @@
       "title": "SIFIR 75 TEKEL CADDESİ ÜZERİ 3+1 OTURUMA HAZIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904924.1418521,
-      "position": 771,
+      "position": 769,
       "first_seen_date": "2026-02-12"
     },
     "4548-168": {
@@ -7728,7 +7698,7 @@
       "title": "HUZUREVLERİ MEKKE CAMİ CİVARI 3+1 SATILIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904925.1531758,
-      "position": 772,
+      "position": 770,
       "first_seen_date": "2026-02-12"
     },
     "5479-31": {
@@ -7738,7 +7708,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK DEVREN PLAYSTATİON",
       "scan_seq": 250,
       "timestamp": 1770904926.1261756,
-      "position": 773,
+      "position": 771,
       "first_seen_date": "2026-02-12"
     },
     "3448-77": {
@@ -7748,7 +7718,7 @@
       "title": "MAKRO LİFE GAYRİMENKULDEN ŞANLIURFA HAVAALANI KARŞISINDA 1278.5 m2 SATILIK İMARLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904927.1005113,
-      "position": 774,
+      "position": 772,
       "first_seen_date": "2026-02-12"
     },
     "3126-978": {
@@ -7758,7 +7728,7 @@
       "title": "ELAZIĞ YOLU ÜZERİ KAYALAR YAPI'DA İŞ YERİ VE BÜRO",
       "scan_seq": 250,
       "timestamp": 1770904927.9987428,
-      "position": 775,
+      "position": 773,
       "first_seen_date": "2026-02-12"
     },
     "5479-28": {
@@ -7768,7 +7738,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN 450 EVLER CİVARI SATILIK LÜKS TRİPLEX VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904928.9303408,
-      "position": 776,
+      "position": 774,
       "first_seen_date": "2026-02-12"
     },
     "0501-035": {
@@ -7778,7 +7748,7 @@
       "title": "SİLVAN YOLU ÜZERİNDE  ELEKTRİĞİNİ KENDİ ÜRETEN SATILIK DOUBLEX VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904929.9146643,
-      "position": 777,
+      "position": 775,
       "first_seen_date": "2026-02-12"
     },
     "6954-57": {
@@ -7788,7 +7758,7 @@
       "title": "RADİSON OTEL ARKASI LAVANTA PARKI YANI SATILIK 4+1 FIRSAT DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904930.8649554,
-      "position": 778,
+      "position": 776,
       "first_seen_date": "2026-02-12"
     },
     "3126-774": {
@@ -7798,7 +7768,7 @@
       "title": "SİLVAN YOLU ÜZERİ SATILIK LÜKS 6,5+1 TRİBLEKS VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904931.796626,
-      "position": 779,
+      "position": 777,
       "first_seen_date": "2026-02-12"
     },
     "4441-268": {
@@ -7808,7 +7778,7 @@
       "title": "KAYAPINAR YENİYOL'DA   4+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904932.8865976,
-      "position": 780,
+      "position": 778,
       "first_seen_date": "2026-02-12"
     },
     "4441-267": {
@@ -7818,7 +7788,7 @@
       "title": "KAYAPINAR YENİYOL'DA   3+1 KİRALIK DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904933.9204648,
-      "position": 781,
+      "position": 779,
       "first_seen_date": "2026-02-12"
     },
     "5479-08": {
@@ -7828,7 +7798,7 @@
       "title": "WİNSTON AVM CİVARI SATILIK LÜKS SIFIR DAİRE",
       "scan_seq": 250,
       "timestamp": 1770904934.8430076,
-      "position": 782,
+      "position": 780,
       "first_seen_date": "2026-02-12"
     },
     "0501-20": {
@@ -7838,7 +7808,7 @@
       "title": "MAKRO LİFE FARKIYLA TÜRKİYE'NİN GÖZDE ŞEHRİ MUĞLADA İMARLI ARSA",
       "scan_seq": 250,
       "timestamp": 1770904935.815485,
-      "position": 783,
+      "position": 781,
       "first_seen_date": "2026-02-12"
     },
     "2140-96": {
@@ -7848,7 +7818,7 @@
       "title": "KAPLAN ROWER VİLLALARINDA 5+1 SATILIK VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904936.8277025,
-      "position": 784,
+      "position": 782,
       "first_seen_date": "2026-02-12"
     },
     "3126-865": {
@@ -7858,7 +7828,17 @@
       "title": "SEYRANTEPE AZİZİYE MAH. SATILIK SIFIR VİLLA",
       "scan_seq": 250,
       "timestamp": 1770904937.8129299,
-      "position": 785,
+      "position": 783,
+      "first_seen_date": "2026-02-12"
+    },
+    "1656-702": {
+      "fiyat": "2.700.000 TL",
+      "tarih": "2026-02-12",
+      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-kooperatifler-mah-satilik-daire-ML-1656-702",
+      "title": "OFİS SANAT SOKAĞI SATILIK 3+1 SATILIK GENİŞ FIRSAT DAİRE",
+      "scan_seq": 251,
+      "timestamp": 1770913181.014148,
+      "position": 0,
       "first_seen_date": "2026-02-12"
     }
   },
@@ -8006,12 +7986,12 @@
       "deleted": 23
     },
     "2026-02-12": {
-      "new": 454,
-      "price_changes": 8,
-      "deleted": 461
+      "new": 455,
+      "price_changes": 9,
+      "deleted": 464
     }
   },
-  "scan_sequence": 250,
-  "last_scan_timestamp": 1770904939.3970625,
+  "scan_sequence": 251,
+  "last_scan_timestamp": 1770913187.5977478,
   "auto_scan_enabled": true
 }
