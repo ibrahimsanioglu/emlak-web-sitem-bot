@@ -2782,7 +2782,7 @@
       "first_seen_date": "2026-02-09"
     },
     "0533-100": {
-      "fiyat": "3.250.000 TL",
+      "fiyat": "3.300.000 TL",
       "tarih": "2026-02-09",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-0533-100",
       "title": "BAĞCILAR ÖĞRETMEN OKULLARI ARKASINDA SATILIK MASRAFSIZ 2+1 BÜYÜK TİP DAİRE",
@@ -8112,11 +8112,11 @@
     },
     "2026-02-13": {
       "new": 22,
-      "price_changes": 2,
+      "price_changes": 3,
       "deleted": 10
     }
   },
-  "scan_sequence": 254,
-  "last_scan_timestamp": 1770988974.2975993,
+  "scan_sequence": 255,
+  "last_scan_timestamp": 1770999742.2049766,
   "auto_scan_enabled": true
 }
