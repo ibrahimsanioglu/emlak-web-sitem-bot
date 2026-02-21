@@ -299,7 +299,7 @@
       "position": 81
     },
     "1143-05": {
-      "fiyat": "4.650.000 TL",
+      "fiyat": "4.620.000 TL",
       "tarih": "2026-02-14",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokmetas-mah-satilik-daire-ML-1143-05",
       "title": "MAKRO LİFE GÜVENCESİYLE CHERY BAYİ CİVARINDA LÜKS 2+1 SATILIK DAİRE",
@@ -920,7 +920,7 @@
       "position": 150
     },
     "2450-141": {
-      "fiyat": "2.400.000 TL",
+      "fiyat": "2.300.000 TL",
       "tarih": "2026-02-14",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-yenisehir-mah-satilik-daire-ML-2450-141",
       "title": "DAĞKAPI ESKİ DÜNYA DOĞUM YANINDA SATILIK 2+1 BÜRO VE DAİRE KULLANIMINA UYGUN  MÜLK",
@@ -1100,7 +1100,7 @@
       "position": 170
     },
     "0429-312": {
-      "fiyat": "3.550.000 TL",
+      "fiyat": "3.440.000 TL",
       "tarih": "2026-02-14",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-0429-312",
       "title": "YEİŞEHİR ÜÇKUYULAR TOKİ 808 KONUTLARINDA 2+1 SATILIK DAİRE",
@@ -3400,7 +3400,7 @@
       "first_seen_date": "2026-02-20"
     },
     "1375-298": {
-      "fiyat": "159.500.000 TL",
+      "fiyat": "149.500.000 TL",
       "tarih": "2026-02-20",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-yolboyu-pirinclik-mah-satilik-daire-ML-1375-298",
       "title": "MAKROLİFE GAYRİMENKUL'DEN SATILIK FABRİKA",
@@ -7667,8 +7667,13 @@
       "new": 436,
       "price_changes": 8,
       "deleted": 440
+    },
+    "2026-02-21": {
+      "new": 0,
+      "price_changes": 4,
+      "deleted": 0
     }
   },
-  "scan_sequence": 30,
-  "last_scan_timestamp": 1771603625.8772511
+  "scan_sequence": 31,
+  "last_scan_timestamp": 1771657652.8890507
 }
