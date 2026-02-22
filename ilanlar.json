@@ -3283,7 +3283,7 @@
       "first_seen_date": "2026-02-20"
     },
     "1143-10": {
-      "fiyat": "4.100.000 TL",
+      "fiyat": "4.180.000 TL",
       "tarih": "2026-02-20",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1143-10",
       "title": "MAKRO LİFE GAYRiMENKUL'DEN BAĞCILAR'DA 3+1 SATILIK DAİRE",
@@ -7698,10 +7698,10 @@
     },
     "2026-02-22": {
       "new": 5,
-      "price_changes": 1,
+      "price_changes": 2,
       "deleted": 0
     }
   },
-  "scan_sequence": 36,
-  "last_scan_timestamp": 1771754890.641522
+  "scan_sequence": 37,
+  "last_scan_timestamp": 1771765649.29958
 }
