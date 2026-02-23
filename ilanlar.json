@@ -974,7 +974,7 @@
       "position": 168
     },
     "7112-164": {
-      "fiyat": "5.350.000 TL",
+      "fiyat": "4.750.000 TL",
       "tarih": "2026-02-14",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-isyeri-ML-7112-164",
       "title": "KENT MEYDANI CİVARI ANA CD. ÜZERİNDE FIRSAT İŞYERİ!",
@@ -7635,10 +7635,10 @@
     },
     "2026-02-23": {
       "new": 5,
-      "price_changes": 4,
+      "price_changes": 5,
       "deleted": 11
     }
   },
-  "scan_sequence": 41,
-  "last_scan_timestamp": 1771852292.7804322
+  "scan_sequence": 42,
+  "last_scan_timestamp": 1771862888.1197882
 }
