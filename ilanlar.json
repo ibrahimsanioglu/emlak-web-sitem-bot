@@ -5627,7 +5627,7 @@
       "first_seen_date": "2026-02-20"
     },
     "2140-513": {
-      "fiyat": "4.030.000 TL",
+      "fiyat": "4.000.000 TL",
       "tarih": "2026-02-20",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-2140-513",
       "title": "ÖZEL TASARIMLI  2+1 LÜKS KONUT 100 M NET ALAN , TEZGEL KALİTESİYLE SATILIK !",
@@ -7812,10 +7812,10 @@
     },
     "2026-02-24": {
       "new": 24,
-      "price_changes": 4,
+      "price_changes": 5,
       "deleted": 7
     }
   },
-  "scan_sequence": 45,
-  "last_scan_timestamp": 1771938703.1622376
+  "scan_sequence": 46,
+  "last_scan_timestamp": 1771949415.404317
 }
