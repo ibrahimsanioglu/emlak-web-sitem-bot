@@ -2360,7 +2360,7 @@
       "position": 362
     },
     "4765-205": {
-      "fiyat": "3.150.000 TL",
+      "fiyat": "3.200.000 TL",
       "tarih": "2026-02-14",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-4765-205",
       "title": "ADLİ TIP YANINDA 2+1 FIRSAT SATILIK DAİRE",
@@ -7879,10 +7879,10 @@
     },
     "2026-02-26": {
       "new": 8,
-      "price_changes": 6,
+      "price_changes": 7,
       "deleted": 6
     }
   },
-  "scan_sequence": 53,
-  "last_scan_timestamp": 1772111525.3470683
+  "scan_sequence": 54,
+  "last_scan_timestamp": 1772122265.017935
 }
