@@ -7881,8 +7881,13 @@
       "new": 8,
       "price_changes": 7,
       "deleted": 6
+    },
+    "2026-02-27": {
+      "new": 0,
+      "price_changes": 0,
+      "deleted": 0
     }
   },
-  "scan_sequence": 54,
-  "last_scan_timestamp": 1772122265.017935
+  "scan_sequence": 55,
+  "last_scan_timestamp": 1772176078.3961854
 }
