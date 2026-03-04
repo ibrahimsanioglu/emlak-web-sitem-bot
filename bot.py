@@ -285,8 +285,32 @@ def fetch_listings_via_flaresolverr():
             print(f"[FLARESOLVERR SAYFA {page_num}] İçerik alınamadı", flush=True)
             
             if page_num <= 3:
-                print("[FLARESOLVERR] İlk 3 sayfada hata - tarama iptal", flush=True)
-                return None
+                # İlk 3 sayfada hata: 3 kez retry dene
+                retry_ok = False
+                for retry_i in range(1, 4):
+                    print(f"[FLARESOLVERR] Sayfa {page_num} retry {retry_i}/3 ({10*retry_i}s bekle)...", flush=True)
+                    time.sleep(10 * retry_i)
+                    result = fetch_via_flaresolverr(page_url)
+                    if result and result.get("content"):
+                        retry_ok = True
+                        consecutive_failures = 0
+                        break
+                
+                if not retry_ok:
+                    print("[FLARESOLVERR] İlk 3 sayfada 3 retry de başarısız - tarama iptal", flush=True)
+                    return None
+                
+                # Retry başarılı, devam et
+                html = result["content"]
+                ilan_pattern_check = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
+                if re.findall(ilan_pattern_check, html, re.IGNORECASE):
+                    page_new, _ = process_page_html(html, page_num)
+                    print(f"[FLARESOLVERR SAYFA {page_num}] Retry başarılı! {page_new} ilan (toplam: {len(results)})", flush=True)
+                    if page_num % 10 == 0:
+                        time.sleep(3)
+                    else:
+                        time.sleep(1.0)
+                    continue
             
             # Başarısız sayfayı kaydet
             failed_pages.append(page_num)
