@@ -23,17 +23,18 @@ print("=" * 60, flush=True)
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-# Railway'de görünen gerçek admin chat id
-REAL_ADMIN_CHAT_ID = "441336964"
+# Admin chat id (Railway env'den alınır)
+ADMIN_CHAT_ID = os.getenv("CHAT_ID", "")
+REAL_ADMIN_CHAT_ID = ADMIN_CHAT_ID  # Geriye uyumluluk
 
 # Web site API (tek endpoint)
 WEBSITE_API_URL = os.getenv("WEBSITE_API_URL", "https://www.diyarbakiremlakmarket.com/admin/bot_api.php")
 
-# Normal bildirim alacak chat'ler (REAL_ADMIN'e ayrı, butonlu mesaj atacağız)
-CHAT_IDS = [cid for cid in [os.getenv("CHAT_ID")] if cid and str(cid) != REAL_ADMIN_CHAT_ID]
+# Bildirim alacak chat'ler
+CHAT_IDS = [ADMIN_CHAT_ID] if ADMIN_CHAT_ID else []
 
-# Komut + buton callback'leri için admin listesi
-ADMIN_CHAT_IDS = [cid for cid in {os.getenv("CHAT_ID"), REAL_ADMIN_CHAT_ID} if cid]
+# Komut kabul edecek admin listesi
+ADMIN_CHAT_IDS = [ADMIN_CHAT_ID] if ADMIN_CHAT_ID else []
 # GitHub ayarlari (veri yedekleme icin)
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "ibrahimsanioglu/emlak-web-sitem-bot")
@@ -285,8 +286,28 @@ def fetch_listings_via_flaresolverr():
             print(f"[FLARESOLVERR SAYFA {page_num}] İçerik alınamadı", flush=True)
             
             if page_num <= 3:
-                print("[FLARESOLVERR] İlk 3 sayfada hata - tarama iptal", flush=True)
-                return None
+                # İlk 3 sayfada hata: 3 kez retry dene
+                retry_ok = False
+                for retry_i in range(1, 4):
+                    print(f"[FLARESOLVERR] Sayfa {page_num} retry {retry_i}/3...", flush=True)
+                    time.sleep(10)
+                    result = fetch_via_flaresolverr(page_url)
+                    if result and result.get("content"):
+                        retry_ok = True
+                        consecutive_failures = 0
+                        break
+                if not retry_ok:
+                    print("[FLARESOLVERR] İlk 3 sayfada 3 retry başarısız - tarama iptal", flush=True)
+                    return None
+                # Retry başarılı oldu, bu sayfayı işle
+                html = result["content"]
+                page_new, _ = process_page_html(html, page_num)
+                print(f"[FLARESOLVERR SAYFA {page_num}] Retry başarılı! {page_new} ilan (toplam: {len(results)})", flush=True)
+                if page_num % 10 == 0:
+                    time.sleep(3)
+                else:
+                    time.sleep(1.0)
+                continue
             
             # Başarısız sayfayı kaydet
             failed_pages.append(page_num)
@@ -794,7 +815,7 @@ def telegram_api(method: str, data: dict, timeout: int = 10, max_retries: int = 
 def send_message(text: str, chat_id: str = None, reply_markup=None, disable_preview: bool = True, include_real_admin: bool = True):
     """Telegram'a mesaj gönder.
     - chat_id verilirse sadece o kişiye gider.
-    - chat_id yoksa broadcast: CHAT_IDS + (include_real_admin True ise) REAL_ADMIN_CHAT_ID
+    - chat_id yoksa ADMIN_CHAT_ID'ye gönderir.
     """
     if not BOT_TOKEN:
         print("[TELEGRAM] BOT_TOKEN yok, mesaj atlanıyor", flush=True)
@@ -817,16 +838,10 @@ def send_message(text: str, chat_id: str = None, reply_markup=None, disable_prev
     if chat_id:
         return _post(str(chat_id))
 
-    targets = list(CHAT_IDS)
-    if include_real_admin and str(REAL_ADMIN_CHAT_ID) not in targets:
-        targets.append(str(REAL_ADMIN_CHAT_ID))
+    if ADMIN_CHAT_ID:
+        return _post(str(ADMIN_CHAT_ID))
 
-    ok_any = False
-    for cid in targets:
-        if cid and str(cid).strip():
-            ok_any = _post(str(cid)) or ok_any
-            time.sleep(0.25)
-    return ok_any
+    return False
 
 def answer_callback_query(callback_query_id: str, text: str = None, show_alert: bool = False):
     payload = {"callback_query_id": callback_query_id, "show_alert": show_alert}
@@ -1237,7 +1252,7 @@ def github_save_file(filename, content, sha=None):
         ).decode()
 
         data = {
-            "message": "Update " + filename + " - " + get_turkey_time().strftime("%Y-%m-%d %H:%M"),
+            "message": "Update " + filename + " - " + get_turkey_time().strftime("%Y-%m-%d %H:%M") + " [skip deploy]",
             "content": content_b64,
             "branch": "main"
         }
