@@ -23,17 +23,17 @@ print("=" * 60, flush=True)
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-# Admin chat id (Railway env'den alınır)
-ADMIN_CHAT_ID = os.getenv("CHAT_ID", "")
+# Railway'de görünen gerçek admin chat id
+REAL_ADMIN_CHAT_ID = "441336964"
 
 # Web site API (tek endpoint)
 WEBSITE_API_URL = os.getenv("WEBSITE_API_URL", "https://www.diyarbakiremlakmarket.com/admin/bot_api.php")
 
-# Bildirim alacak chat'ler
-CHAT_IDS = [ADMIN_CHAT_ID] if ADMIN_CHAT_ID else []
+# Normal bildirim alacak chat'ler (REAL_ADMIN'e ayrı, butonlu mesaj atacağız)
+CHAT_IDS = [cid for cid in [os.getenv("CHAT_ID")] if cid and str(cid) != REAL_ADMIN_CHAT_ID]
 
-# Komut kabul edecek admin listesi
-ADMIN_CHAT_IDS = [ADMIN_CHAT_ID] if ADMIN_CHAT_ID else []
+# Komut + buton callback'leri için admin listesi
+ADMIN_CHAT_IDS = [cid for cid in {os.getenv("CHAT_ID"), REAL_ADMIN_CHAT_ID} if cid]
 # GitHub ayarlari (veri yedekleme icin)
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "ibrahimsanioglu/emlak-web-sitem-bot")
@@ -285,32 +285,8 @@ def fetch_listings_via_flaresolverr():
             print(f"[FLARESOLVERR SAYFA {page_num}] İçerik alınamadı", flush=True)
             
             if page_num <= 3:
-                # İlk 3 sayfada hata: 3 kez retry dene
-                retry_ok = False
-                for retry_i in range(1, 4):
-                    print(f"[FLARESOLVERR] Sayfa {page_num} retry {retry_i}/3 ({10*retry_i}s bekle)...", flush=True)
-                    time.sleep(10 * retry_i)
-                    result = fetch_via_flaresolverr(page_url)
-                    if result and result.get("content"):
-                        retry_ok = True
-                        consecutive_failures = 0
-                        break
-                
-                if not retry_ok:
-                    print("[FLARESOLVERR] İlk 3 sayfada 3 retry de başarısız - tarama iptal", flush=True)
-                    return None
-                
-                # Retry başarılı, devam et
-                html = result["content"]
-                ilan_pattern_check = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
-                if re.findall(ilan_pattern_check, html, re.IGNORECASE):
-                    page_new, _ = process_page_html(html, page_num)
-                    print(f"[FLARESOLVERR SAYFA {page_num}] Retry başarılı! {page_new} ilan (toplam: {len(results)})", flush=True)
-                    if page_num % 10 == 0:
-                        time.sleep(3)
-                    else:
-                        time.sleep(1.0)
-                    continue
+                print("[FLARESOLVERR] İlk 3 sayfada hata - tarama iptal", flush=True)
+                return None
             
             # Başarısız sayfayı kaydet
             failed_pages.append(page_num)
@@ -818,7 +794,7 @@ def telegram_api(method: str, data: dict, timeout: int = 10, max_retries: int = 
 def send_message(text: str, chat_id: str = None, reply_markup=None, disable_preview: bool = True, include_real_admin: bool = True):
     """Telegram'a mesaj gönder.
     - chat_id verilirse sadece o kişiye gider.
-    - chat_id yoksa ADMIN_CHAT_ID'ye gönderir.
+    - chat_id yoksa broadcast: CHAT_IDS + (include_real_admin True ise) REAL_ADMIN_CHAT_ID
     """
     if not BOT_TOKEN:
         print("[TELEGRAM] BOT_TOKEN yok, mesaj atlanıyor", flush=True)
@@ -841,10 +817,16 @@ def send_message(text: str, chat_id: str = None, reply_markup=None, disable_prev
     if chat_id:
         return _post(str(chat_id))
 
-    if ADMIN_CHAT_ID:
-        return _post(str(ADMIN_CHAT_ID))
+    targets = list(CHAT_IDS)
+    if include_real_admin and str(REAL_ADMIN_CHAT_ID) not in targets:
+        targets.append(str(REAL_ADMIN_CHAT_ID))
 
-    return False
+    ok_any = False
+    for cid in targets:
+        if cid and str(cid).strip():
+            ok_any = _post(str(cid)) or ok_any
+            time.sleep(0.25)
+    return ok_any
 
 def answer_callback_query(callback_query_id: str, text: str = None, show_alert: bool = False):
     payload = {"callback_query_id": callback_query_id, "show_alert": show_alert}
@@ -955,9 +937,9 @@ def send_real_admin_deleted(kod: str, title: str, fiyat: str):
 
     if ex.get("exists") is True:
         kb = _kb([[("✅ SİL", f"site_del:{kod}"), ("❌ SİLME", f"site_cancel:{kod}")]])
-        send_message(msg, chat_id=ADMIN_CHAT_ID, reply_markup=kb)
+        send_message(msg, chat_id=REAL_ADMIN_CHAT_ID, reply_markup=kb)
     else:
-        send_message(msg, chat_id=ADMIN_CHAT_ID)
+        send_message(msg, chat_id=REAL_ADMIN_CHAT_ID)
 
 
 def send_real_admin_price_change(kod: str, title: str, eski_fiyat: str, yeni_fiyat: str):
@@ -973,9 +955,9 @@ def send_real_admin_price_change(kod: str, title: str, eski_fiyat: str, yeni_fiy
         yeni_digits = normalize_price(yeni_fiyat)[:24]
         kb = _kb([[("✅ DEĞİŞTİR", f"site_price:{kod}:{yeni_digits}"),
                    ("❌ DEĞİŞTİRME", f"site_cancel:{kod}")]])
-        send_message(msg, chat_id=ADMIN_CHAT_ID, reply_markup=kb)
+        send_message(msg, chat_id=REAL_ADMIN_CHAT_ID, reply_markup=kb)
     else:
-        send_message(msg, chat_id=ADMIN_CHAT_ID)
+        send_message(msg, chat_id=REAL_ADMIN_CHAT_ID)
 
 
 def send_real_admin_new_listing(kod: str, title: str, fiyat: str, link: str):
@@ -991,7 +973,7 @@ def send_real_admin_new_listing(kod: str, title: str, fiyat: str, link: str):
     if ex.get("exists") is False:
         msg += "\n➕ <b>Siteye ekleme:</b> ONAY BEKLENİYOR ⏳"
         kb = _kb([[("✅ EKLE", f"site_add:{kod}"), ("❌ EKLEME", f"site_cancel:{kod}")]])
-        send_message(msg, chat_id=ADMIN_CHAT_ID, reply_markup=kb)
+        send_message(msg, chat_id=REAL_ADMIN_CHAT_ID, reply_markup=kb)
         return
 
     if ex.get("exists") is True:
@@ -999,7 +981,7 @@ def send_real_admin_new_listing(kod: str, title: str, fiyat: str, link: str):
     else:
         msg += "\n➕ <b>Siteye ekleme:</b> Atlandı (site durumu bilinmiyor) ⚠️"
 
-    send_message(msg, chat_id=ADMIN_CHAT_ID)
+    send_message(msg, chat_id=REAL_ADMIN_CHAT_ID)
 
 def handle_callback_query(cb: dict):
     """Inline buton tıklamaları.
@@ -1025,7 +1007,7 @@ def handle_callback_query(cb: dict):
         message_id = msg_obj.get("message_id")
 
         # Sadece gerçek adminin butonlarını kabul et
-        if chat_id != str(ADMIN_CHAT_ID):
+        if chat_id != str(REAL_ADMIN_CHAT_ID):
             safe_answer("Bu buton sadece admin içindir.")
             return
 
@@ -1183,7 +1165,7 @@ def github_get_file(filename):
             "User-Agent": "railway-makrolife-bot"
         }
 
-        resp = requests.get(url, headers=headers, params={"ref": "data"}, timeout=20)
+        resp = requests.get(url, headers=headers, timeout=20)
 
         if resp.status_code != 200:
             # 404/401 vb. durumlarda sessizce None döndür
@@ -1257,7 +1239,7 @@ def github_save_file(filename, content, sha=None):
         data = {
             "message": "Update " + filename + " - " + get_turkey_time().strftime("%Y-%m-%d %H:%M"),
             "content": content_b64,
-            "branch": "data"
+            "branch": "main"
         }
 
         if sha:
