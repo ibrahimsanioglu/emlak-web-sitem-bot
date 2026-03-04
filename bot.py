@@ -30,11 +30,11 @@ REAL_ADMIN_CHAT_ID = ADMIN_CHAT_ID  # Geriye uyumluluk
 # Web site API (tek endpoint)
 WEBSITE_API_URL = os.getenv("WEBSITE_API_URL", "https://www.diyarbakiremlakmarket.com/admin/bot_api.php")
 
-# Bildirim alacak chat'ler
-CHAT_IDS = [ADMIN_CHAT_ID] if ADMIN_CHAT_ID else []
+# Bildirim alacak chat'ler (Kullanılmıyor, geriye dönük uyumluluk için boş bırakıldı)
+CHAT_IDS = []
 
-# Komut kabul edecek admin listesi
-ADMIN_CHAT_IDS = [ADMIN_CHAT_ID] if ADMIN_CHAT_ID else []
+# Komut kabul edecek admin listesi (Kullanılmıyor, geriye dönük uyumluluk için boş bırakıldı)
+ADMIN_CHAT_IDS = []
 # GitHub ayarlari (veri yedekleme icin)
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "ibrahimsanioglu/emlak-web-sitem-bot")
@@ -1829,8 +1829,8 @@ def check_telegram_commands():
         if not text or not chat_id:
             continue
 
-        # Sadece admin'lerden komut al
-        if chat_id not in ADMIN_CHAT_IDS:
+        # Sadece admin'den komut al
+        if chat_id != str(ADMIN_CHAT_ID):
             continue
 
         if text.startswith("/"):
