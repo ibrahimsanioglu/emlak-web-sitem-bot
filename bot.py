@@ -21,7 +21,12 @@ print("Python version: " + sys.version, flush=True)
 print("Calisma zamani: " + datetime.utcnow().isoformat(), flush=True)
 print("=" * 60, flush=True)
 
+import random
+import string
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+# Generate a random 4-char ID to identify uniquely this running process
+INSTANCE_ID = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
 
 # Admin chat id (Railway env'den alınır)
 ADMIN_CHAT_ID = os.getenv("CHAT_ID", "")
@@ -1564,7 +1569,8 @@ def handle_command(chat_id, command, message_text):
         msg += "Toplam tarama: " + str(bot_stats["total_scans"]) + "\n"
         msg += "Son tarama: " + str(bot_stats["last_scan_pages"]) + " sayfa\n"
         msg += "Son sure: " + format_duration(bot_stats["last_scan_duration"]) + "\n"
-        msg += "Timeout: " + str(bot_stats["timeouts"]) + " | Hata: " + str(bot_stats["errors"])
+        msg += "Timeout: " + str(bot_stats["timeouts"]) + " | Hata: " + str(bot_stats["errors"]) + "\n\n"
+        msg += f"🖥️ Sunucu ID: {INSTANCE_ID}"
         send_message(msg, chat_id)
     
     elif command == "/istatistik" or command == "/stats":
@@ -1582,7 +1588,8 @@ def handle_command(chat_id, command, message_text):
         msg += "En yuksek: " + format_number(max_price) + " TL\n\n"
         msg += "Yeni bulunan: " + str(bot_stats["total_new_listings"]) + "\n"
         msg += "Fiyat degisimi: " + str(bot_stats["total_price_changes"]) + "\n"
-        msg += "Silinen: " + str(bot_stats["total_deleted"])
+        msg += "Silinen: " + str(bot_stats["total_deleted"]) + "\n\n"
+        msg += f"🖥️ Sunucu ID: {INSTANCE_ID}"
         send_message(msg, chat_id)
     
     elif command == "/bellek" or command == "/memory":
