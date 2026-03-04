@@ -230,18 +230,26 @@ def fetch_listings_via_flaresolverr():
             
             # 2. Fiyat Çıkarma - Makrolife'ın HTML yapısına özel
             fiyat = "Fiyat Yok"
-            # Öncelik 1: <span class="h5 text-primary m-0">26.000 TL</span>
-            price_match = re.search(r'<span[^>]*class="[^"]*h5[^"]*text-primary[^"]*"[^>]*>\s*([\d\.,]+)\s*(TL|₺)', chunk, re.IGNORECASE)
+            # Öncelik 1: <span class="h5 text-primary m-0">26.000 TL</span> veya türevleri
+            price_match = re.search(r'class="[^"]*price[^"]*"[^>]*>\s*([\d\.,]+)\s*(?:<[^>]+>\s*)*(TL|₺)', chunk, re.IGNORECASE)
             if price_match:
                 amount = price_match.group(1)
                 if sum(c.isdigit() for c in amount) >= 3:
                     fiyat = f"{amount.strip()} TL"
             
-            # Öncelik 2: Genel fiyat pattern'i
+            # Öncelik 2: Genel fiyat pattern'i (HTML tagları arasında veya direkt metin içinde)
             if fiyat == "Fiyat Yok":
-                price_match2 = re.search(r'>\s*([\d\.]+(?:[\.,]\d{3})*)\s*(TL|₺)\s*<', chunk)
+                price_match2 = re.search(r'>\s*([\d\.]+(?:[\.,]\d{3})*)\s*(?:<[^>]+>\s*)*(TL|₺|USD|EUR|GBP)', chunk, re.IGNORECASE)
                 if price_match2:
                     amount = price_match2.group(1)
+                    if sum(c.isdigit() for c in amount) >= 3:
+                        fiyat = f"{amount.strip()} TL"
+
+            # Öncelik 3: Sadece Rakam ve Para birimi arama
+            if fiyat == "Fiyat Yok":
+                price_match3 = re.search(r'([\d\.,]{4,})\s*(?:<[^>]+>\s*)*(TL|₺)', chunk, re.IGNORECASE)
+                if price_match3:
+                    amount = price_match3.group(1)
                     if sum(c.isdigit() for c in amount) >= 3:
                         fiyat = f"{amount.strip()} TL"
             
@@ -496,13 +504,13 @@ def fetch_listings_via_google_proxy():
                 
             # 2. Fiyat
             fiyat = "Fiyat Yok"
-            price_match = re.search(r'([\d\.,]+)(?:\s*(?:<[^>]+>)*\s*)(TL|₺|USD|EUR|GBP)', chunk)
+            price_match = re.search(r'([\d\.,]{4,})\s*(?:<[^>]+>\s*)*(TL|₺|USD|EUR|GBP)', chunk, re.IGNORECASE)
             if price_match:
                 amount = price_match.group(1)
                 currency = price_match.group(2)
                 candidate = amount
                 if sum(c.isdigit() for c in candidate) >= 3:
-                    currency = currency.replace('₺', 'TL').replace('&#8378;', 'TL')
+                    currency = currency.replace('₺', 'TL').replace('&#8378;', 'TL').upper()
                     fiyat = f"{amount.strip()} {currency}"
             
             current_result = (
