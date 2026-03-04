@@ -191,9 +191,9 @@ def fetch_listings_via_flaresolverr():
             if link_pos == -1:
                 link_pos = 0
             
-            # Chunk al - Kart yapısı geniş, fiyat linkin ~3500 karakter sonrasında
+            # Chunk al - Kart yapısı geniş, fiyat linkin ~5000-7000 karakter sonrasında
             search_start = max(0, link_pos - 500)
-            search_end = min(len(html), link_pos + 5000)  # 5000'e çıkarıldı
+            search_end = min(len(html), link_pos + 8000)  # 8000'e çıkarıldı (fiyat kart sonunda)
             chunk = html[search_start:search_end]
             
             # 1. Başlık Çıkarma
@@ -480,7 +480,7 @@ def fetch_listings_via_google_proxy():
             if i < len(matches) - 1:
                 search_end = matches[i+1].start()
             else:
-                search_end = min(len(html), start_pos + 5000)
+                search_end = min(len(html), start_pos + 8000)
                 
             chunk = html[search_start:search_end]
             
@@ -1364,74 +1364,6 @@ def load_state(force_refresh=False):
         "scan_sequence": 0
     }
     return STATE_CACHE
-
-
-    # Cache kullan (komutlar çok sık load_state çağırıyor)
-    if (not force_refresh) and isinstance(STATE_CACHE, dict) and STATE_CACHE.get("items") is not None:
-        return STATE_CACHE
-
-    if not GITHUB_TOKEN:
-        # GitHub yoksa (token yoksa) eski davranış: lokal cache -> yeni state
-        if os.path.exists(DATA_FILE):
-            try:
-                with open(DATA_FILE, "r", encoding="utf-8") as f:
-                    state = json.load(f)
-                    print("[STATE] Lokal cache kullanılıyor (GITHUB_TOKEN yok)", flush=True)
-                    STATE_CACHE = state
-                    return state
-            except Exception as e:
-                print("[STATE] Lokal okuma hatası:", e, flush=True)
-
-        print("[STATE] Yeni state oluşturuldu (GITHUB_TOKEN yok)", flush=True)
-        STATE_CACHE = {
-            "cycle_start": get_turkey_time().strftime("%Y-%m-%d"),
-            "items": {},
-            "reported_days": [],
-            "first_run_done": False,
-            "daily_stats": {},
-            "scan_sequence": 0
-        }
-        return STATE_CACHE
-
-    # GitHub ana kaynak
-    state, sha = github_get_file("ilanlar.json")
-    if isinstance(state, dict) and state.get("items") is not None:
-        STATE_GITHUB_SHA = sha
-        STATE_CACHE = state
-        # Railway cache'e yaz (okuma kaynağı değil, sadece yedek)
-        save_state_local(state)
-        print("[STATE] GitHub ANA kaynak kullanılıyor", flush=True)
-        return state
-
-    # GitHub okunamazsa: Railway state kullanma (isteğiniz doğrultusunda)
-    # Cache varsa onu kullan, yoksa yeni state ile devam etme (yanlis yeni ilan spam'ini onlemek icin)
-    if isinstance(STATE_CACHE, dict) and STATE_CACHE.get("items") is not None:
-        print("[STATE] GitHub okunamadi, RAM cache kullaniliyor", flush=True)
-        return STATE_CACHE
-
-    raise RuntimeError("GitHub'dan ilanlar.json okunamadi. (Railway lokal state kullanilmiyor)")
-
-
-    # 2️⃣ GitHub yoksa LOCAL CACHE
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, "r", encoding="utf-8") as f:
-                state = json.load(f)
-                print("[STATE] Lokal cache kullanılıyor", flush=True)
-                return state
-        except Exception as e:
-            print("[STATE] Lokal okuma hatası:", e, flush=True)
-
-    # 3️⃣ TAMAMEN YENİ STATE
-    print("[STATE] Yeni state oluşturuldu", flush=True)
-    return {
-        "cycle_start": get_turkey_time().strftime("%Y-%m-%d"),
-        "items": {},
-        "reported_days": [],
-        "first_run_done": False,
-        "daily_stats": {},
-        "scan_sequence": 0
-    }
 
 
 
