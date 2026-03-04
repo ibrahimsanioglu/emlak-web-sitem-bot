@@ -2326,7 +2326,6 @@ def run_scan_with_timeout():
                 msg += "🏷️ " + title + "\n"
                 msg += "💰 " + fiyat + "\n\n"
                 msg += "🔗 " + link
-                send_message(msg, include_real_admin=False)
                 send_real_admin_new_listing(kod, title, fiyat, link)
                 time.sleep(0.3)
 
@@ -2362,7 +2361,6 @@ def run_scan_with_timeout():
                     msg += "💰 " + eski + " ➜ " + fiyat + "\n"
                     msg += fark_str + " (" + trend + ")\n\n"
                     msg += "🔗 " + state["items"][kod].get("link", "")
-                    send_message(msg, include_real_admin=False)  # real admin de alsın (ayrıca butonlu mesaj da gider)
                     send_real_admin_price_change(kod, state["items"][kod].get("title", ""), eski, fiyat)
                     time.sleep(0.3)
 
@@ -2382,7 +2380,6 @@ def run_scan_with_timeout():
                 msg += "📋 " + kod + "\n"
                 msg += "🏷️ " + item.get("title", "") + "\n"
                 msg += "💰 " + item.get("fiyat", "")
-                send_message(msg, include_real_admin=False)
                 send_real_admin_deleted(kod, item.get("title", ""), item.get("fiyat", ""))
 
                 del state["items"][kod]
