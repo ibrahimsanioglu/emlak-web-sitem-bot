@@ -30,10 +30,10 @@ REAL_ADMIN_CHAT_ID = "441336964"
 WEBSITE_API_URL = os.getenv("WEBSITE_API_URL", "https://www.diyarbakiremlakmarket.com/admin/bot_api.php")
 
 # Normal bildirim alacak chat'ler (REAL_ADMIN'e ayrı, butonlu mesaj atacağız)
-CHAT_IDS = [cid for cid in [os.getenv("CHAT_ID"), "7449598531"] if cid and str(cid) != REAL_ADMIN_CHAT_ID]
+CHAT_IDS = [cid for cid in [os.getenv("CHAT_ID")] if cid and str(cid) != REAL_ADMIN_CHAT_ID]
 
 # Komut + buton callback'leri için admin listesi
-ADMIN_CHAT_IDS = [cid for cid in {os.getenv("CHAT_ID"), "7449598531", REAL_ADMIN_CHAT_ID} if cid]
+ADMIN_CHAT_IDS = [cid for cid in {os.getenv("CHAT_ID"), REAL_ADMIN_CHAT_ID} if cid]
 # GitHub ayarlari (veri yedekleme icin)
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_REPO = os.getenv("GITHUB_REPO", "ibrahimsanioglu/emlak-web-sitem-bot")
