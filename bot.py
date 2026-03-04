@@ -1183,7 +1183,7 @@ def github_get_file(filename):
             "User-Agent": "railway-makrolife-bot"
         }
 
-        resp = requests.get(url, headers=headers, timeout=20)
+        resp = requests.get(url, headers=headers, params={"ref": "data"}, timeout=20)
 
         if resp.status_code != 200:
             # 404/401 vb. durumlarda sessizce None döndür
@@ -1257,7 +1257,7 @@ def github_save_file(filename, content, sha=None):
         data = {
             "message": "Update " + filename + " - " + get_turkey_time().strftime("%Y-%m-%d %H:%M"),
             "content": content_b64,
-            "branch": "main"
+            "branch": "data"
         }
 
         if sha:
