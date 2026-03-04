@@ -36,7 +36,7 @@ CHAT_IDS = [cid for cid in [os.getenv("CHAT_ID"), "7449598531"] if cid and str(c
 ADMIN_CHAT_IDS = [cid for cid in {os.getenv("CHAT_ID"), "7449598531", REAL_ADMIN_CHAT_ID} if cid]
 # GitHub ayarlari (veri yedekleme icin)
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-GITHUB_REPO = os.getenv("GITHUB_REPO", "emlak-web-sitem/emlak-web-sitem-bot")
+GITHUB_REPO = os.getenv("GITHUB_REPO", "ibrahimsanioglu/emlak-web-sitem-bot")
 
 print("BOT_TOKEN mevcut: " + str(bool(BOT_TOKEN)), flush=True)
 print("CHAT_ID mevcut: " + str(bool(os.getenv("CHAT_ID"))), flush=True)
