@@ -169,7 +169,12 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
 
     active_session = session or requests.Session()
     
-    # FlareSolverr üzerinden anahtar al (Eğer bulmaca varsa)
+    # Session User-Agent kontrolü
+    if ua:
+        active_session.headers['User-Agent'] = ua
+    elif 'User-Agent' not in active_session.headers:
+        active_session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+
     # İlk istekte bulmaca var mı bak
     try:
         if method == "POST":
@@ -177,8 +182,13 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         else:
             resp = active_session.get(url, headers=headers, timeout=30)
         
+        # 403 durumunda içeriğe bak (Cloudflare veya Backend engeli)
+        if resp.status_code == 403:
+            print(f"[API_CALL] 403 Alındı: {resp.text[:200]}", flush=True)
+
         html = resp.text
-        if "Güvenlik Doğrulaması" not in html or "challengeId" not in html:
+        # Cloudflare veya özel "Güvenlik Doğrulaması" sayfasını algıla
+        if "Güvenlik Doğrulaması" not in html and "challengeId" not in html and "cf-challenge" not in html:
             return resp
 
         print("[POW] Bulmaca tespit edildi, FlareSolverr ile anahtar alınıyor...", flush=True)
@@ -194,7 +204,10 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         # FlareSolverr çerezlerini ve UA'yı seansa aktar
         fs_cookies_dict = {c["name"]: c["value"] for c in fs_cookies}
         requests.utils.add_dict_to_cookiejar(active_session.cookies, fs_cookies_dict)
-        headers['User-Agent'] = fs_ua
+        
+        # KRİTİK: User-Agent'ı seansa kaydet ki sonraki isteklerde 403 almayalım
+        active_session.headers['User-Agent'] = fs_ua
+        headers['User-Agent'] = fs_ua # Bu çağrı için de güncelle
         
         # Parametreleri çıkar
         c_id_match = re.search(r'challengeId\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
