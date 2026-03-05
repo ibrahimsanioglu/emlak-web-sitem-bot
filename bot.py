@@ -162,6 +162,7 @@ def fetch_listings_via_flaresolverr():
     def process_page_html(html, page_num, result_dict=None):
         """Sayfa HTML'inden data-token'ları çıkarıp API'den verileri çeker ve results'a ekler"""
         nonlocal results, seen_codes
+        page_new = 0
         
         blocks = html.split('data-token="')[1:]
         tokens = []
@@ -184,86 +185,72 @@ def fetch_listings_via_flaresolverr():
         if csrf_match:
             csrf_token = csrf_match.group(1)
         
+        # result_dict (FlareSolverr'dan gelen) içindeki çerezleri requests formatına çevirelim
+        cookies_dict = {}
+        ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        
+        if result_dict:
+            if "cookies" in result_dict:
+                for c in result_dict["cookies"]:
+                    cookies_dict[c["name"]] = c["value"]
+            if "userAgent" in result_dict and result_dict["userAgent"]:
+                ua = result_dict["userAgent"]
+        
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+            'User-Agent': ua
         }
         
         if csrf_token:
             headers['X-CSRF-TOKEN'] = csrf_token
             
-        # Flaresolverr kullanarak POST isteği yapacağız
-        post_data_str = urlencode([("tokens[]", t) for t in tokens])
-        
-        fs_payload = {
-            "cmd": "request.post",
-            "url": "https://www.makrolife.com.tr/api/ilan-verileri.php",
-            "maxTimeout": 45000,
-            "postData": post_data_str
-        }
-        
-        cookies_str = ""
-        if result_dict and "cookies" in result_dict:
-            for c in result_dict["cookies"]:
-                cookies_str += f"{c['name']}={c['value']}; "
-        if cookies_str:
-            headers['Cookie'] = cookies_str
+        # Doğrudan Python requests ile POST yapıyoruz (Cookies + UA + CSRF sayesinde Cloudflare geçilmeli)
+        payload_data = [("tokens[]", t) for t in tokens]
+        if csrf_token:
+            payload_data.append(("_token", csrf_token))
             
         try:
-            resp = requests.post(FLARESOLVERR_URL, json=fs_payload, timeout=60)
+            api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
+            resp = requests.post(api_url, data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
+            
             if resp.status_code == 200:
-                fs_res = resp.json()
-                if fs_res.get("status") == "ok":
-                    html_response = fs_res["solution"]["response"]
-                    # API JSON döndürmeli, flaresolverr html'e basıldığında JSON olarak döner 
-                    # ya da <body> içinde yer alır
-                    try:
-                        # Eğer body içine sardıysa
-                        if "<body" in html_response:
-                            json_str = html_response.split("<body>")[1].split("</body>")[0]
-                        else:
-                            json_str = html_response
+                try:
+                    resp_json = resp.json()
+                except ValueError:
+                    print(f"[API] JSON Parse Hatası: {resp.text[:200]}", flush=True)
+                    return page_new, page_new > 0
+                    
+                if resp_json.get("success") and "data" in resp_json:
+                    data = resp_json["data"]
+                    for i in range(len(tokens)):
+                        d = data.get(str(i))
+                        if d and isinstance(d, dict):
+                            kod = d.get('ilan_kodu')
+                            if not kod or kod in seen_codes:
+                                continue
+                            seen_codes.add(kod)
                             
-                        # HTML tabanlı (pre wrapper) cleanup
-                        json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
-                        
-                        resp_json = json.loads(json_str)
-                    except ValueError:
-                        print(f"[API] JSON Parse Hatası: FlareSolverr yanıtı düzgün parse edilemedi", flush=True)
-                        return page_new, page_new > 0
-                        
-                    if resp_json.get("success") and "data" in resp_json:
-                        data = resp_json["data"]
-                        for i in range(len(tokens)):
-                            d = data.get(str(i))
-                            if d and isinstance(d, dict):
-                                kod = d.get('ilan_kodu')
-                                if not kod or kod in seen_codes:
-                                    continue
-                                seen_codes.add(kod)
-                                
-                                fiyat = d.get('fiyat', 'Fiyat Yok')
-                                href = d.get('seo_url', '')
-                                baslik = d.get('baslik') or kod
-                                
-                                final_href = f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href
-                                
-                                results.append((
-                                    kod,
-                                    fiyat,
-                                    final_href,
-                                    baslik,
-                                    page_num
-                                ))
-                                page_new += 1
-                        return page_new, True
-                    else:
-                        print(f"[API] Başarısız yanıt veya data yok: {str(resp_json)[:100]}", flush=True)
+                            fiyat = d.get('fiyat', 'Fiyat Yok')
+                            href = d.get('seo_url', '')
+                            baslik = d.get('baslik') or kod
+                            
+                            final_href = f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href
+                            
+                            results.append((
+                                kod,
+                                fiyat,
+                                final_href,
+                                baslik,
+                                page_num
+                            ))
+                            page_new += 1
+                    return page_new, True
                 else:
-                    print(f"[API] Flaresolverr çözüm üretemedi: {fs_res}", flush=True)
+                    print(f"[API] Başarısız yanıt veya data yok: {str(resp_json)[:100]}", flush=True)
             else:
-                print(f"[API] Flaresolverr Hata {resp.status_code}: {resp.text[:200]}", flush=True)
+                print(f"[API] HTTP Hata {resp.status_code}: {resp.text[:200]}", flush=True)
+                # 403 alırsak Cloudflare engellemiş demektir
         except Exception as e:
             print(f"[API] Hata: {e}", flush=True)
             
@@ -2003,8 +1990,8 @@ def fetch_listings_playwright():
                 page_url = URL
                 print("[SAYFA " + str(page_num) + "] " + page_url, flush=True)
             else:
-                page_url = URL + "?page=" + str(page_num)
-                print("[SAYFA " + str(page_num) + "] AJAX: " + page_url, flush=True)
+                page_url = URL
+                print("[SAYFA " + str(page_num) + "] AJAX (Sayfa " + str(page_num) + ")", flush=True)
 
             success = False
             selector_found = False
@@ -2025,11 +2012,30 @@ def fetch_listings_playwright():
                             raise TimeoutError("Cloudflare challenge timeout")
                     else:
                         # AJAX sayfalama
-                        # `sayfaDegistir(page_num)` fonksiyonunu çağırıp ardından bekliyoruz
-                        page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
+                        # Önce mevcut içeriğin bir parçasını alalım ki değişip değişmediğini anlayalım
+                        old_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
-                        # API'nin yanıt verip DOM'un güncellenmesi için yeterli ve güvenli bir statik bekleme süresi:
-                        page.wait_for_timeout(5000)
+                        print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
+                        page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
+                        page.wait_for_timeout(4000)
+                        
+                        new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
+                        
+                        if old_content_hash == new_content_hash:
+                            print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, butona tıklama deneniyor...", flush=True)
+                            # Alternatif: Sayfa numarası butonuna tıkla
+                            # PHP sayfalama genelde <a> tagı içinde sayfa numarasını barındırır
+                            try:
+                                # Sayfa numarasını içeren tam metin eşleşmesi arayalım
+                                page.click(f"ul.pagination >> a:has-text('{page_num}')", timeout=5000)
+                                page.wait_for_timeout(4000)
+                            except:
+                                try:
+                                    # Alternatif seçici
+                                    page.click(f"a[onclick*='sayfaDegistir({page_num})']", timeout=5000)
+                                    page.wait_for_timeout(4000)
+                                except:
+                                    print(f"[SAYFA {page_num}] Buton tıklaması da başarısız oldu.", flush=True)
                         
                     page_loaded = True
                     break
