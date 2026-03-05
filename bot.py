@@ -271,7 +271,7 @@ def fetch_listings_via_flaresolverr():
         if page_num == 1:
             page_url = URL
         else:
-            page_url = URL + "?pager_p=" + str(page_num)
+            page_url = URL + "?page=" + str(page_num)
         
         print(f"[FLARESOLVERR SAYFA {page_num}] {page_url}", flush=True)
         
@@ -365,7 +365,7 @@ def fetch_listings_via_flaresolverr():
                 if failed_page == 1:
                     page_url = URL
                 else:
-                    page_url = URL + "?pager_p=" + str(failed_page)
+                    page_url = URL + "?page=" + str(failed_page)
                 
                 print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} tekrar deneniyor...", flush=True)
                 
@@ -452,7 +452,7 @@ def fetch_listings_via_google_proxy():
         if page_num == 1:
             page_url = URL
         else:
-            page_url = URL + "?pager_p=" + str(page_num)
+            page_url = URL + "?page=" + str(page_num)
         
         print(f"[GOOGLE_PROXY SAYFA {page_num}] {page_url}", flush=True)
         
