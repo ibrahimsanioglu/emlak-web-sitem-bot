@@ -73,7 +73,7 @@ USE_FLARESOLVERR = os.getenv("USE_FLARESOLVERR", "true").lower() == "true"
 print(f"FLARESOLVERR_URL: {FLARESOLVERR_URL}", flush=True)
 print(f"USE_FLARESOLVERR: {USE_FLARESOLVERR}", flush=True)
 
-def fetch_via_flaresolverr(url, method="GET", json_payload=None, max_timeout=120000):
+def fetch_via_flaresolverr(url, method="GET", json_payload=None, headers=None, max_timeout=120000):
     """FlareSolverr üzerinden sayfa içeriği al (Cloudflare Turnstile bypass)"""
     if not FLARESOLVERR_URL:
         print("[FLARESOLVERR] URL ayarlanmamış! Railway'de FLARESOLVERR_URL ekleyin.", flush=True)
@@ -100,10 +100,18 @@ def fetch_via_flaresolverr(url, method="GET", json_payload=None, max_timeout=120
             payload = {
                 "cmd": "request.get" if method == "GET" else "request.post",
                 "url": url,
-                "maxTimeout": max_timeout
+                "maxTimeout": max_timeout,
+                "session": "makrolife-bot-session" # FlareSolverr seansı korunsun
             }
+            if headers:
+                # FlareSolverr headers'ı liste veya dict olarak alabilir.
+                # Cookie header'ını FlareSolverr'ın kendi yönetimine bırakmak daha güvenli.
+                safe_headers = {k: v for k, v in headers.items() if k.lower() != 'cookie'}
+                payload["headers"] = safe_headers
+                
             if method == "POST" and json_payload:
                 payload["postData"] = json.dumps(json_payload)
+            
             
             
             response = requests.post(api_url, json=payload, timeout=max_timeout/1000 + 30)
@@ -202,23 +210,19 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
 
     # İlan verileri API'si veya AJAX istekleri için özel çerez hazırlığı
     if "api/" in url or method == "POST":
-        # Session içindeki TÜM çerezleri al
+        # requests.Session çerezleri otomatik yönetir. Manuel Cookie header'ı 
+        # bazen kütüphanenin çerez yönetimini bozabilir. 
+        # Sadece XSRF-TOKEN gibi özel header'ları ekleyelim.
         from requests.utils import dict_from_cookiejar
         cookies_dict = dict_from_cookiejar(active_session.cookies)
         
-        # Eğer seans boşsa FlareSolverr cookie'lerini bekliyor olabiliriz
         if cookies_dict:
-            cookie_str = "; ".join([f"{k}={v}" for k, v in cookies_dict.items()])
-            headers['Cookie'] = cookie_str
-            
             # XSRF-TOKEN'ı hem Cookie hem X-XSRF-TOKEN olarak gönder (Laravel standardı)
             from urllib.parse import unquote
             xsrf = cookies_dict.get('XSRF-TOKEN')
             if xsrf and 'X-XSRF-TOKEN' not in headers:
                 headers['X-XSRF-TOKEN'] = unquote(xsrf)
-            
-            # Ayrıca X-CSRF-TOKEN eğer varsa header'a ekle (Zaten process_page_html ekliyor ama garanti olsun)
-            print(f"[DEBUG] API/POST isteği çerezleri: {list(cookies_dict.keys())}", flush=True)
+            print(f"[DEBUG] API/POST isteği seans çerezleri aktif: {list(cookies_dict.keys())}", flush=True)
 
     # İlk istekte bulmaca var mı bak
     try:
@@ -255,7 +259,7 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
 
         print("[POW] Bulmaca tespit edildi, FlareSolverr ile anahtar alınıyor...", flush=True)
         # FlareSolverr ile anahtar alalım
-        fs_res = fetch_via_flaresolverr(url, method=method, json_payload=json_payload)
+        fs_res = fetch_via_flaresolverr(url, method=method, json_payload=json_payload, headers=headers)
         if not fs_res:
             return resp
         
