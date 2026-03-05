@@ -156,22 +156,31 @@ def solve_pow(prefix, difficulty):
 def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=None, referer=None, extra_headers=None):
     """Makrolife API'sine istek atar, Cloudflare bulmacasını otomatik çözer."""
     headers = {
-        'User-Agent': ua or 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
         'X-Requested-With': 'XMLHttpRequest',
         'Origin': 'https://www.makrolife.com.tr',
         'Referer': referer or 'https://www.makrolife.com.tr/ilanlar',
-        'Connection': 'keep-alive'
+        'Connection': 'keep-alive',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
+        'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"'
     }
+    
+    if ua:
+        headers['User-Agent'] = ua
 
     active_session = session or requests.Session()
     
-    # Session User-Agent kontrolü
-    if ua:
-        active_session.headers['User-Agent'] = ua
-    elif 'User-Agent' not in active_session.headers:
-        active_session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    # Session User-Agent senkronizasyonu
+    if 'User-Agent' in active_session.headers and not ua:
+        headers['User-Agent'] = active_session.headers['User-Agent']
+    elif 'User-Agent' not in headers:
+        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        active_session.headers['User-Agent'] = headers['User-Agent']
 
     # XSRF-TOKEN'ı çerezlerden alıp header'a ekle (Laravel standardı)
     from urllib.parse import unquote
@@ -249,6 +258,13 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
             
             if chal_resp.status_code == 200 and "success" in chal_resp.text:
                 print("[POW] Doğrulama başarılı, asıl istek tekrar ediliyor.", flush=True)
+                
+                # Çerezler değişmiş olabilir (özellikle XSRF-TOKEN), başlıkları tazele
+                from urllib.parse import unquote
+                xs_cookie = active_session.cookies.get('XSRF-TOKEN', domain='www.makrolife.com.tr')
+                if xs_cookie:
+                    headers['X-XSRF-TOKEN'] = unquote(xs_cookie)
+                
                 if method == "POST":
                     return active_session.post(url, json=json_payload, headers=headers, timeout=30)
                 else:
@@ -305,6 +321,8 @@ def fetch_listings_via_flaresolverr():
         if csrf_match:
             csrf_token = csrf_match.group(1)
             print(f"[DEBUG] CSRF Token bulundu: {csrf_token[:10]}...", flush=True)
+        else:
+            print("[DEBUG] CSRF Token bulunamadı. (Meta tag eksik veya farklı format)", flush=True)
         
         extra_headers = {}
         if csrf_token:
