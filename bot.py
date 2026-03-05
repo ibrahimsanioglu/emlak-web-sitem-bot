@@ -203,6 +203,15 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
     if extra_headers:
         headers.update(extra_headers)
 
+    # İlan verileri API'si için özel çerez hazırlığı
+    if "api/ilan-verileri.php" in url:
+        # Session içindeki çerezleri manuel olarak Cookie header'ına ekle (Bazı backendler bunu bekler)
+        cookies_dict = active_session.cookies.get_dict(domain="www.makrolife.com.tr")
+        if cookies_dict:
+            cookie_str = "; ".join([f"{k}={v}" for k, v in cookies_dict.items()])
+            headers['Cookie'] = cookie_str
+            print(f"[DEBUG] API isteği için çerezler eklendi: {list(cookies_dict.keys())}", flush=True)
+
     # İlk istekte bulmaca var mı bak
     try:
         if method == "POST":
