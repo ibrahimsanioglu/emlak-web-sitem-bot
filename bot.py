@@ -209,9 +209,8 @@ def fetch_listings_via_flaresolverr():
             headers['X-CSRF-TOKEN'] = csrf_token
             
         # API JSON formatında bekliyor
+        # Not: _token body içinde değil, header (X-CSRF-TOKEN) olarak gönderilmeli
         json_payload = {"tokens": tokens}
-        if csrf_token:
-            json_payload["_token"] = csrf_token
             
         try:
             api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
@@ -308,9 +307,9 @@ def fetch_listings_via_flaresolverr():
             if csrf_token:
                 headers['X-CSRF-TOKEN'] = csrf_token
             
-            json_payload = {"sayfa": page_num}
-            if csrf_token:
-                json_payload["_token"] = csrf_token
+            json_payload = {"sayfa": page_num, "filtreler": {}}
+            # Laravel CSRF bazen body'de de isteyebilir, ama browser testinde görünmüyordu.
+            # Deneme yanılma: Sadece filtreler ekleyelim.
                 
             try:
                 # AJAX Sayfalama API'sine doğrudan JSON ile istek atılıyor
@@ -2033,11 +2032,16 @@ def fetch_listings_playwright():
                             print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, butona tıklama deneniyor...", flush=True)
                             # Alternatif: Sayfa numarası butonuna tıkla
                             try:
-                                # Sayfa numarasını içeren linki bul ve tıkla
-                                pagination_link = page.locator(f"a:has-text('{page_num}')").first
+                                # Sayfa numarasını içeren linki (data-sayfa özniteliği ile) bul ve tıkla
+                                pagination_link = page.locator(f"a.page-link[data-sayfa='{page_num}']").first
+                                if not pagination_link.is_visible():
+                                    pagination_link = page.locator(f"a:has-text('{page_num}')").first
+                                    
                                 if pagination_link.is_visible():
                                     pagination_link.click()
                                     page.wait_for_timeout(4000)
+                                else:
+                                    print(f"[SAYFA {page_num}] Pagination butonu görünmüyor.", flush=True)
                             except Exception as e:
                                 print(f"[SAYFA {page_num}] Buton tıklaması başarısız: {str(e)[:50]}", flush=True)
                         
@@ -2121,62 +2125,57 @@ def fetch_listings_playwright():
                 """() => {
                 const out = [];
                 const seen = new Set();
+                
+                // data-token özniteliğine sahip elemanların kapsayıcılarını dolaşalım
+                document.querySelectorAll('[data-token]').forEach(el => {
+                    const token = el.getAttribute("data-token");
+                    if (!token) return;
 
-                // YENİ FORMAT: /ilan/...-ML-XXXX-XX ve ESKİ FORMAT: ilandetay?ilan_kodu=ML-XXXX-XX
-                document.querySelectorAll('a[href*="/ilan/"], a[href*="ilan_kodu="]').forEach(a => {
-                    const href = a.getAttribute("href");
-                    if (!href) return;
+                    // İlan kodu bulmaya çalışalım (genelde h6 veya p içinde ML-XXXXX formatında geçer)
+                    const text = el.innerText || "";
+                    const m = text.match(/(ML-[A-Z0-9-]{3,})/i) || document.body.innerHTML.match(new RegExp('ML-[A-Z0-9-]{3,}', 'i'));
                     
-                    if (href.includes('/danismanlar/') || href.includes('/iletisim')) return;
+                    let kod = "";
+                    if (m) {
+                        kod = m[0].toUpperCase();
+                    } else {
+                        // Eğer metinden gelmiyorsa, eleman içindeki linklerden arayalım
+                        const a = el.querySelector('a[href*="ML-"]');
+                        if (a) {
+                           const m2 = a.getAttribute("href").match(/(ML-[A-Z0-9-]{3,})/i);
+                           if (m2) kod = m2[1].toUpperCase();
+                        }
+                    }
 
-                    // ML- kodunu hem path'den hem de query string'den ayıklayalım (ML-XXXXX-XX formatı)
-                    const m = href.match(/(ML-[A-Z0-9-]{3,})/i);
-                    if (!m) return;
-
-                    const kod = m[1].toUpperCase();
-                    if (seen.has(kod)) return;
+                    if (!kod || seen.has(kod)) return;
                     seen.add(kod);
-                    console.log("[DEBUG] Bulunan Kod:", kod, "Link:", href);
 
                     let fiyat = "Fiyat yok";
-                    let title = "";
+                    let title = kod;
 
-                    let el = a;
-                    for (let i = 0; i < 8; i++) {
-                        if (!el.parentElement) break;
-                        el = el.parentElement;
+                    // Başlık ve fiyatı çekmeye çalışalım
+                    const h2 = el.querySelector("h2, h3, h4, h5, h6");
+                    if (h2) title = h2.innerText.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
 
-                        // Yeni yapı: h2 veya class içeren başlık
-                        const h2 = el.querySelector("h2");
-                        const h3 = el.querySelector("h3");
-                        const text = el.innerText || "";
-
-                        if ((h2 || h3) && (text.includes("₺") || text.includes("TL"))) {
-                            title = (h2 || h3).innerText.trim();
-                            // İlan kodunu başlıktan çıkar
-                            title = title.replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
-                            
-                            for (const line of text.split("\\n")) {
-                                if (/^[\d.,]+\s*(₺|TL)$/.test(line.trim())) {
-                                    fiyat = line.trim();
-                                    break;
-                                }
-                            }
+                    for (const line of text.split("\\n")) {
+                        if (/^[\d., ]+\s*(₺|TL)$/i.test(line.trim())) {
+                            fiyat = line.trim();
                             break;
                         }
                     }
 
-                    // Tam URL oluştur
-                    let fullHref = href;
-                    if (!href.startsWith('http')) {
-                        fullHref = 'https://www.makrolife.com.tr' + (href.startsWith('/') ? '' : '/') + href;
+                    // Link oluştur
+                    const aLink = el.querySelector('a');
+                    let fullHref = aLink ? aLink.getAttribute("href") : "";
+                    if (fullHref && !fullHref.startsWith('http')) {
+                        fullHref = 'https://www.makrolife.com.tr' + (fullHref.startsWith('/') ? '' : '/') + fullHref;
                     }
 
                     out.push({
                         kod: kod,
                         fiyat: fiyat,
                         title: title,
-                        link: fullHref
+                        link: fullHref || `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`
                     });
                 });
 
