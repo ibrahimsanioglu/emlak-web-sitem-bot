@@ -178,11 +178,20 @@ def fetch_listings_via_flaresolverr():
             
         print(f"[API] {len(tokens)} adet token API'ye (ilan-verileri.php) gönderiliyor...", flush=True)
         
+        # X-CSRF-TOKEN bilgisini HTML metninden regex ile çıkarıyoruz
+        csrf_token = ""
+        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', html)
+        if csrf_match:
+            csrf_token = csrf_match.group(1)
+        
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
         }
+        
+        if csrf_token:
+            headers['X-CSRF-TOKEN'] = csrf_token
         
         cookies_dict = {}
         if result_dict:
@@ -262,11 +271,20 @@ def fetch_listings_via_flaresolverr():
                 print(f"[FLARESOLVERR SAYFA {page_num}] Temel oturum bilgisi eksik", flush=True)
                 break
                 
+            # CSRF token'ı base result'tan alalım
+            csrf_token = ""
+            base_html = base_result_dict.get("content", "")
+            csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', base_html)
+            if csrf_match:
+                csrf_token = csrf_match.group(1)
+
             headers = {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With': 'XMLHttpRequest',
                 'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
             }
+            if csrf_token:
+                headers['X-CSRF-TOKEN'] = csrf_token
             cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
                     
             payload_data = {"sayfa": page_num}
@@ -402,11 +420,21 @@ def fetch_listings_via_flaresolverr():
                         still_failed.append(failed_page)
                         continue
                     
+                    # CSRF token'ı base result'tan alalım
+                    csrf_token = ""
+                    base_html = base_result_dict.get("content", "")
+                    csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', base_html)
+                    if csrf_match:
+                        csrf_token = csrf_match.group(1)
+                    
                     headers = {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                         'X-Requested-With': 'XMLHttpRequest',
                         'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
                     }
+                    if csrf_token:
+                        headers['X-CSRF-TOKEN'] = csrf_token
+                    
                     cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
                     
                     try:
