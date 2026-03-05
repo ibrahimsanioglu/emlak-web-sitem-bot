@@ -164,8 +164,6 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         'Referer': referer or 'https://www.makrolife.com.tr/ilanlar',
         'Connection': 'keep-alive'
     }
-    if extra_headers:
-        headers.update(extra_headers)
 
     active_session = session or requests.Session()
     
@@ -174,6 +172,15 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         active_session.headers['User-Agent'] = ua
     elif 'User-Agent' not in active_session.headers:
         active_session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+
+    # XSRF-TOKEN'ı çerezlerden alıp header'a ekle (Laravel standardı)
+    from urllib.parse import unquote
+    xsrf_cookie = active_session.cookies.get('XSRF-TOKEN', domain='www.makrolife.com.tr')
+    if xsrf_cookie:
+        headers['X-XSRF-TOKEN'] = unquote(xsrf_cookie)
+
+    if extra_headers:
+        headers.update(extra_headers)
 
     # İlk istekte bulmaca var mı bak
     try:
@@ -214,7 +221,8 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         prefix_match = re.search(r'prefix\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
         diff_match = re.search(r'difficulty\s*=\s*(\d+)', fs_html)
         ilan_match = re.search(r'ilanKodu\s*=\s*[\'"](.*?)[\'"]', fs_html)
-        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', fs_html)
+        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', fs_html) or \
+                     re.search(r'csrfToken\s*=\s*[\'"]([^"\']+)[\'"]', fs_html) # Alternatif formatlar
         
         if c_id_match and prefix_match:
             c_id = c_id_match.group(1)
@@ -290,11 +298,13 @@ def fetch_listings_via_flaresolverr():
             
         print(f"[API] {len(tokens)} adet token API'ye (ilan-verileri.php) gönderiliyor...", flush=True)
         
-        # X-CSRF-TOKEN bilgisini HTML metninden regex ile çıkarıyoruz
+        # X-CSRF-TOKEN bilgisini HTML metninden daha kapsamlı ara
         csrf_token = ""
-        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', html)
+        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', html) or \
+                     re.search(r'csrfToken\s*=\s*[\'"]([^"\']+)[\'"]', html)
         if csrf_match:
             csrf_token = csrf_match.group(1)
+            print(f"[DEBUG] CSRF Token bulundu: {csrf_token[:10]}...", flush=True)
         
         extra_headers = {}
         if csrf_token:
@@ -398,7 +408,6 @@ def fetch_listings_via_flaresolverr():
             print(f"[FAST-API SAYFA {page_num}] Hata: {e}", flush=True)
             break
     
-    return results
     return results
 
 def fetch_via_google_proxy(url):
