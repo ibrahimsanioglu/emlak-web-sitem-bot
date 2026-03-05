@@ -199,13 +199,17 @@ def fetch_listings_via_flaresolverr():
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent': ua
+            'User-Agent': ua,
+            'Referer': 'https://www.makrolife.com.tr/ilanlar',
+            'Origin': 'https://www.makrolife.com.tr',
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7'
         }
         
         if csrf_token:
             headers['X-CSRF-TOKEN'] = csrf_token
             
-        # Doğrudan Python requests ile POST yapıyoruz (Cookies + UA + CSRF sayesinde Cloudflare geçilmeli)
+        # Doğrudan Python requests ile POST yapıyoruz (Cookies + UA + CSRF + Headers sayesinde Cloudflare geçilmeli)
         payload_data = [("tokens[]", t) for t in tokens]
         if csrf_token:
             payload_data.append(("_token", csrf_token))
@@ -216,7 +220,9 @@ def fetch_listings_via_flaresolverr():
             
             if resp.status_code == 200:
                 try:
-                    resp_json = resp.json()
+                    # Bazı durumlarda yanıt başında boşluk veya BOM karakteri olabilir
+                    text = resp.text.strip()
+                    resp_json = json.loads(text)
                 except ValueError:
                     print(f"[API] JSON Parse Hatası: {resp.text[:200]}", flush=True)
                     return page_new, page_new > 0
@@ -284,57 +290,46 @@ def fetch_listings_via_flaresolverr():
             if csrf_match:
                 csrf_token = csrf_match.group(1)
 
+            # Çerezleri dict formatına çevir
+            cookies_dict = {}
+            if "cookies" in base_result_dict:
+                for c in base_result_dict["cookies"]:
+                    cookies_dict[c["name"]] = c["value"]
+
+            ua = base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+            
             headers = {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With': 'XMLHttpRequest',
-                'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+                'User-Agent': ua,
+                'Referer': 'https://www.makrolife.com.tr/ilanlar',
+                'Origin': 'https://www.makrolife.com.tr'
             }
             if csrf_token:
                 headers['X-CSRF-TOKEN'] = csrf_token
             
-            cookies_str = ""
-            if "cookies" in base_result_dict:
-                for c in base_result_dict["cookies"]:
-                    cookies_str += f"{c['name']}={c['value']}; "
-            if cookies_str:
-                headers['Cookie'] = cookies_str
+            payload_data = {"sayfa": page_num}
+            if csrf_token:
+                payload_data["_token"] = csrf_token
                 
-            post_data_str = urlencode([("sayfa", page_num)])
-            fs_payload = {
-                "cmd": "request.post",
-                "url": "https://www.makrolife.com.tr/api/ilan-sayfalama.php",
-                "maxTimeout": 45000,
-                "postData": post_data_str
-            }
-            
             try:
-                # AJAX Sayfalama API'sine FlareSolverr ile POST isteği atılarak Cloudflare engeli aşılıyor
-                resp = requests.post(FLARESOLVERR_URL, json=fs_payload, timeout=60)
+                # AJAX Sayfalama API'sine doğrudan Python ile istek atılıyor
+                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
                 if resp.status_code == 200:
-                    fs_res = resp.json()
-                    if fs_res.get("status") == "ok":
-                        # JSON parselama
-                        html_res = fs_res["solution"]["response"]
-                        if "<body" in html_res:
-                            json_str = html_res.split("<body>")[1].split("</body>")[0]
+                    try:
+                        resp_json = resp.json()
+                        if resp_json.get("success"):
+                            html = resp_json.get("html", "")
+                            result = {"content": html, **base_result_dict}
                         else:
-                            json_str = html_res
-                            
-                        json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
-                        try:
-                            resp_json = json.loads(json_str)
-                            if resp_json.get("success"):
-                                html = resp_json.get("html", "")
-                                result = {"content": html, **base_result_dict}
-                            else:
-                                print(f"[API SAYFALAMA] Başarısız yanıt: {str(resp_json)[:100]}", flush=True)
-                                result = None
-                        except ValueError:
-                            print(f"[API SAYFALAMA] JSON Parse Hatası", flush=True)
+                            print(f"[API SAYFALAMA] Başarısız yanıt: {str(resp_json)[:100]}", flush=True)
                             result = None
-                    else:
-                        print(f"[API SAYFALAMA] Flaresolverr çözüm üretemedi", flush=True)
+                    except ValueError:
+                        print(f"[API SAYFALAMA] JSON Parse Hatası: {resp.text[:200]}", flush=True)
                         result = None
+                else:
+                    print(f"[API SAYFALAMA] HTTP Hata {resp.status_code}: {resp.text[:200]}", flush=True)
+                    result = None
             except Exception as e:
                 print(f"[API SAYFALAMA] Hata: {e}", flush=True)
                 result = None
@@ -355,7 +350,12 @@ def fetch_listings_via_flaresolverr():
                         base_result_dict = result
                     else:
                         try:
-                            resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
+                            # Retry için de aynı headers ve cookies kullanılıyor
+                            retry_payload = {"sayfa": page_num}
+                            if csrf_token:
+                                retry_payload["_token"] = csrf_token
+                                
+                            resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=retry_payload, headers=headers, cookies=cookies_dict, timeout=30)
                             if resp.status_code == 200:
                                 resp_json = resp.json()
                                 if resp_json.get("success"):
@@ -2016,26 +2016,29 @@ def fetch_listings_playwright():
                         old_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
-                        page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
-                        page.wait_for_timeout(4000)
+                        try:
+                            # AJAX yanıtını bekle (ilan-sayfalama.php)
+                            with page.expect_response("**/api/ilan-sayfalama.php", timeout=15000) as response_info:
+                                page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
+                            print(f"[SAYFA {page_num}] AJAX yanıtı alındı.", flush=True)
+                        except:
+                            print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel deneme...", flush=True)
+                            page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                         
+                        page.wait_for_timeout(4000)
                         new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         if old_content_hash == new_content_hash:
                             print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, butona tıklama deneniyor...", flush=True)
                             # Alternatif: Sayfa numarası butonuna tıkla
-                            # PHP sayfalama genelde <a> tagı içinde sayfa numarasını barındırır
                             try:
-                                # Sayfa numarasını içeren tam metin eşleşmesi arayalım
-                                page.click(f"ul.pagination >> a:has-text('{page_num}')", timeout=5000)
-                                page.wait_for_timeout(4000)
-                            except:
-                                try:
-                                    # Alternatif seçici
-                                    page.click(f"a[onclick*='sayfaDegistir({page_num})']", timeout=5000)
+                                # Sayfa numarasını içeren linki bul ve tıkla
+                                pagination_link = page.locator(f"a:has-text('{page_num}')").first
+                                if pagination_link.is_visible():
+                                    pagination_link.click()
                                     page.wait_for_timeout(4000)
-                                except:
-                                    print(f"[SAYFA {page_num}] Buton tıklaması da başarısız oldu.", flush=True)
+                            except Exception as e:
+                                print(f"[SAYFA {page_num}] Buton tıklaması başarısız: {str(e)[:50]}", flush=True)
                         
                     page_loaded = True
                     break
@@ -2118,19 +2121,19 @@ def fetch_listings_playwright():
                 const out = [];
                 const seen = new Set();
 
-                // YENİ FORMAT: /ilan/...-ML-XXXX-XX
-                document.querySelectorAll('a[href*="/ilan/"]').forEach(a => {
+                // YENİ FORMAT: /ilan/...-ML-XXXX-XX ve ESKİ FORMAT: ilandetay?ilan_kodu=ML-XXXX-XX
+                document.querySelectorAll('a[href*="/ilan/"], a[href*="ilan_kodu="]').forEach(a => {
                     const href = a.getAttribute("href");
                     if (!href) return;
                     
                     // İlan linki değilse atla (danışman sayfaları vb.)
                     if (href.includes('/danismanlar/') || href.includes('/iletisim')) return;
 
-                    // Yeni format: /ilan/diyarbakir-yenisehir-mahalle-satilik-daire-ML-XXXX-XX
-                    const m = href.match(/-(ML-\d+-\d+)$/i) || href.match(/ML-(\d+-\d+)/i);
+                    // ML- kodunu hem path'den hem de query string'den ayıklayalım
+                    const m = href.match(/(ML-\d+-\d+)/i);
                     if (!m) return;
 
-                    const kod = m[1].startsWith('ML-') ? m[1].substring(3) : m[1];
+                    const kod = m[1].toUpperCase(); // ML-XXXX-XX formatını koru
                     if (seen.has(kod)) return;
                     seen.add(kod);
 
