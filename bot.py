@@ -73,85 +73,52 @@ USE_FLARESOLVERR = os.getenv("USE_FLARESOLVERR", "true").lower() == "true"
 print(f"FLARESOLVERR_URL: {FLARESOLVERR_URL}", flush=True)
 print(f"USE_FLARESOLVERR: {USE_FLARESOLVERR}", flush=True)
 
-def fetch_via_flaresolverr(url, method="GET", json_payload=None, headers=None, max_timeout=120000):
+def fetch_via_flaresolverr(url, method="GET", json_payload=None, max_timeout=120000):
     """FlareSolverr üzerinden sayfa içeriği al (Cloudflare Turnstile bypass)"""
     if not FLARESOLVERR_URL:
-        print("[FLARESOLVERR] URL ayarlanmamış! Railway'de FLARESOLVERR_URL ekleyin.", flush=True)
+        print("[FLARESOLVERR] URL ayarlanmamış!", flush=True)
         return None
     
     api_url = FLARESOLVERR_URL.rstrip("/")
-    if not api_url.startswith("http"):
-        api_url = "https://" + api_url
-        
     if not api_url.endswith("/v1"):
-        api_url = api_url + "/v1"
+        api_url += "/v1"
     
-    # Retry mekanizması (Connection refused için)
     import time as _time
-    max_retries = 3
+    max_retries = 2
     
     for attempt in range(max_retries):
         try:
-            if attempt > 0:
-                print(f"[FLARESOLVERR] Deneme {attempt+1}/{max_retries}...", flush=True)
-            
-            print(f"[FLARESOLVERR] Fetch: {url}", flush=True)
-            
             payload = {
                 "cmd": "request.get" if method == "GET" else "request.post",
                 "url": url,
                 "maxTimeout": max_timeout,
-                "session": "makrolife-bot-session" # FlareSolverr seansı korunsun
+                "session": "makrolife-bot-session" 
             }
-            if headers:
-                # FlareSolverr headers'ı liste veya dict olarak alabilir.
-                # Cookie header'ını FlareSolverr'ın kendi yönetimine bırakmak daha güvenli.
-                safe_headers = {k: v for k, v in headers.items() if k.lower() != 'cookie'}
-                payload["headers"] = safe_headers
-                
             if method == "POST" and json_payload:
                 payload["postData"] = json.dumps(json_payload)
             
-            
-            
             response = requests.post(api_url, json=payload, timeout=max_timeout/1000 + 30)
-            
             if response.status_code != 200:
-                print(f"[FLARESOLVERR] HTTP hata: {response.status_code}", flush=True)
+                print(f"[FLARESOLVERR] HTTP {response.status_code}", flush=True)
                 return None
             
             data = response.json()
-            status = data.get("status", "")
-            
-            if status != "ok":
-                message = data.get("message", "Bilinmeyen hata")
-                print(f"[FLARESOLVERR] Hata: {message}", flush=True)
+            if data.get("status") != "ok":
+                print(f"[FLARESOLVERR] Hata: {data.get('message')}", flush=True)
+                if "session" in data.get("message", "").lower():
+                    requests.post(api_url, json={"cmd": "sessions.destroy", "session": "makrolife-bot-session"})
                 return None
             
-            solution = data.get("solution", {})
-            html = solution.get("response", "")
-            final_url = solution.get("url", url)
-            cookies = solution.get("cookies", [])
-            user_agent = solution.get("userAgent", "")
-            
-            print(f"[FLARESOLVERR] Başarılı! İçerik uzunluğu: {len(html)}, Cookies: {len(cookies)}", flush=True)
-            
-            if html:
-                return {"content": html, "final_url": final_url, "cookies": cookies, "userAgent": user_agent}
-            return None
-
-        except requests.exceptions.ConnectionError:
-            print(f"[FLARESOLVERR] Bağlantı reddedildi (Connection refused). Servis henüz hazır olmayabilir.", flush=True)
-            if attempt < max_retries - 1:
-                _time.sleep(5)  # 5 saniye bekle ve tekrar dene
-        except requests.exceptions.Timeout:
-            print("[FLARESOLVERR] Timeout - FlareSolverr çok uzun sürdü", flush=True)
-            return None
+            sol = data.get("solution", {})
+            return {
+                "content": sol.get("response", ""),
+                "cookies": sol.get("cookies", []),
+                "userAgent": sol.get("userAgent", "")
+            }
         except Exception as e:
-            print(f"[FLARESOLVERR] Beklenmeyen Hata: {e}", flush=True)
-            return None
+            print(f"[FLARESOLVERR] Exception: {e}", flush=True)
+            _time.sleep(2)
             
-    print("[FLARESOLVERR] Tüm denemeler başarısız oldu.", flush=True)
     return None
 
 def solve_pow(prefix, difficulty):
@@ -164,182 +131,83 @@ def solve_pow(prefix, difficulty):
             return nonce
         nonce += 1
 
+class MockResponse:
+    def __init__(self, text, status_code):
+        self.text = text
+        self.status_code = status_code
+
 def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=None, referer=None, extra_headers=None):
     """Makrolife API'sine istek atar, Cloudflare bulmacasını otomatik çözer."""
     active_session = session or requests.Session()
+    BROWSER_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     
-    # Varsayılan başlıklar (Tarayıcı gibi davran)
     headers = {
-        'User-Agent': ua or active_session.headers.get('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'),
+        'User-Agent': BROWSER_UA,
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
-        'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"'
+        'X-Requested-With': 'XMLHttpRequest' if (method == "POST" or "api/" in url) else None
     }
+    # None olanları temizle
+    headers = {k: v for k, v in headers.items() if v is not None}
 
-    if referer:
-        headers['Referer'] = referer
-        headers['Sec-Fetch-Site'] = 'same-origin'
+    if referer: headers['Referer'] = referer
+    if extra_headers: headers.update(extra_headers)
 
-    # AJAX isteği ise başlıkları güncelle
-    if method == "POST" or "api/" in url:
-        headers.update({
-            'Accept': 'application/json, text/javascript, */*; q=0.01',
-            'X-Requested-With': 'XMLHttpRequest',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-origin'
-        })
-        if not referer:
-            headers['Referer'] = 'https://www.makrolife.com.tr/ilanlar'
-        
-    if ua:
-        headers['User-Agent'] = ua
-    
-    active_session.headers['User-Agent'] = headers['User-Agent']
-
-    if extra_headers:
-        headers.update(extra_headers)
-
-    # İlan verileri API'si veya AJAX istekleri için özel çerez hazırlığı
-    if "api/" in url or method == "POST":
-        # requests.Session çerezleri otomatik yönetir. Manuel Cookie header'ı 
-        # bazen kütüphanenin çerez yönetimini bozabilir. 
-        # Sadece XSRF-TOKEN gibi özel header'ları ekleyelim.
-        from requests.utils import dict_from_cookiejar
-        cookies_dict = dict_from_cookiejar(active_session.cookies)
-        
-        if cookies_dict:
-            # XSRF-TOKEN'ı hem Cookie hem X-XSRF-TOKEN olarak gönder (Laravel standardı)
-            from urllib.parse import unquote
-            xsrf = cookies_dict.get('XSRF-TOKEN')
-            if xsrf and 'X-XSRF-TOKEN' not in headers:
-                headers['X-XSRF-TOKEN'] = unquote(xsrf)
-            print(f"[DEBUG] API/POST isteği seans çerezleri aktif: {list(cookies_dict.keys())}", flush=True)
-
-    # İlk istekte bulmaca var mı bak
     try:
         if method == "POST":
             resp = active_session.post(url, json=json_payload, headers=headers, timeout=30)
         else:
             resp = active_session.get(url, headers=headers, timeout=30)
         
-        # 403 durumunda içeriğe bak (Cloudflare veya Backend engeli)
-        if resp.status_code == 403:
-            print(f"[API_CALL] 403 Alındı: {resp.text[:200]}", flush=True)
-
         html = resp.text
-        # Cloudflare veya özel "Güvenlik Doğrulaması" sayfasını algıla
-        html_lower = html.lower()
         is_challenge = False
-        if any(kw in html_lower for kw in [
-            "güvenlik doğrulaması", "challengeid", "cf-challenge", 
-            "enable javascript and cookies", "checking your browser before accessing",
-            "access denied"
-        ]):
+        if any(x in html.lower() for x in ["güvenlik", "challenge", "cf-", "captcha", "access denied"]):
             is_challenge = True
         
-        # Makrolife'a özel: Sadece yorum içeren veya data-token bulunmayan "sahte" başarılı yanıtlar (Block emaresi)
-        if not is_challenge and "data-token" not in html:
-            # Gerçek ilanlar sayfası mutlaka data-token içerir. 
-            # Eğer yoksa ve sitemizin ismini/yorumunu içeriyorsa bu bir bloktur.
-            if any(x in html for x in ["MAKRO", "GAYRİ", "challenge", "Checking your browser"]):
-                print("[API_CALL] Yanıtta data-token yok! Şüpheli içerik (Blok), FlareSolverr tetikleniyor...", flush=True)
+        if not is_challenge and "data-token" not in html and "api/ilan-verileri.php" not in url:
+            if "MAKRO" in html or "GAYRİ" in html:
                 is_challenge = True
 
         if not is_challenge:
             return resp
 
-        print("[POW] Bulmaca tespit edildi, FlareSolverr ile anahtar alınıyor...", flush=True)
-        # FlareSolverr ile anahtar alalım
-        fs_res = fetch_via_flaresolverr(url, method=method, json_payload=json_payload, headers=headers)
-        if not fs_res:
-            return resp
+        print("[POW] Engel tespit edildi, FlareSolverr seansı üzerinden aşılıyor...", flush=True)
+        fs_res = fetch_via_flaresolverr(url, method=method, json_payload=json_payload)
         
-        fs_html = fs_res["content"]
-        fs_cookies = fs_res["cookies"]
-        fs_ua = fs_res["userAgent"]
-        
-        # FlareSolverr çerezlerini ve UA'yı seansa aktar
-        fs_cookies_dict = {c["name"]: c["value"] for c in fs_cookies}
-        print(f"[DEBUG] FlareSolverr'dan gelen yeni çerezler: {list(fs_cookies_dict.keys())}", flush=True)
-        requests.utils.add_dict_to_cookiejar(active_session.cookies, fs_cookies_dict)
-        
-        # KRİTİK: User-Agent'ı seansa kaydet ki sonraki isteklerde 403 almayalım
-        active_session.headers['User-Agent'] = fs_ua
-        headers['User-Agent'] = fs_ua # Bu çağrı için de güncelle
-        
-        # Eğer FlareSolverr zaten aradığımız ilanları getirdiyse (data-token varsa) direkt dön
-        if "data-token" in fs_html:
-            print("[FLARESOLVERR] İlanlar içerikte bulundu, secondary PoW'a gerek yok.", flush=True)
-            class MockResponse:
-                def __init__(self, text, status_code):
-                    self.text = text
-                    self.status_code = status_code
-            return MockResponse(fs_html, 200)
-
-        # Parametreleri çıkar
-        c_id_match = re.search(r'challengeId\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
-        prefix_match = re.search(r'prefix\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
-        diff_match = re.search(r'difficulty\s*=\s*(\d+)', fs_html)
-        ilan_match = re.search(r'ilanKodu\s*=\s*[\'"](.*?)[\'"]', fs_html)
-        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', fs_html) or \
-                     re.search(r'csrfToken\s*=\s*[\'"]([^"\']+)[\'"]', fs_html) # Alternatif formatlar
-        
-        if c_id_match and prefix_match:
-            c_id = c_id_match.group(1)
-            prefix = prefix_match.group(1)
-            diff = int(diff_match.group(1)) if diff_match else 4
-            ilan_kodu = ilan_match.group(1) if ilan_match else ""
-            csrf = csrf_match.group(1) if csrf_match else ""
+        if fs_res:
+            # UA ve Çerezleri seansa işle (ileriki direkt istekler için)
+            active_session.headers['User-Agent'] = fs_res["userAgent"]
+            for c in fs_res["cookies"]:
+                active_session.cookies.set(c["name"], c["value"], domain="www.makrolife.com.tr")
             
-            print(f"[POW] Bulmaca çözülüyor (Diff: {diff})...", flush=True)
-            nonce = solve_pow(prefix, diff)
-            print(f"[POW] Çözüldü! Nonce: {nonce}", flush=True)
+            # Eğer ilanlar geldiyse direkt dön
+            if "data-token" in fs_res["content"]:
+                return MockResponse(fs_res["content"], 200)
             
-            # API'ye çözümü gönder
-            challenge_payload = {
-                "challenge_id": c_id,
-                "nonce": str(nonce),
-                "ilan_kodu": ilan_kodu
-            }
-            if csrf:
-                headers['X-CSRF-TOKEN'] = csrf
+            # Eğer hala bulmaca varsa PoW çöz (Kendi sitemizin eklediği PoW olabilir)
+            fs_html = fs_res["content"]
+            c_id_match = re.search(r'challengeId\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
+            prefix_match = re.search(r'prefix\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
             
-            challenge_url = "https://www.makrolife.com.tr/api/ilan-challenge.php"
-            chal_resp = active_session.post(challenge_url, json=challenge_payload, headers=headers, timeout=20)
-            
-            if chal_resp.status_code == 200 and "success" in chal_resp.text:
-                print("[POW] Doğrulama başarılı, asıl istek tekrar ediliyor.", flush=True)
+            if c_id_match and prefix_match:
+                print("[POW] Python Solver devrede...", flush=True)
+                c_id = c_id_match.group(1)
+                prefix = prefix_match.group(1)
+                diff = int(re.search(r'difficulty\s*=\s*(\d+)', fs_html).group(1)) if "difficulty" in fs_html else 4
+                nonce = solve_pow(prefix, diff)
                 
-                # Çerezler değişmiş olabilir (özellikle XSRF-TOKEN), başlıkları tazele
-                from urllib.parse import unquote
-                xs_cookie = active_session.cookies.get('XSRF-TOKEN', domain='www.makrolife.com.tr')
-                if xs_cookie:
-                    headers['X-XSRF-TOKEN'] = unquote(xs_cookie)
+                chal_url = "https://www.makrolife.com.tr/api/ilan-challenge.php"
+                chal_payload = {"challenge_id": c_id, "nonce": str(nonce), "ilan_kodu": ""}
+                active_session.post(chal_url, json=chal_payload, headers=headers, timeout=20)
                 
+                # Asıl isteği tekrarla
                 if method == "POST":
                     return active_session.post(url, json=json_payload, headers=headers, timeout=30)
-                else:
-                    return active_session.get(url, headers=headers, timeout=30)
-            else:
-                print(f"[POW] Doğrulama hatası! HTTP {chal_resp.status_code}", flush=True)
-        
-        # Eğer custom PoW bulunamadıysa ama elimizde FlareSolverr içeriği varsa onu dönelim
-        if fs_html:
-            class MockResponse:
-                def __init__(self, text, status_code):
-                    self.text = text
-                    self.status_code = status_code
-            return MockResponse(fs_html, 200)
+                return active_session.get(url, headers=headers, timeout=30)
             
+            return MockResponse(fs_html, 200)
+
         return resp
     except Exception as e:
         print(f"[API_CALL] Hata: {e}", flush=True)
@@ -360,6 +228,15 @@ def fetch_listings_via_flaresolverr():
     RETRY_WAIT = 30  # Retry öncesi bekleme süresi (saniye)
     
     print("[FLARESOLVERR] İlan taraması başlıyor...", flush=True)
+    
+    # Temiz bir başlangıç için FlareSolverr seansını temizle
+    if FLARESOLVERR_URL:
+        try:
+            api_url = FLARESOLVERR_URL.rstrip("/")
+            if not api_url.endswith("/v1"): api_url += "/v1"
+            requests.post(api_url, json={"cmd": "sessions.destroy", "session": "makrolife-bot-session"}, timeout=5)
+        except: pass
+    
     session = requests.Session()
     
     def process_page_html(html, page_num, session=None):
@@ -396,23 +273,9 @@ def fetch_listings_via_flaresolverr():
             
         print(f"[API] {len(tokens)} adet token API'ye (ilan-verileri.php) gönderiliyor...", flush=True)
         
-        # X-CSRF-TOKEN bilgisini HTML metninden daha kapsamlı ara
-        csrf_token = ""
-        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', html) or \
-                     re.search(r'csrfToken\s*=\s*[\'"]([^"\']+)[\'"]', html)
-        if csrf_match:
-            csrf_token = csrf_match.group(1)
-            print(f"[DEBUG] CSRF Token bulundu: {csrf_token[:10]}...", flush=True)
-        else:
-            print("[DEBUG] CSRF Token bulunamadı. (Meta tag eksik veya farklı format)", flush=True)
-        
         extra_headers = {}
-        if csrf_token:
-            extra_headers['X-CSRF-TOKEN'] = csrf_token
-            
         json_payload = {"tokens": tokens}
-        if csrf_token:
-            json_payload["_token"] = csrf_token
+            
             
         try:
             api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
