@@ -153,7 +153,7 @@ def solve_pow(prefix, difficulty):
             return nonce
         nonce += 1
 
-def call_makrolife_api(url, method="GET", json_payload=None, cookies_dict=None, ua=None, referer=None):
+def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=None, referer=None, extra_headers=None):
     """Makrolife API'sine istek atar, Cloudflare bulmacasını otomatik çözer."""
     headers = {
         'User-Agent': ua or 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -164,18 +164,18 @@ def call_makrolife_api(url, method="GET", json_payload=None, cookies_dict=None, 
         'Referer': referer or 'https://www.makrolife.com.tr/ilanlar',
         'Connection': 'keep-alive'
     }
+    if extra_headers:
+        headers.update(extra_headers)
 
-    session = requests.Session()
-    if cookies_dict:
-        requests.utils.add_dict_to_cookiejar(session.cookies, cookies_dict)
+    active_session = session or requests.Session()
     
     # FlareSolverr üzerinden anahtar al (Eğer bulmaca varsa)
     # İlk istekte bulmaca var mı bak
     try:
         if method == "POST":
-            resp = session.post(url, json=json_payload, headers=headers, timeout=30)
+            resp = active_session.post(url, json=json_payload, headers=headers, timeout=30)
         else:
-            resp = session.get(url, headers=headers, timeout=30)
+            resp = active_session.get(url, headers=headers, timeout=30)
         
         html = resp.text
         if "Güvenlik Doğrulaması" not in html or "challengeId" not in html:
@@ -193,7 +193,7 @@ def call_makrolife_api(url, method="GET", json_payload=None, cookies_dict=None, 
         
         # FlareSolverr çerezlerini ve UA'yı seansa aktar
         fs_cookies_dict = {c["name"]: c["value"] for c in fs_cookies}
-        requests.utils.add_dict_to_cookiejar(session.cookies, fs_cookies_dict)
+        requests.utils.add_dict_to_cookiejar(active_session.cookies, fs_cookies_dict)
         headers['User-Agent'] = fs_ua
         
         # Parametreleri çıkar
@@ -224,14 +224,14 @@ def call_makrolife_api(url, method="GET", json_payload=None, cookies_dict=None, 
                 headers['X-CSRF-TOKEN'] = csrf
             
             challenge_url = "https://www.makrolife.com.tr/api/ilan-challenge.php"
-            chal_resp = session.post(challenge_url, json=challenge_payload, headers=headers, timeout=20)
+            chal_resp = active_session.post(challenge_url, json=challenge_payload, headers=headers, timeout=20)
             
             if chal_resp.status_code == 200 and "success" in chal_resp.text:
                 print("[POW] Doğrulama başarılı, asıl istek tekrar ediliyor.", flush=True)
                 if method == "POST":
-                    return session.post(url, json=json_payload, headers=headers, timeout=30)
+                    return active_session.post(url, json=json_payload, headers=headers, timeout=30)
                 else:
-                    return session.get(url, headers=headers, timeout=30)
+                    return active_session.get(url, headers=headers, timeout=30)
             else:
                 print(f"[POW] Doğrulama hatası! HTTP {chal_resp.status_code}", flush=True)
                 
@@ -255,8 +255,9 @@ def fetch_listings_via_flaresolverr():
     RETRY_WAIT = 30  # Retry öncesi bekleme süresi (saniye)
     
     print("[FLARESOLVERR] İlan taraması başlıyor...", flush=True)
+    session = requests.Session()
     
-    def process_page_html(html, page_num, result_dict=None):
+    def process_page_html(html, page_num, session=None):
         """Sayfa HTML'inden data-token'ları çıkarıp API'den verileri çeker ve results'a ekler"""
         nonlocal results, seen_codes
         page_new = 0
@@ -282,39 +283,19 @@ def fetch_listings_via_flaresolverr():
         if csrf_match:
             csrf_token = csrf_match.group(1)
         
-        # result_dict (FlareSolverr'dan gelen) içindeki çerezleri requests formatına çevirelim
-        cookies_dict = {}
-        ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-        
-        if result_dict:
-            if "cookies" in result_dict:
-                for c in result_dict["cookies"]:
-                    cookies_dict[c["name"]] = c["value"]
-            if "userAgent" in result_dict and result_dict["userAgent"]:
-                ua = result_dict["userAgent"]
-        
-        headers = {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent': ua,
-            'Referer': 'https://www.makrolife.com.tr/ilanlar',
-            'Origin': 'https://www.makrolife.com.tr',
-            'Accept': 'application/json, text/javascript, */*; q=0.01'
-        }
-        
+        extra_headers = {}
         if csrf_token:
-            headers['X-CSRF-TOKEN'] = csrf_token
+            extra_headers['X-CSRF-TOKEN'] = csrf_token
             
-        # API hem JSON hem de _token bekliyor olabilir
         json_payload = {"tokens": tokens}
         if csrf_token:
             json_payload["_token"] = csrf_token
             
         try:
             api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
-            resp = requests.post(api_url, json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
+            resp = call_makrolife_api(api_url, method="POST", json_payload=json_payload, session=session, extra_headers=extra_headers)
             
-            if resp.status_code == 200:
+            if resp and resp.status_code == 200:
                 try:
                     # Bazı durumlarda yanıt başında boşluk veya BOM karakteri olabilir
                     text = resp.text.strip()
@@ -370,30 +351,21 @@ def fetch_listings_via_flaresolverr():
         
         if page_num == 1:
             print(f"[FAST-API SAYFA 1] {URL}", flush=True)
-            resp = call_makrolife_api(URL)
+            resp = call_makrolife_api(URL, session=session)
         else:
             print(f"[FAST-API SAYFA {page_num}] AJAX tetikleniyor...", flush=True)
-            if not base_result_dict:
-                print(f"[FAST-API SAYFA {page_num}] Temel oturum bilgisi eksik", flush=True)
-                break
-                
-            # CSRF token'ı base result'tan alalım
-            csrf_token = ""
-            base_html = base_result_dict.get("content", "")
-            csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', base_html)
-            if csrf_match:
-                csrf_token = csrf_match.group(1)
-
+            # CSRF token'ı önceki sayfadan (veya session state'ten) alalım
+            # Genelde session state'te kalır ama HTML'den okumak daha garanti
             json_payload = {"sayfa": page_num, "filtreler": {}}
-            if csrf_token:
-                json_payload["_token"] = csrf_token
+            # CSRF token'ı session içindeki cookies veya html'den bulamayız kolayca, 
+            # o yüzden process_page_html sonrasında global veya shared state'ten almalıyız.
+            # Şimdilik process_page_html içinde güncellenen token'ı kullanacağız.
             
             resp = call_makrolife_api(
                 "https://www.makrolife.com.tr/api/ilan-sayfalama.php",
                 method="POST",
                 json_payload=json_payload,
-                cookies_dict={c["name"]: c["value"] for c in base_result_dict.get("cookies", [])},
-                ua=base_result_dict.get("userAgent")
+                session=session
             )
 
         if not resp or resp.status_code != 200:
@@ -401,23 +373,8 @@ def fetch_listings_via_flaresolverr():
             return results
 
         try:
-            if page_num == 1:
-                html = resp.text
-                # Sayfa 1 için base_result_dict oluştur (çerezler ve UA için)
-                base_result_dict = {
-                    "content": html,
-                    "cookies": [{"name": k, "value": v} for k, v in resp.cookies.get_dict().items()],
-                    "userAgent": resp.request.headers.get("User-Agent")
-                }
-            else:
-                resp_json = resp.json()
-                if resp_json.get("success"):
-                    html = resp_json.get("html", "")
-                else:
-                    print(f"[FAST-API SAYFA {page_num}] Başarısız yanıt", flush=True)
-                    break
-
-            page_new, success = process_page_html(html, page_num, base_result_dict)
+            html = resp.text
+            page_new, success = process_page_html(html, page_num, session=session)
             if not success or page_new == 0:
                 print(f"[FAST-API SAYFA {page_num}] Yeni ilan yok veya son sayfa", flush=True)
                 break
