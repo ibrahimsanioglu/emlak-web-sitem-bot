@@ -173,10 +173,13 @@ def fetch_listings_via_flaresolverr():
                 tokens.append(token)
         
         if not tokens:
+            print("[API] Sayfada data-token bulunamadı!", flush=True)
             return 0, False
             
+        print(f"[API] {len(tokens)} adet token API'ye (ilan-verileri.php) gönderiliyor...", flush=True)
+        
         headers = {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
         }
@@ -192,9 +195,16 @@ def fetch_listings_via_flaresolverr():
         api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
         page_new = 0
         try:
-            resp = requests.post(api_url, json={"tokens": tokens}, cookies=cookies_dict, headers=headers, timeout=30)
+            # PHP, $_POST dizisini alabilmek için form-urlencoded bekler ve token listesi 'tokens[]' anahtarıyla yollanmalıdır
+            payload_data = {"tokens[]": tokens}
+            resp = requests.post(api_url, data=payload_data, cookies=cookies_dict, headers=headers, timeout=30)
             if resp.status_code == 200:
-                resp_json = resp.json()
+                try:
+                    resp_json = resp.json()
+                except ValueError:
+                    print(f"[API] JSON Parse Hatası: {resp.text[:200]}", flush=True)
+                    return page_new, page_new > 0
+                    
                 if resp_json.get("success") and "data" in resp_json:
                     data = resp_json["data"]
                     for i in range(len(tokens)):
@@ -220,6 +230,10 @@ def fetch_listings_via_flaresolverr():
                             ))
                             page_new += 1
                     return page_new, True
+                else:
+                    print(f"[API] Başarısız yanıt veya data yok: {resp_json}", flush=True)
+            else:
+                print(f"[API] HTTP Hata {resp.status_code}: {resp.text[:300]}", flush=True)
         except Exception as e:
             print(f"[API] Hata: {e}", flush=True)
             
@@ -247,20 +261,30 @@ def fetch_listings_via_flaresolverr():
                 break
                 
             headers = {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With': 'XMLHttpRequest',
                 'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
             }
             cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
                     
-            payload = {"sayfa": page_num, "filtreler": {}}
+            payload_data = {"sayfa": page_num}
             try:
                 # AJAX Sayfalama API'sine doğrudan Python ile istek atılıyor
-                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=payload, headers=headers, cookies=cookies_dict, timeout=30)
-                if resp.status_code == 200 and resp.json().get("success"):
-                    html = resp.json().get("html", "")
-                    result = {"content": html, **base_result_dict}
+                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
+                if resp.status_code == 200:
+                    try:
+                        resp_json = resp.json()
+                        if resp_json.get("success"):
+                            html = resp_json.get("html", "")
+                            result = {"content": html, **base_result_dict}
+                        else:
+                            print(f"[API SAYFALAMA] Başarısız yanıt: {resp_json}", flush=True)
+                            result = None
+                    except ValueError:
+                        print(f"[API SAYFALAMA] JSON Parse Hatası: {resp.text[:200]}", flush=True)
+                        result = None
                 else:
+                    print(f"[API SAYFALAMA] HTTP Hata {resp.status_code}: {resp.text[:200]}", flush=True)
                     result = None
             except Exception as e:
                 print(f"[API SAYFALAMA] Hata: {e}", flush=True)
@@ -282,10 +306,14 @@ def fetch_listings_via_flaresolverr():
                         base_result_dict = result
                     else:
                         try:
-                            resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=payload, headers=headers, cookies=cookies_dict, timeout=30)
-                            if resp.status_code == 200 and resp.json().get("success"):
-                                html = resp.json().get("html", "")
-                                result = {"content": html, **base_result_dict}
+                            resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
+                            if resp.status_code == 200:
+                                resp_json = resp.json()
+                                if resp_json.get("success"):
+                                    html = resp_json.get("html", "")
+                                    result = {"content": html, **base_result_dict}
+                                else:
+                                    result = None
                             else:
                                 result = None
                         except:
@@ -373,14 +401,14 @@ def fetch_listings_via_flaresolverr():
                         continue
                     
                     headers = {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                         'X-Requested-With': 'XMLHttpRequest',
                         'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
                     }
                     cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
                     
                     try:
-                        resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json={"sayfa": failed_page, "filtreler": {}}, headers=headers, cookies=cookies_dict, timeout=30)
+                        resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data={"sayfa": failed_page}, headers=headers, cookies=cookies_dict, timeout=30)
                         if resp.status_code == 200 and resp.json().get("success"):
                             result = {"content": resp.json().get("html", ""), **base_result_dict}
                         else:
