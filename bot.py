@@ -208,9 +208,10 @@ def fetch_listings_via_flaresolverr():
         if csrf_token:
             headers['X-CSRF-TOKEN'] = csrf_token
             
-        # API JSON formatında bekliyor
-        # Not: _token body içinde değil, header (X-CSRF-TOKEN) olarak gönderilmeli
+        # API hem JSON hem de _token bekliyor olabilir
         json_payload = {"tokens": tokens}
+        if csrf_token:
+            json_payload["_token"] = csrf_token
             
         try:
             api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
@@ -308,11 +309,11 @@ def fetch_listings_via_flaresolverr():
                 headers['X-CSRF-TOKEN'] = csrf_token
             
             json_payload = {"sayfa": page_num, "filtreler": {}}
-            # Laravel CSRF bazen body'de de isteyebilir, ama browser testinde görünmüyordu.
-            # Deneme yanılma: Sadece filtreler ekleyelim.
+            if csrf_token:
+                json_payload["_token"] = csrf_token
                 
             try:
-                # AJAX Sayfalama API'sine doğrudan JSON ile istek atılıyor
+                # AJAX Sayfalama API'sine doğrudan JSON+Token ile istek atılıyor
                 resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
                 if resp.status_code == 200:
                     try:
@@ -2029,21 +2030,32 @@ def fetch_listings_playwright():
                         new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         if old_content_hash == new_content_hash:
-                            print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, butona tıklama deneniyor...", flush=True)
-                            # Alternatif: Sayfa numarası butonuna tıkla
+                            print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, JS-click deneniyor...", flush=True)
                             try:
-                                # Sayfa numarasını içeren linki (data-sayfa özniteliği ile) bul ve tıkla
-                                pagination_link = page.locator(f"a.page-link[data-sayfa='{page_num}']").first
-                                if not pagination_link.is_visible():
-                                    pagination_link = page.locator(f"a:has-text('{page_num}')").first
-                                    
-                                if pagination_link.is_visible():
-                                    pagination_link.click()
-                                    page.wait_for_timeout(4000)
+                                # Overlay engellerini aşmak için JS ile doğrudan elemana tıklayıp sayfalama AJAX'ını tetikleyelim
+                                js_click = f"""
+                                (function(num) {{
+                                    let btn = document.querySelector('a.page-link[data-sayfa="' + num + '"]');
+                                    if(!btn) {{
+                                       // Alternatif: Metne göre bul
+                                       let links = Array.from(document.querySelectorAll('a.page-link, a'));
+                                       btn = links.find(a => a.innerText.trim() === String(num));
+                                    }}
+                                    if(btn) {{
+                                        btn.click();
+                                        return true;
+                                    }}
+                                    return false;
+                                }})({page_num})
+                                """
+                                clicked = page.evaluate(js_click)
+                                if clicked:
+                                    print(f"[SAYFA {page_num}] JS-click başarılı, bekleniyor...", flush=True)
+                                    page.wait_for_timeout(5000)
                                 else:
-                                    print(f"[SAYFA {page_num}] Pagination butonu görünmüyor.", flush=True)
+                                    print(f"[SAYFA {page_num}] Buton bulunamadı.", flush=True)
                             except Exception as e:
-                                print(f"[SAYFA {page_num}] Buton tıklaması başarısız: {str(e)[:50]}", flush=True)
+                                print(f"[SAYFA {page_num}] JS-click hatası: {str(e)[:50]}", flush=True)
                         
                     page_loaded = True
                     break
