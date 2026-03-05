@@ -3,7 +3,7 @@ import sys
 import json
 import time
 import random
-from urllib.parse import urlparse, urlunparse
+from urllib.parse import urlparse, urlunparse, urlencode
 import base64
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
@@ -187,64 +187,83 @@ def fetch_listings_via_flaresolverr():
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+            'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
         }
         
         if csrf_token:
             headers['X-CSRF-TOKEN'] = csrf_token
-        
-        cookies_dict = {}
-        if result_dict:
-            if "cookies" in result_dict:
-                for c in result_dict["cookies"]:
-                    cookies_dict[c["name"]] = c["value"]
-            if "userAgent" in result_dict and result_dict["userAgent"]:
-                headers["User-Agent"] = result_dict["userAgent"]
-                
-        api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
-        page_new = 0
-        try:
-            # PHP, $_POST dizisini alabilmek için form-urlencoded bekler
-            # Aynı anahtarla birden fazla değer göndermek için list of tuples kullanılır
-            payload_data = [("tokens[]", t) for t in tokens]
             
-            resp = requests.post(api_url, data=payload_data, cookies=cookies_dict, headers=headers, timeout=30)
+        # Flaresolverr kullanarak POST isteği yapacağız
+        post_data_str = urlencode([("tokens[]", t) for t in tokens])
+        
+        fs_payload = {
+            "cmd": "request.post",
+            "url": "https://www.makrolife.com.tr/api/ilan-verileri.php",
+            "maxTimeout": 45000,
+            "postData": post_data_str
+        }
+        
+        cookies_str = ""
+        if result_dict and "cookies" in result_dict:
+            for c in result_dict["cookies"]:
+                cookies_str += f"{c['name']}={c['value']}; "
+        if cookies_str:
+            headers['Cookie'] = cookies_str
+            
+        try:
+            resp = requests.post(FLARESOLVERR_URL, json=fs_payload, timeout=60)
             if resp.status_code == 200:
-                try:
-                    resp_json = resp.json()
-                except ValueError:
-                    print(f"[API] JSON Parse Hatası: {resp.text[:200]}", flush=True)
-                    return page_new, page_new > 0
-                    
-                if resp_json.get("success") and "data" in resp_json:
-                    data = resp_json["data"]
-                    for i in range(len(tokens)):
-                        d = data.get(str(i))
-                        if d and isinstance(d, dict):
-                            kod = d.get('ilan_kodu')
-                            if not kod or kod in seen_codes:
-                                continue
-                            seen_codes.add(kod)
+                fs_res = resp.json()
+                if fs_res.get("status") == "ok":
+                    html_response = fs_res["solution"]["response"]
+                    # API JSON döndürmeli, flaresolverr html'e basıldığında JSON olarak döner 
+                    # ya da <body> içinde yer alır
+                    try:
+                        # Eğer body içine sardıysa
+                        if "<body" in html_response:
+                            json_str = html_response.split("<body>")[1].split("</body>")[0]
+                        else:
+                            json_str = html_response
                             
-                            fiyat = d.get('fiyat', 'Fiyat Yok')
-                            href = d.get('seo_url', '')
-                            baslik = d.get('baslik') or kod
-                            
-                            final_href = f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href
-                            
-                            results.append((
-                                kod,
-                                fiyat,
-                                final_href,
-                                baslik,
-                                page_num
-                            ))
-                            page_new += 1
-                    return page_new, True
+                        # HTML tabanlı (pre wrapper) cleanup
+                        json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
+                        
+                        resp_json = json.loads(json_str)
+                    except ValueError:
+                        print(f"[API] JSON Parse Hatası: FlareSolverr yanıtı düzgün parse edilemedi", flush=True)
+                        return page_new, page_new > 0
+                        
+                    if resp_json.get("success") and "data" in resp_json:
+                        data = resp_json["data"]
+                        for i in range(len(tokens)):
+                            d = data.get(str(i))
+                            if d and isinstance(d, dict):
+                                kod = d.get('ilan_kodu')
+                                if not kod or kod in seen_codes:
+                                    continue
+                                seen_codes.add(kod)
+                                
+                                fiyat = d.get('fiyat', 'Fiyat Yok')
+                                href = d.get('seo_url', '')
+                                baslik = d.get('baslik') or kod
+                                
+                                final_href = f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href
+                                
+                                results.append((
+                                    kod,
+                                    fiyat,
+                                    final_href,
+                                    baslik,
+                                    page_num
+                                ))
+                                page_new += 1
+                        return page_new, True
+                    else:
+                        print(f"[API] Başarısız yanıt veya data yok: {str(resp_json)[:100]}", flush=True)
                 else:
-                    print(f"[API] Başarısız yanıt veya data yok: {resp_json}", flush=True)
+                    print(f"[API] Flaresolverr çözüm üretemedi: {fs_res}", flush=True)
             else:
-                print(f"[API] HTTP Hata {resp.status_code}: {resp.text[:300]}", flush=True)
+                print(f"[API] Flaresolverr Hata {resp.status_code}: {resp.text[:200]}", flush=True)
         except Exception as e:
             print(f"[API] Hata: {e}", flush=True)
             
@@ -259,14 +278,14 @@ def fetch_listings_via_flaresolverr():
             break
         
         page_num += 1
-        page_url = URL if page_num == 1 else URL + "?page=" + str(page_num)
-        
-        print(f"[FLARESOLVERR SAYFA {page_num}] {page_url}", flush=True)
+        page_url = URL if page_num == 1 else URL
         
         if page_num == 1:
+            print(f"[FLARESOLVERR SAYFA 1] {URL}", flush=True)
             result = fetch_via_flaresolverr(page_url)
             base_result_dict = result
         else:
+            print(f"[FLARESOLVERR SAYFA {page_num}] AJAX tetikleniyor...", flush=True)
             if not base_result_dict:
                 print(f"[FLARESOLVERR SAYFA {page_num}] Temel oturum bilgisi eksik", flush=True)
                 break
@@ -285,27 +304,50 @@ def fetch_listings_via_flaresolverr():
             }
             if csrf_token:
                 headers['X-CSRF-TOKEN'] = csrf_token
-            cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
-                    
-            payload_data = {"sayfa": page_num}
+            
+            cookies_str = ""
+            if "cookies" in base_result_dict:
+                for c in base_result_dict["cookies"]:
+                    cookies_str += f"{c['name']}={c['value']}; "
+            if cookies_str:
+                headers['Cookie'] = cookies_str
+                
+            post_data_str = urlencode([("sayfa", page_num)])
+            fs_payload = {
+                "cmd": "request.post",
+                "url": "https://www.makrolife.com.tr/api/ilan-sayfalama.php",
+                "maxTimeout": 45000,
+                "postData": post_data_str
+            }
+            
             try:
-                # AJAX Sayfalama API'sine doğrudan Python ile istek atılıyor
-                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
+                # AJAX Sayfalama API'sine FlareSolverr ile POST isteği atılarak Cloudflare engeli aşılıyor
+                resp = requests.post(FLARESOLVERR_URL, json=fs_payload, timeout=60)
                 if resp.status_code == 200:
-                    try:
-                        resp_json = resp.json()
-                        if resp_json.get("success"):
-                            html = resp_json.get("html", "")
-                            result = {"content": html, **base_result_dict}
+                    fs_res = resp.json()
+                    if fs_res.get("status") == "ok":
+                        # JSON parselama
+                        html_res = fs_res["solution"]["response"]
+                        if "<body" in html_res:
+                            json_str = html_res.split("<body>")[1].split("</body>")[0]
                         else:
-                            print(f"[API SAYFALAMA] Başarısız yanıt: {resp_json}", flush=True)
+                            json_str = html_res
+                            
+                        json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
+                        try:
+                            resp_json = json.loads(json_str)
+                            if resp_json.get("success"):
+                                html = resp_json.get("html", "")
+                                result = {"content": html, **base_result_dict}
+                            else:
+                                print(f"[API SAYFALAMA] Başarısız yanıt: {str(resp_json)[:100]}", flush=True)
+                                result = None
+                        except ValueError:
+                            print(f"[API SAYFALAMA] JSON Parse Hatası", flush=True)
                             result = None
-                    except ValueError:
-                        print(f"[API SAYFALAMA] JSON Parse Hatası: {resp.text[:200]}", flush=True)
+                    else:
+                        print(f"[API SAYFALAMA] Flaresolverr çözüm üretemedi", flush=True)
                         result = None
-                else:
-                    print(f"[API SAYFALAMA] HTTP Hata {resp.status_code}: {resp.text[:200]}", flush=True)
-                    result = None
             except Exception as e:
                 print(f"[API SAYFALAMA] Hata: {e}", flush=True)
                 result = None
@@ -435,15 +477,45 @@ def fetch_listings_via_flaresolverr():
                     if csrf_token:
                         headers['X-CSRF-TOKEN'] = csrf_token
                     
-                    cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
+                    if cookies_str:
+                        headers['Cookie'] = cookies_str
+                        
+                    post_data_str = urlencode([("sayfa", failed_page)])
+                    fs_payload = {
+                        "cmd": "request.post",
+                        "url": "https://www.makrolife.com.tr/api/ilan-sayfalama.php",
+                        "maxTimeout": 45000,
+                        "postData": post_data_str
+                    }
                     
                     try:
-                        resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data={"sayfa": failed_page}, headers=headers, cookies=cookies_dict, timeout=30)
-                        if resp.status_code == 200 and resp.json().get("success"):
-                            result = {"content": resp.json().get("html", ""), **base_result_dict}
+                        resp = requests.post(FLARESOLVERR_URL, json=fs_payload, timeout=60)
+                        if resp.status_code == 200:
+                            fs_res = resp.json()
+                            if fs_res.get("status") == "ok":
+                                # JSON parselama
+                                html_res = fs_res["solution"]["response"]
+                                if "<body" in html_res:
+                                    json_str = html_res.split("<body>")[1].split("</body>")[0]
+                                else:
+                                    json_str = html_res
+                                    
+                                json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
+                                try:
+                                    resp_json = json.loads(json_str)
+                                    if resp_json.get("success"):
+                                        result = {"content": resp_json.get("html", ""), **base_result_dict}
+                                    else:
+                                        result = None
+                                        print(f"[API SAYFALAMA] Başarısız: {str(resp_json)[:100]}", flush=True)
+                                except ValueError:
+                                    result = None
+                            else:
+                                result = None
                         else:
                             result = None
-                    except:
+                    except Exception as e:
+                        print(f"[API SAYFALAMA] Hata: {e}", flush=True)
                         result = None
                         
                 if result and result.get("content"):
