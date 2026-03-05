@@ -158,108 +158,68 @@ def fetch_listings_via_flaresolverr():
     
     print("[FLARESOLVERR] İlan taraması başlıyor...", flush=True)
     
-    def process_page_html(html, page_num):
-        """Sayfa HTML'inden ilanları çıkar ve results/seen_codes'a ekle"""
+    def process_page_html(html, page_num, result_dict=None):
+        """Sayfa HTML'inden data-token'ları çıkarıp API'den verileri çeker ve results'a ekler"""
         nonlocal results, seen_codes
         
-        # HTML'den ilan linklerini çıkar - ÖNCE BENZERSİZ KODLARI BUL
-        ilan_pattern = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
-        all_matches = re.findall(ilan_pattern, html, re.IGNORECASE)
+        blocks = html.split('data-token="')[1:]
+        tokens = []
+        for block in blocks:
+            token = block.split('"')[0]
+            if 'aria-hidden="true"' in block[:150]:
+                continue
+            if token not in tokens:
+                tokens.append(token)
         
-        if not all_matches:
-            return 0, False  # 0 ilan, devam et
+        if not tokens:
+            return 0, False
+            
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        }
         
-        # Benzersiz kodları ve ilk linklerini al (dict ile otomatik dedupe)
-        unique_listings = {}
-        for href, kod in all_matches:
-            if kod not in unique_listings and kod not in seen_codes:
-                unique_listings[kod] = href
-        
-        if not unique_listings:
-            return 0, False  # 0 yeni ilan
-        
-        # Sadece benzersiz ilanları işle
+        cookies_dict = {}
+        if result_dict and "cookies" in result_dict:
+            for c in result_dict["cookies"]:
+                cookies_dict[c["name"]] = c["value"]
+                
+        api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
         page_new = 0
-        for kod, href in unique_listings.items():
-            seen_codes.add(kod)
+        try:
+            resp = requests.post(api_url, json={"tokens": tokens}, cookies=cookies_dict, headers=headers, timeout=30)
+            if resp.status_code == 200:
+                resp_json = resp.json()
+                if resp_json.get("success") and "data" in resp_json:
+                    data = resp_json["data"]
+                    for i in range(len(tokens)):
+                        d = data.get(str(i))
+                        if d and isinstance(d, dict):
+                            kod = d.get('ilan_kodu')
+                            if not kod or kod in seen_codes:
+                                continue
+                            seen_codes.add(kod)
+                            
+                            fiyat = d.get('fiyat', 'Fiyat Yok')
+                            href = d.get('seo_url', '')
+                            baslik = d.get('baslik') or kod
+                            
+                            final_href = f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href
+                            
+                            results.append((
+                                kod,
+                                fiyat,
+                                final_href,
+                                baslik,
+                                page_num
+                            ))
+                            page_new += 1
+                    return page_new, True
+        except Exception as e:
+            print(f"[API] Hata: {e}", flush=True)
             
-            # Link pozisyonunu bul
-            link_pos = html.find(f'href="{href}"')
-            if link_pos == -1:
-                link_pos = 0
-            
-            # Chunk al - Kart yapısı geniş, fiyat linkin ~5000-7000 karakter sonrasında
-            search_start = max(0, link_pos - 500)
-            search_end = min(len(html), link_pos + 8000)  # 8000'e çıkarıldı (fiyat kart sonunda)
-            chunk = html[search_start:search_end]
-            
-            # 1. Başlık Çıkarma
-            baslik = None
-            # Heading tagleri
-            title_match = re.search(r'<h[1-6][^>]*>\s*([^<]+?)\s*-\s*ML-\d+-\d+\s*</h[1-6]>', chunk, re.IGNORECASE)
-            if title_match:
-                baslik = title_match.group(1).strip()
-            
-            # data-target-title attribute (daha güvenilir)
-            if not baslik:
-                data_title = re.search(r'data-target-title="([^"]+)"', chunk, re.IGNORECASE)
-                if data_title:
-                    baslik = data_title.group(1).strip()
-            
-            # card-title class
-            if not baslik:
-                class_match = re.search(r'class="[^"]*card-title[^"]*"[^>]*>(?:\s*<a[^>]+>)?\s*([^<]+?)\s*(?:</a>)?\s*</', chunk, re.IGNORECASE)
-                if class_match:
-                    baslik = class_match.group(1).strip()
-
-            # Fallback: URL'den çıkar
-            if not baslik:
-                try:
-                    path_parts = href.split("/ilan/")[1].rsplit("-ML-", 1)[0]
-                    baslik = " ".join(word.capitalize() for word in path_parts.replace("-", " ").split())
-                except:
-                    baslik = f"İlan ML-{kod}"
-            
-            # Temizlik
-            if baslik:
-                baslik = baslik.replace("&amp;", "&").replace("&quot;", '"').replace("&#039;", "'").replace("&nbsp;", " ")
-                baslik = re.sub(r'\s*-\s*ML-\d+-\d+\s*$', '', baslik, flags=re.IGNORECASE)
-            
-            # 2. Fiyat Çıkarma - Makrolife'ın HTML yapısına özel
-            fiyat = "Fiyat Yok"
-            # Öncelik 1: <span class="h5 text-primary m-0">26.000 TL</span> veya türevleri
-            price_match = re.search(r'class="[^"]*price[^"]*"[^>]*>\s*([\d\.,]+)\s*(?:<[^>]+>\s*)*(TL|₺)', chunk, re.IGNORECASE)
-            if price_match:
-                amount = price_match.group(1)
-                if sum(c.isdigit() for c in amount) >= 3:
-                    fiyat = f"{amount.strip()} TL"
-            
-            # Öncelik 2: Genel fiyat pattern'i (HTML tagları arasında veya direkt metin içinde)
-            if fiyat == "Fiyat Yok":
-                price_match2 = re.search(r'>\s*([\d\.]+(?:[\.,]\d{3})*)\s*(?:<[^>]+>\s*)*(TL|₺|USD|EUR|GBP)', chunk, re.IGNORECASE)
-                if price_match2:
-                    amount = price_match2.group(1)
-                    if sum(c.isdigit() for c in amount) >= 3:
-                        fiyat = f"{amount.strip()} TL"
-
-            # Öncelik 3: Sadece Rakam ve Para birimi arama
-            if fiyat == "Fiyat Yok":
-                price_match3 = re.search(r'([\d\.,]{4,})\s*(?:<[^>]+>\s*)*(TL|₺)', chunk, re.IGNORECASE)
-                if price_match3:
-                    amount = price_match3.group(1)
-                    if sum(c.isdigit() for c in amount) >= 3:
-                        fiyat = f"{amount.strip()} TL"
-            
-            results.append((
-                kod,
-                fiyat,
-                f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href,
-                baslik,
-                page_num
-            ))
-            page_new += 1
-        
-        return page_new, True
+        return page_new, page_new > 0
     
     # ============ ANA TARAMA DÖNGÜSÜ ============
     while page_num < MAX_PAGES:
@@ -297,7 +257,7 @@ def fetch_listings_via_flaresolverr():
                     return None
                 # Retry başarılı oldu, bu sayfayı işle
                 html = result["content"]
-                page_new, _ = process_page_html(html, page_num)
+                page_new, _ = process_page_html(html, page_num, result)
                 print(f"[FLARESOLVERR SAYFA {page_num}] Retry başarılı! {page_new} ilan (toplam: {len(results)})", flush=True)
                 if page_num % 10 == 0:
                     time.sleep(3)
@@ -317,9 +277,9 @@ def fetch_listings_via_flaresolverr():
         consecutive_failures = 0
         html = result["content"]
         
-        # HTML'den ilan linklerini çıkar - ÖNCE BENZERSİZ KODLARI BUL
-        ilan_pattern = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
-        all_matches = re.findall(ilan_pattern, html, re.IGNORECASE)
+        # HTML'den data-token'ları çıkar
+        token_pattern = r'data-token="([^"]+)"'
+        all_matches = re.findall(token_pattern, html)
         
         if not all_matches:
             if page_num <= MIN_VALID_PAGES:
@@ -328,7 +288,7 @@ def fetch_listings_via_flaresolverr():
             print(f"[FLARESOLVERR SAYFA {page_num}] Son sayfa geçildi", flush=True)
             break
         
-        page_new, _ = process_page_html(html, page_num)
+        page_new, _ = process_page_html(html, page_num, result)
         
         if page_new == 0:
             # Bu sayfada yeni ilan yok, muhtemelen son sayfa
@@ -373,7 +333,7 @@ def fetch_listings_via_flaresolverr():
                 
                 if result and result.get("content"):
                     html = result["content"]
-                    page_new, success = process_page_html(html, failed_page)
+                    page_new, success = process_page_html(html, failed_page, result)
                     
                     if success:
                         print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} BAŞARILI! {page_new} ilan eklendi (toplam: {len(results)})", flush=True)
