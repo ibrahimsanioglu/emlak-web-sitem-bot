@@ -225,10 +225,13 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         ]):
             is_challenge = True
         
-        # Makrolife'a özel: Sadece yorum içeren çok kısa yanıtlar (Block emaresi)
-        if not is_challenge and len(html) < 2000 and "<!-- MAKRO LİFE GAYRİMENKUL -->" in html:
-            print("[API_CALL] Şüpheli kısa/yorumlu yanıt (Blok olabilir), FlareSolverr tetikleniyor...", flush=True)
-            is_challenge = True
+        # Makrolife'a özel: Sadece yorum içeren veya data-token bulunmayan "sahte" başarılı yanıtlar (Block emaresi)
+        if not is_challenge and "data-token" not in html:
+            # Gerçek ilanlar sayfası mutlaka data-token içerir. 
+            # Eğer yoksa ve sitemizin ismini/yorumunu içeriyorsa bu bir bloktur.
+            if any(x in html for x in ["MAKRO", "GAYRİ", "challenge", "Checking your browser"]):
+                print("[API_CALL] Yanıtta data-token yok! Şüpheli içerik (Blok), FlareSolverr tetikleniyor...", flush=True)
+                is_challenge = True
 
         if not is_challenge:
             return resp
