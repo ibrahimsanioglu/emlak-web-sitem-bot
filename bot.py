@@ -195,8 +195,10 @@ def fetch_listings_via_flaresolverr():
         api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
         page_new = 0
         try:
-            # PHP, $_POST dizisini alabilmek için form-urlencoded bekler ve token listesi 'tokens[]' anahtarıyla yollanmalıdır
-            payload_data = {"tokens[]": tokens}
+            # PHP, $_POST dizisini alabilmek için form-urlencoded bekler
+            # Aynı anahtarla birden fazla değer göndermek için list of tuples kullanılır
+            payload_data = [("tokens[]", t) for t in tokens]
+            
             resp = requests.post(api_url, data=payload_data, cookies=cookies_dict, headers=headers, timeout=30)
             if resp.status_code == 200:
                 try:
@@ -1923,9 +1925,11 @@ def fetch_listings_playwright():
                             raise TimeoutError("Cloudflare challenge timeout")
                     else:
                         # AJAX sayfalama
-                        with page.expect_response("**/api/ilan-verileri.php", timeout=45000):
-                            page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') sayfaDegistir({page_num});")
-                        page.wait_for_timeout(1000) # JS'nin DOM'u güncellemesi için kısa bekleme
+                        # `sayfaDegistir(page_num)` fonksiyonunu çağırıp ardından bekliyoruz
+                        page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
+                        
+                        # API'nin yanıt verip DOM'un güncellenmesi için yeterli ve güvenli bir statik bekleme süresi:
+                        page.wait_for_timeout(5000)
                         
                     page_loaded = True
                     break
