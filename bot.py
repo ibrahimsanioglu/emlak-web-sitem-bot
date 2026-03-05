@@ -119,11 +119,12 @@ def fetch_via_flaresolverr(url, max_timeout=120000):
             html = solution.get("response", "")
             final_url = solution.get("url", url)
             cookies = solution.get("cookies", [])
+            user_agent = solution.get("userAgent", "")
             
             print(f"[FLARESOLVERR] Başarılı! İçerik uzunluğu: {len(html)}, Cookies: {len(cookies)}", flush=True)
             
             if html:
-                return {"content": html, "final_url": final_url, "cookies": cookies}
+                return {"content": html, "final_url": final_url, "cookies": cookies, "userAgent": user_agent}
             return None
 
         except requests.exceptions.ConnectionError:
@@ -181,9 +182,12 @@ def fetch_listings_via_flaresolverr():
         }
         
         cookies_dict = {}
-        if result_dict and "cookies" in result_dict:
-            for c in result_dict["cookies"]:
-                cookies_dict[c["name"]] = c["value"]
+        if result_dict:
+            if "cookies" in result_dict:
+                for c in result_dict["cookies"]:
+                    cookies_dict[c["name"]] = c["value"]
+            if "userAgent" in result_dict and result_dict["userAgent"]:
+                headers["User-Agent"] = result_dict["userAgent"]
                 
         api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
         page_new = 0
@@ -222,20 +226,45 @@ def fetch_listings_via_flaresolverr():
         return page_new, page_new > 0
     
     # ============ ANA TARAMA DÖNGÜSÜ ============
+    base_result_dict = None  # Sayfa 1'den gelen FlareSolverr session verilerini saklamak için
+    
     while page_num < MAX_PAGES:
         if SCAN_STOP_REQUESTED:
             print("[FLARESOLVERR] Kullanıcı durdurdu", flush=True)
             break
         
         page_num += 1
-        if page_num == 1:
-            page_url = URL
-        else:
-            page_url = URL + "?page=" + str(page_num)
+        page_url = URL if page_num == 1 else URL + "?page=" + str(page_num)
         
         print(f"[FLARESOLVERR SAYFA {page_num}] {page_url}", flush=True)
         
-        result = fetch_via_flaresolverr(page_url)
+        if page_num == 1:
+            result = fetch_via_flaresolverr(page_url)
+            base_result_dict = result
+        else:
+            if not base_result_dict:
+                print(f"[FLARESOLVERR SAYFA {page_num}] Temel oturum bilgisi eksik", flush=True)
+                break
+                
+            headers = {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+            }
+            cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
+                    
+            payload = {"sayfa": page_num, "filtreler": {}}
+            try:
+                # AJAX Sayfalama API'sine doğrudan Python ile istek atılıyor
+                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=payload, headers=headers, cookies=cookies_dict, timeout=30)
+                if resp.status_code == 200 and resp.json().get("success"):
+                    html = resp.json().get("html", "")
+                    result = {"content": html, **base_result_dict}
+                else:
+                    result = None
+            except Exception as e:
+                print(f"[API SAYFALAMA] Hata: {e}", flush=True)
+                result = None
         
         if not result or not result.get("content"):
             consecutive_failures += 1
@@ -247,7 +276,21 @@ def fetch_listings_via_flaresolverr():
                 for retry_i in range(1, 4):
                     print(f"[FLARESOLVERR] Sayfa {page_num} retry {retry_i}/3...", flush=True)
                     time.sleep(10)
-                    result = fetch_via_flaresolverr(page_url)
+                    
+                    if page_num == 1:
+                        result = fetch_via_flaresolverr(page_url)
+                        base_result_dict = result
+                    else:
+                        try:
+                            resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=payload, headers=headers, cookies=cookies_dict, timeout=30)
+                            if resp.status_code == 200 and resp.json().get("success"):
+                                html = resp.json().get("html", "")
+                                result = {"content": html, **base_result_dict}
+                            else:
+                                result = None
+                        except:
+                            result = None
+
                     if result and result.get("content"):
                         retry_ok = True
                         consecutive_failures = 0
@@ -282,13 +325,13 @@ def fetch_listings_via_flaresolverr():
         all_matches = re.findall(token_pattern, html)
         
         if not all_matches:
-            if page_num <= MIN_VALID_PAGES:
+            if page_num <= 1:
                 print(f"[FLARESOLVERR] Sayfa {page_num} boş - hata", flush=True)
                 return None
             print(f"[FLARESOLVERR SAYFA {page_num}] Son sayfa geçildi", flush=True)
             break
         
-        page_new, _ = process_page_html(html, page_num, result)
+        page_new, _ = process_page_html(html, page_num, base_result_dict)
         
         if page_new == 0:
             # Bu sayfada yeni ilan yok, muhtemelen son sayfa
@@ -323,17 +366,31 @@ def fetch_listings_via_flaresolverr():
                     break
                 
                 if failed_page == 1:
-                    page_url = URL
+                    result = fetch_via_flaresolverr(URL)
                 else:
-                    page_url = URL + "?page=" + str(failed_page)
-                
-                print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} tekrar deneniyor...", flush=True)
-                
-                result = fetch_via_flaresolverr(page_url)
-                
+                    if not base_result_dict:
+                        still_failed.append(failed_page)
+                        continue
+                    
+                    headers = {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+                    }
+                    cookies_dict = {c["name"]: c["value"] for c in base_result_dict.get("cookies", [])}
+                    
+                    try:
+                        resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json={"sayfa": failed_page, "filtreler": {}}, headers=headers, cookies=cookies_dict, timeout=30)
+                        if resp.status_code == 200 and resp.json().get("success"):
+                            result = {"content": resp.json().get("html", ""), **base_result_dict}
+                        else:
+                            result = None
+                    except:
+                        result = None
+                        
                 if result and result.get("content"):
                     html = result["content"]
-                    page_new, success = process_page_html(html, failed_page, result)
+                    page_new, success = process_page_html(html, failed_page, base_result_dict if failed_page > 1 else result)
                     
                     if success:
                         print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} BAŞARILI! {page_new} ilan eklendi (toplam: {len(results)})", flush=True)
@@ -1814,9 +1871,10 @@ def fetch_listings_playwright():
             page_num += 1
             if page_num == 1:
                 page_url = URL
+                print("[SAYFA " + str(page_num) + "] " + page_url, flush=True)
             else:
                 page_url = URL + "?page=" + str(page_num)
-            print("[SAYFA " + str(page_num) + "] " + page_url, flush=True)
+                print("[SAYFA " + str(page_num) + "] AJAX: " + page_url, flush=True)
 
             success = False
             selector_found = False
@@ -1827,29 +1885,37 @@ def fetch_listings_playwright():
             
             for retry_attempt in range(MAX_PAGE_RETRIES):
                 try:
-                    # Timeout: 90 saniye (önceki 60'tan artırıldı)
-                    page.goto(page_url, timeout=90000, wait_until="networkidle")
-                    
-                    # Cloudflare challenge kontrolü ve beklemesi
-                    if not wait_for_cloudflare(page):
-                        print(f"[SAYFA {page_num}] Cloudflare challenge geçilemedi", flush=True)
-                        raise TimeoutError("Cloudflare challenge timeout")
-                    
+                    if page_num == 1:
+                        # Timeout: 90 saniye (önceki 60'tan artırıldı)
+                        page.goto(page_url, timeout=90000, wait_until="networkidle")
+                        
+                        # Cloudflare challenge kontrolü ve beklemesi
+                        if not wait_for_cloudflare(page):
+                            print(f"[SAYFA {page_num}] Cloudflare challenge geçilemedi", flush=True)
+                            raise TimeoutError("Cloudflare challenge timeout")
+                    else:
+                        # AJAX sayfalama
+                        with page.expect_response("**/api/ilan-verileri.php", timeout=45000):
+                            page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') sayfaDegistir({page_num});")
+                        page.wait_for_timeout(1000) # JS'nin DOM'u güncellemesi için kısa bekleme
+                        
                     page_loaded = True
                     break
                 except TimeoutError:
                     if retry_attempt < MAX_PAGE_RETRIES - 1:
                         print("[SAYFA " + str(page_num) + "] Timeout - yeniden deneniyor (" + str(retry_attempt + 2) + "/" + str(MAX_PAGE_RETRIES) + ")", flush=True)
                         time.sleep(2)  # Kısa bekleme
-                        # Context yenile
-                        try:
-                            page.close()
-                            context.close()
-                            context = new_context()
-                            page = context.new_page()
-                            stealth_sync(page)  # Apply stealth to new page
-                        except:
-                            pass
+                        
+                        if page_num == 1:
+                            # Context yenile
+                            try:
+                                page.close()
+                                context.close()
+                                context = new_context()
+                                page = context.new_page()
+                                stealth_sync(page)  # Apply stealth to new page
+                            except:
+                                pass
                     else:
                         print("[SAYFA " + str(page_num) + "] Sayfa yüklenemedi - " + str(MAX_PAGE_RETRIES) + " deneme başarısız", flush=True)
                 except Exception as e:
