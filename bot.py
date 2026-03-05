@@ -254,6 +254,15 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         active_session.headers['User-Agent'] = fs_ua
         headers['User-Agent'] = fs_ua # Bu çağrı için de güncelle
         
+        # Eğer FlareSolverr zaten aradığımız ilanları getirdiyse (data-token varsa) direkt dön
+        if "data-token" in fs_html:
+            print("[FLARESOLVERR] İlanlar içerikte bulundu, secondary PoW'a gerek yok.", flush=True)
+            class MockResponse:
+                def __init__(self, text, status_code):
+                    self.text = text
+                    self.status_code = status_code
+            return MockResponse(fs_html, 200)
+
         # Parametreleri çıkar
         c_id_match = re.search(r'challengeId\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
         prefix_match = re.search(r'prefix\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
@@ -300,7 +309,15 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
                     return active_session.get(url, headers=headers, timeout=30)
             else:
                 print(f"[POW] Doğrulama hatası! HTTP {chal_resp.status_code}", flush=True)
-                
+        
+        # Eğer custom PoW bulunamadıysa ama elimizde FlareSolverr içeriği varsa onu dönelim
+        if fs_html:
+            class MockResponse:
+                def __init__(self, text, status_code):
+                    self.text = text
+                    self.status_code = status_code
+            return MockResponse(fs_html, 200)
+            
         return resp
     except Exception as e:
         print(f"[API_CALL] Hata: {e}", flush=True)
