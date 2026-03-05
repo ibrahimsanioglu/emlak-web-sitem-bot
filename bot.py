@@ -197,26 +197,25 @@ def fetch_listings_via_flaresolverr():
                 ua = result_dict["userAgent"]
         
         headers = {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
             'User-Agent': ua,
             'Referer': 'https://www.makrolife.com.tr/ilanlar',
             'Origin': 'https://www.makrolife.com.tr',
-            'Accept': 'application/json, text/javascript, */*; q=0.01',
-            'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7'
+            'Accept': 'application/json, text/javascript, */*; q=0.01'
         }
         
         if csrf_token:
             headers['X-CSRF-TOKEN'] = csrf_token
             
-        # Doğrudan Python requests ile POST yapıyoruz (Cookies + UA + CSRF + Headers sayesinde Cloudflare geçilmeli)
-        payload_data = [("tokens[]", t) for t in tokens]
+        # API JSON formatında bekliyor
+        json_payload = {"tokens": tokens}
         if csrf_token:
-            payload_data.append(("_token", csrf_token))
+            json_payload["_token"] = csrf_token
             
         try:
             api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
-            resp = requests.post(api_url, data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
+            resp = requests.post(api_url, json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
             
             if resp.status_code == 200:
                 try:
@@ -299,22 +298,23 @@ def fetch_listings_via_flaresolverr():
             ua = base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
             
             headers = {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
                 'User-Agent': ua,
                 'Referer': 'https://www.makrolife.com.tr/ilanlar',
-                'Origin': 'https://www.makrolife.com.tr'
+                'Origin': 'https://www.makrolife.com.tr',
+                'Accept': 'application/json, text/javascript, */*; q=0.01'
             }
             if csrf_token:
                 headers['X-CSRF-TOKEN'] = csrf_token
             
-            payload_data = {"sayfa": page_num}
+            json_payload = {"sayfa": page_num}
             if csrf_token:
-                payload_data["_token"] = csrf_token
+                json_payload["_token"] = csrf_token
                 
             try:
-                # AJAX Sayfalama API'sine doğrudan Python ile istek atılıyor
-                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=payload_data, headers=headers, cookies=cookies_dict, timeout=30)
+                # AJAX Sayfalama API'sine doğrudan JSON ile istek atılıyor
+                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
                 if resp.status_code == 200:
                     try:
                         resp_json = resp.json()
@@ -482,11 +482,11 @@ def fetch_listings_via_flaresolverr():
                             if fs_res.get("status") == "ok":
                                 # JSON parselama
                                 html_res = fs_res["solution"]["response"]
+                                # Veri bazen <pre> içinde bazen direkt gelebilir
+                                json_str = html_res
                                 if "<body" in html_res:
                                     json_str = html_res.split("<body>")[1].split("</body>")[0]
-                                else:
-                                    json_str = html_res
-                                    
+                                
                                 json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
                                 try:
                                     resp_json = json.loads(json_str)
@@ -496,6 +496,7 @@ def fetch_listings_via_flaresolverr():
                                         result = None
                                         print(f"[API SAYFALAMA] Başarısız: {str(resp_json)[:100]}", flush=True)
                                 except ValueError:
+                                    print(f"[API SAYFALAMA] JSON Parse Hatası (Ham Veri): {json_str[:200]}", flush=True)
                                     result = None
                             else:
                                 result = None
@@ -2017,12 +2018,12 @@ def fetch_listings_playwright():
                         
                         print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
                         try:
-                            # AJAX yanıtını bekle (ilan-sayfalama.php)
-                            with page.expect_response("**/api/ilan-sayfalama.php", timeout=15000) as response_info:
+                            # Filtreyi daha geniş tutalım (ilan-sayfalama kelimesi geçsin yeter)
+                            with page.expect_response(lambda r: "ilan-sayfalama" in r.url, timeout=15000) as response_info:
                                 page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
-                            print(f"[SAYFA {page_num}] AJAX yanıtı alındı.", flush=True)
+                            print(f"[SAYFA {page_num}] AJAX yanıtı alındı: {response_info.value.status}", flush=True)
                         except:
-                            print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel deneme...", flush=True)
+                            print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel tıklama denenecek.", flush=True)
                             page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                         
                         page.wait_for_timeout(4000)
@@ -2126,16 +2127,16 @@ def fetch_listings_playwright():
                     const href = a.getAttribute("href");
                     if (!href) return;
                     
-                    // İlan linki değilse atla (danışman sayfaları vb.)
                     if (href.includes('/danismanlar/') || href.includes('/iletisim')) return;
 
-                    // ML- kodunu hem path'den hem de query string'den ayıklayalım
-                    const m = href.match(/(ML-\d+-\d+)/i);
+                    // ML- kodunu hem path'den hem de query string'den ayıklayalım (ML-XXXXX-XX formatı)
+                    const m = href.match(/(ML-[A-Z0-9-]{3,})/i);
                     if (!m) return;
 
-                    const kod = m[1].toUpperCase(); // ML-XXXX-XX formatını koru
+                    const kod = m[1].toUpperCase();
                     if (seen.has(kod)) return;
                     seen.add(kod);
+                    console.log("[DEBUG] Bulunan Kod:", kod, "Link:", href);
 
                     let fiyat = "Fiyat yok";
                     let title = "";
