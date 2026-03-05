@@ -73,7 +73,7 @@ USE_FLARESOLVERR = os.getenv("USE_FLARESOLVERR", "true").lower() == "true"
 print(f"FLARESOLVERR_URL: {FLARESOLVERR_URL}", flush=True)
 print(f"USE_FLARESOLVERR: {USE_FLARESOLVERR}", flush=True)
 
-def fetch_via_flaresolverr(url, max_timeout=120000):
+def fetch_via_flaresolverr(url, method="GET", json_payload=None, max_timeout=120000):
     """FlareSolverr üzerinden sayfa içeriği al (Cloudflare Turnstile bypass)"""
     if not FLARESOLVERR_URL:
         print("[FLARESOLVERR] URL ayarlanmamış! Railway'de FLARESOLVERR_URL ekleyin.", flush=True)
@@ -98,10 +98,13 @@ def fetch_via_flaresolverr(url, max_timeout=120000):
             print(f"[FLARESOLVERR] Fetch: {url}", flush=True)
             
             payload = {
-                "cmd": "request.get",
+                "cmd": "request.get" if method == "GET" else "request.post",
                 "url": url,
                 "maxTimeout": max_timeout
             }
+            if method == "POST" and json_payload:
+                payload["postData"] = json.dumps(json_payload)
+            
             
             response = requests.post(api_url, json=payload, timeout=max_timeout/1000 + 30)
             
@@ -194,23 +197,28 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
     
     active_session.headers['User-Agent'] = headers['User-Agent']
 
-    # XSRF-TOKEN'ı çerezlerden alıp header'a ekle (Laravel standardı)
-    from urllib.parse import unquote
-    xsrf_cookie = active_session.cookies.get('XSRF-TOKEN', domain='www.makrolife.com.tr')
-    if xsrf_cookie:
-        headers['X-XSRF-TOKEN'] = unquote(xsrf_cookie)
-
     if extra_headers:
         headers.update(extra_headers)
 
-    # İlan verileri API'si için özel çerez hazırlığı
-    if "api/ilan-verileri.php" in url:
-        # Session içindeki çerezleri manuel olarak Cookie header'ına ekle (Bazı backendler bunu bekler)
-        cookies_dict = active_session.cookies.get_dict(domain="www.makrolife.com.tr")
+    # İlan verileri API'si veya AJAX istekleri için özel çerez hazırlığı
+    if "api/" in url or method == "POST":
+        # Session içindeki TÜM çerezleri al
+        from requests.utils import dict_from_cookiejar
+        cookies_dict = dict_from_cookiejar(active_session.cookies)
+        
+        # Eğer seans boşsa FlareSolverr cookie'lerini bekliyor olabiliriz
         if cookies_dict:
             cookie_str = "; ".join([f"{k}={v}" for k, v in cookies_dict.items()])
             headers['Cookie'] = cookie_str
-            print(f"[DEBUG] API isteği için çerezler eklendi: {list(cookies_dict.keys())}", flush=True)
+            
+            # XSRF-TOKEN'ı hem Cookie hem X-XSRF-TOKEN olarak gönder (Laravel standardı)
+            from urllib.parse import unquote
+            xsrf = cookies_dict.get('XSRF-TOKEN')
+            if xsrf and 'X-XSRF-TOKEN' not in headers:
+                headers['X-XSRF-TOKEN'] = unquote(xsrf)
+            
+            # Ayrıca X-CSRF-TOKEN eğer varsa header'a ekle (Zaten process_page_html ekliyor ama garanti olsun)
+            print(f"[DEBUG] API/POST isteği çerezleri: {list(cookies_dict.keys())}", flush=True)
 
     # İlk istekte bulmaca var mı bak
     try:
@@ -247,7 +255,7 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
 
         print("[POW] Bulmaca tespit edildi, FlareSolverr ile anahtar alınıyor...", flush=True)
         # FlareSolverr ile anahtar alalım
-        fs_res = fetch_via_flaresolverr(url)
+        fs_res = fetch_via_flaresolverr(url, method=method, json_payload=json_payload)
         if not fs_res:
             return resp
         
@@ -257,6 +265,7 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         
         # FlareSolverr çerezlerini ve UA'yı seansa aktar
         fs_cookies_dict = {c["name"]: c["value"] for c in fs_cookies}
+        print(f"[DEBUG] FlareSolverr'dan gelen yeni çerezler: {list(fs_cookies_dict.keys())}", flush=True)
         requests.utils.add_dict_to_cookiejar(active_session.cookies, fs_cookies_dict)
         
         # KRİTİK: User-Agent'ı seansa kaydet ki sonraki isteklerde 403 almayalım
