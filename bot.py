@@ -2016,17 +2016,23 @@ def fetch_listings_playwright():
                         # Önce mevcut içeriğin bir parçasını alalım ki değişip değişmediğini anlayalım
                         old_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
+                        # Sayfa scriptlerinin (sayfaDegistir vb) yüklenmesini bekle
+                        try:
+                            page.wait_for_function("typeof sayfaDegistir !== 'undefined'", timeout=10000)
+                        except:
+                            print(f"[SAYFA {page_num}] sayfaDegistir fonksiyonu bulunamadı, bekleniyor...", flush=True)
+
                         print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
                         try:
                             # Filtreyi daha geniş tutalım (ilan-sayfalama kelimesi geçsin yeter)
-                            with page.expect_response(lambda r: "ilan-sayfalama" in r.url, timeout=15000) as response_info:
+                            with page.expect_response(lambda r: "ilan-sayfalama" in r.url, timeout=20000) as response_info:
                                 page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                             print(f"[SAYFA {page_num}] AJAX yanıtı alındı: {response_info.value.status}", flush=True)
                         except:
                             print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel tıklama denenecek.", flush=True)
                             page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                         
-                        page.wait_for_timeout(4000)
+                        page.wait_for_timeout(5000)
                         new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         if old_content_hash == new_content_hash:
@@ -2239,7 +2245,7 @@ def fetch_listings_playwright():
                 print("[PLAYWRIGHT] Son sayfa (liste boş)", flush=True)
                 break
 
-            if page_num % 5 == 0:
+            if page_num % 100 == 0:
                 try:
                     page.close()
                     context.close()
