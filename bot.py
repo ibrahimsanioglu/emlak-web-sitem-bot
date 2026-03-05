@@ -204,7 +204,12 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
 
         html = resp.text
         # Cloudflare veya özel "Güvenlik Doğrulaması" sayfasını algıla
-        if "Güvenlik Doğrulaması" not in html and "challengeId" not in html and "cf-challenge" not in html:
+        html_lower = html.lower()
+        if "güvenlik doğrulaması" not in html_lower and \
+           "challengeid" not in html_lower and \
+           "cf-challenge" not in html_lower and \
+           "enable javascript and cookies" not in html_lower and \
+           "checking your browser before accessing" not in html_lower:
             return resp
 
         print("[POW] Bulmaca tespit edildi, FlareSolverr ile anahtar alınıyor...", flush=True)
@@ -299,17 +304,31 @@ def fetch_listings_via_flaresolverr():
         nonlocal results, seen_codes
         page_new = 0
         
-        blocks = html.split('data-token="')[1:]
-        tokens = []
-        for block in blocks:
-            token = block.split('"')[0]
-            if 'aria-hidden="true"' in block[:150]:
-                continue
-            if token not in tokens:
-                tokens.append(token)
+        # data-token çıkarma işlemini regex ile daha garanti yapalım
+        import re
+        tokens = re.findall(r'data-token\s*=\s*["\']([^"\']+)["\']', html)
         
+        # Filtrele: aria-hidden olanları veya gereksizleri çıkar (opsiyonel ama kalsın)
+        # tokens = [t for t in tokens if 'aria-hidden="true"' not in html.split(t)[0][-150:]] 
+        # split'li eski mantık yerine temiz bir liste yapalım
+        cleaned_tokens = []
+        for t in tokens:
+            if t not in cleaned_tokens:
+                cleaned_tokens.append(t)
+        tokens = cleaned_tokens
+
         if not tokens:
             print("[API] Sayfada data-token bulunamadı!", flush=True)
+            # Teşhis için HTML içeriğini kontrol et
+            if "Güvenlik Doğrulaması" in html or "challengeId" in html or "cf-challenge" in html:
+                print("[DEBUG] HTML içinde halen bulmaca emaresi var! (Bypass çalışmamış veya yeni challenge)", flush=True)
+            elif "Enable JavaScript" in html:
+                print("[DEBUG] JS engeline takıldık!", flush=True)
+            elif "Arama Sonuçları" in html:
+                print("[DEBUG] Sayfa yüklendi ama ilan yok (Arama Sonuçları metni var)", flush=True)
+                print(f"[DEBUG] HTML Snippet: {html[:1000]}", flush=True)
+            else:
+                print(f"[DEBUG] HTML Snippet: {html[:500]}", flush=True)
             return 0, False
             
         print(f"[API] {len(tokens)} adet token API'ye (ilan-verileri.php) gönderiliyor...", flush=True)
