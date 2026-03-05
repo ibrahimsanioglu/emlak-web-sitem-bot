@@ -9,8 +9,6 @@ from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 
 import requests
-import hashlib
-import re
 from playwright.sync_api import sync_playwright, TimeoutError
 from playwright_stealth import stealth_sync
 # Data klasoru
@@ -73,145 +71,77 @@ USE_FLARESOLVERR = os.getenv("USE_FLARESOLVERR", "true").lower() == "true"
 print(f"FLARESOLVERR_URL: {FLARESOLVERR_URL}", flush=True)
 print(f"USE_FLARESOLVERR: {USE_FLARESOLVERR}", flush=True)
 
-def fetch_via_flaresolverr(url, method="GET", json_payload=None, max_timeout=120000):
+def fetch_via_flaresolverr(url, max_timeout=120000):
     """FlareSolverr üzerinden sayfa içeriği al (Cloudflare Turnstile bypass)"""
     if not FLARESOLVERR_URL:
-        print("[FLARESOLVERR] URL ayarlanmamış!", flush=True)
+        print("[FLARESOLVERR] URL ayarlanmamış! Railway'de FLARESOLVERR_URL ekleyin.", flush=True)
         return None
     
     api_url = FLARESOLVERR_URL.rstrip("/")
+    if not api_url.startswith("http"):
+        api_url = "https://" + api_url
+        
     if not api_url.endswith("/v1"):
-        api_url += "/v1"
+        api_url = api_url + "/v1"
     
+    # Retry mekanizması (Connection refused için)
     import time as _time
-    max_retries = 2
+    max_retries = 3
     
     for attempt in range(max_retries):
         try:
+            if attempt > 0:
+                print(f"[FLARESOLVERR] Deneme {attempt+1}/{max_retries}...", flush=True)
+            
+            print(f"[FLARESOLVERR] Fetch: {url}", flush=True)
+            
             payload = {
-                "cmd": "request.get" if method == "GET" else "request.post",
+                "cmd": "request.get",
                 "url": url,
-                "maxTimeout": max_timeout,
-                "session": "makrolife-bot-session" 
+                "maxTimeout": max_timeout
             }
-            if method == "POST" and json_payload:
-                payload["postData"] = json.dumps(json_payload)
             
             response = requests.post(api_url, json=payload, timeout=max_timeout/1000 + 30)
+            
             if response.status_code != 200:
-                print(f"[FLARESOLVERR] HTTP {response.status_code}", flush=True)
+                print(f"[FLARESOLVERR] HTTP hata: {response.status_code}", flush=True)
                 return None
             
             data = response.json()
-            if data.get("status") != "ok":
-                print(f"[FLARESOLVERR] Hata: {data.get('message')}", flush=True)
-                if "session" in data.get("message", "").lower():
-                    requests.post(api_url, json={"cmd": "sessions.destroy", "session": "makrolife-bot-session"})
+            status = data.get("status", "")
+            
+            if status != "ok":
+                message = data.get("message", "Bilinmeyen hata")
+                print(f"[FLARESOLVERR] Hata: {message}", flush=True)
                 return None
             
-            sol = data.get("solution", {})
-            return {
-                "content": sol.get("response", ""),
-                "cookies": sol.get("cookies", []),
-                "userAgent": sol.get("userAgent", "")
-            }
-        except Exception as e:
-            print(f"[FLARESOLVERR] Exception: {e}", flush=True)
-            _time.sleep(2)
+            solution = data.get("solution", {})
+            html = solution.get("response", "")
+            final_url = solution.get("url", url)
+            cookies = solution.get("cookies", [])
+            user_agent = solution.get("userAgent", "")
             
+            print(f"[FLARESOLVERR] Başarılı! İçerik uzunluğu: {len(html)}, Cookies: {len(cookies)}", flush=True)
+            
+            if html:
+                return {"content": html, "final_url": final_url, "cookies": cookies, "userAgent": user_agent}
+            return None
+
+        except requests.exceptions.ConnectionError:
+            print(f"[FLARESOLVERR] Bağlantı reddedildi (Connection refused). Servis henüz hazır olmayabilir.", flush=True)
+            if attempt < max_retries - 1:
+                _time.sleep(5)  # 5 saniye bekle ve tekrar dene
+        except requests.exceptions.Timeout:
+            print("[FLARESOLVERR] Timeout - FlareSolverr çok uzun sürdü", flush=True)
+            return None
+        except Exception as e:
+            print(f"[FLARESOLVERR] Beklenmeyen Hata: {e}", flush=True)
+            return None
+            
+    print("[FLARESOLVERR] Tüm denemeler başarısız oldu.", flush=True)
     return None
 
-def solve_pow(prefix, difficulty):
-    """Cloudflare'in beklediği SHA-256 tabanlı bulmacayı çözer."""
-    target = '0' * difficulty
-    nonce = 0
-    while True:
-        check = hashlib.sha256((prefix + str(nonce)).encode()).hexdigest()
-        if check.startswith(target):
-            return nonce
-        nonce += 1
 
-class MockResponse:
-    def __init__(self, text, status_code):
-        self.text = text
-        self.status_code = status_code
-
-def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=None, referer=None, extra_headers=None):
-    """Makrolife API'sine istek atar, Cloudflare bulmacasını otomatik çözer."""
-    active_session = session or requests.Session()
-    BROWSER_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    
-    headers = {
-        'User-Agent': BROWSER_UA,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-        'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
-        'Upgrade-Insecure-Requests': '1',
-        'X-Requested-With': 'XMLHttpRequest' if (method == "POST" or "api/" in url) else None
-    }
-    # None olanları temizle
-    headers = {k: v for k, v in headers.items() if v is not None}
-
-    if referer: headers['Referer'] = referer
-    if extra_headers: headers.update(extra_headers)
-
-    try:
-        if method == "POST":
-            resp = active_session.post(url, json=json_payload, headers=headers, timeout=30)
-        else:
-            resp = active_session.get(url, headers=headers, timeout=30)
-        
-        html = resp.text
-        is_challenge = False
-        if any(x in html.lower() for x in ["güvenlik", "challenge", "cf-", "captcha", "access denied"]):
-            is_challenge = True
-        
-        if not is_challenge and "data-token" not in html and "api/ilan-verileri.php" not in url:
-            if "MAKRO" in html or "GAYRİ" in html:
-                is_challenge = True
-
-        if not is_challenge:
-            return resp
-
-        print("[POW] Engel tespit edildi, FlareSolverr seansı üzerinden aşılıyor...", flush=True)
-        fs_res = fetch_via_flaresolverr(url, method=method, json_payload=json_payload)
-        
-        if fs_res:
-            # UA ve Çerezleri seansa işle (ileriki direkt istekler için)
-            active_session.headers['User-Agent'] = fs_res["userAgent"]
-            for c in fs_res["cookies"]:
-                active_session.cookies.set(c["name"], c["value"], domain="www.makrolife.com.tr")
-            
-            # Eğer ilanlar geldiyse direkt dön
-            if "data-token" in fs_res["content"]:
-                return MockResponse(fs_res["content"], 200)
-            
-            # Eğer hala bulmaca varsa PoW çöz (Kendi sitemizin eklediği PoW olabilir)
-            fs_html = fs_res["content"]
-            c_id_match = re.search(r'challengeId\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
-            prefix_match = re.search(r'prefix\s*=\s*[\'"]([a-f0-9]+)[\'"]', fs_html)
-            
-            if c_id_match and prefix_match:
-                print("[POW] Python Solver devrede...", flush=True)
-                c_id = c_id_match.group(1)
-                prefix = prefix_match.group(1)
-                diff = int(re.search(r'difficulty\s*=\s*(\d+)', fs_html).group(1)) if "difficulty" in fs_html else 4
-                nonce = solve_pow(prefix, diff)
-                
-                chal_url = "https://www.makrolife.com.tr/api/ilan-challenge.php"
-                chal_payload = {"challenge_id": c_id, "nonce": str(nonce), "ilan_kodu": ""}
-                active_session.post(chal_url, json=chal_payload, headers=headers, timeout=20)
-                
-                # Asıl isteği tekrarla
-                if method == "POST":
-                    return active_session.post(url, json=json_payload, headers=headers, timeout=30)
-                return active_session.get(url, headers=headers, timeout=30)
-            
-            return MockResponse(fs_html, 200)
-
-        return resp
-    except Exception as e:
-        print(f"[API_CALL] Hata: {e}", flush=True)
-        return None
 def fetch_listings_via_flaresolverr():
     """FlareSolverr üzerinden tüm ilanları çek ve fiyatları parse et"""
     import re
@@ -229,59 +159,65 @@ def fetch_listings_via_flaresolverr():
     
     print("[FLARESOLVERR] İlan taraması başlıyor...", flush=True)
     
-    # Temiz bir başlangıç için FlareSolverr seansını temizle
-    if FLARESOLVERR_URL:
-        try:
-            api_url = FLARESOLVERR_URL.rstrip("/")
-            if not api_url.endswith("/v1"): api_url += "/v1"
-            requests.post(api_url, json={"cmd": "sessions.destroy", "session": "makrolife-bot-session"}, timeout=5)
-        except: pass
-    
-    session = requests.Session()
-    
-    def process_page_html(html, page_num, session=None):
+    def process_page_html(html, page_num, result_dict=None):
         """Sayfa HTML'inden data-token'ları çıkarıp API'den verileri çeker ve results'a ekler"""
         nonlocal results, seen_codes
         page_new = 0
         
-        # data-token çıkarma işlemini regex ile daha garanti yapalım
-        import re
-        tokens = re.findall(r'data-token\s*=\s*["\']([^"\']+)["\']', html)
+        blocks = html.split('data-token="')[1:]
+        tokens = []
+        for block in blocks:
+            token = block.split('"')[0]
+            if 'aria-hidden="true"' in block[:150]:
+                continue
+            if token not in tokens:
+                tokens.append(token)
         
-        # Filtrele: aria-hidden olanları veya gereksizleri çıkar (opsiyonel ama kalsın)
-        # tokens = [t for t in tokens if 'aria-hidden="true"' not in html.split(t)[0][-150:]] 
-        # split'li eski mantık yerine temiz bir liste yapalım
-        cleaned_tokens = []
-        for t in tokens:
-            if t not in cleaned_tokens:
-                cleaned_tokens.append(t)
-        tokens = cleaned_tokens
-
         if not tokens:
             print("[API] Sayfada data-token bulunamadı!", flush=True)
-            # Teşhis için HTML içeriğini kontrol et
-            if "Güvenlik Doğrulaması" in html or "challengeId" in html or "cf-challenge" in html:
-                print("[DEBUG] HTML içinde halen bulmaca emaresi var! (Bypass çalışmamış veya yeni challenge)", flush=True)
-            elif "Enable JavaScript" in html:
-                print("[DEBUG] JS engeline takıldık!", flush=True)
-            elif "Arama Sonuçları" in html:
-                print("[DEBUG] Sayfa yüklendi ama ilan yok (Arama Sonuçları metni var)", flush=True)
-                print(f"[DEBUG] HTML Snippet: {html[:1000]}", flush=True)
-            else:
-                print(f"[DEBUG] HTML Snippet: {html[:500]}", flush=True)
             return 0, False
             
         print(f"[API] {len(tokens)} adet token API'ye (ilan-verileri.php) gönderiliyor...", flush=True)
         
-        extra_headers = {}
-        json_payload = {"tokens": tokens}
+        # X-CSRF-TOKEN bilgisini HTML metninden regex ile çıkarıyoruz
+        csrf_token = ""
+        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', html)
+        if csrf_match:
+            csrf_token = csrf_match.group(1)
+        
+        # result_dict (FlareSolverr'dan gelen) içindeki çerezleri requests formatına çevirelim
+        cookies_dict = {}
+        ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        
+        if result_dict:
+            if "cookies" in result_dict:
+                for c in result_dict["cookies"]:
+                    cookies_dict[c["name"]] = c["value"]
+            if "userAgent" in result_dict and result_dict["userAgent"]:
+                ua = result_dict["userAgent"]
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'User-Agent': ua,
+            'Referer': 'https://www.makrolife.com.tr/ilanlar',
+            'Origin': 'https://www.makrolife.com.tr',
+            'Accept': 'application/json, text/javascript, */*; q=0.01'
+        }
+        
+        if csrf_token:
+            headers['X-CSRF-TOKEN'] = csrf_token
             
+        # API hem JSON hem de _token bekliyor olabilir
+        json_payload = {"tokens": tokens}
+        if csrf_token:
+            json_payload["_token"] = csrf_token
             
         try:
             api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
-            resp = call_makrolife_api(api_url, method="POST", json_payload=json_payload, session=session, extra_headers=extra_headers)
+            resp = requests.post(api_url, json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
             
-            if resp and resp.status_code == 200:
+            if resp.status_code == 200:
                 try:
                     # Bazı durumlarda yanıt başında boşluk veya BOM karakteri olabilir
                     text = resp.text.strip()
@@ -334,43 +270,269 @@ def fetch_listings_via_flaresolverr():
             break
         
         page_num += 1
+        page_url = URL if page_num == 1 else URL
         
         if page_num == 1:
-            print(f"[FAST-API SAYFA 1] {URL}", flush=True)
-            resp = call_makrolife_api(URL, session=session)
+            print(f"[FLARESOLVERR SAYFA 1] {URL}", flush=True)
+            result = fetch_via_flaresolverr(page_url)
+            base_result_dict = result
         else:
-            print(f"[FAST-API SAYFA {page_num}] AJAX tetikleniyor...", flush=True)
-            # CSRF token'ı önceki sayfadan (veya session state'ten) alalım
-            # Genelde session state'te kalır ama HTML'den okumak daha garanti
-            json_payload = {"sayfa": page_num, "filtreler": {}}
-            # CSRF token'ı session içindeki cookies veya html'den bulamayız kolayca, 
-            # o yüzden process_page_html sonrasında global veya shared state'ten almalıyız.
-            # Şimdilik process_page_html içinde güncellenen token'ı kullanacağız.
+            print(f"[FLARESOLVERR SAYFA {page_num}] AJAX tetikleniyor...", flush=True)
+            if not base_result_dict:
+                print(f"[FLARESOLVERR SAYFA {page_num}] Temel oturum bilgisi eksik", flush=True)
+                break
+                
+            # CSRF token'ı base result'tan alalım
+            csrf_token = ""
+            base_html = base_result_dict.get("content", "")
+            csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', base_html)
+            if csrf_match:
+                csrf_token = csrf_match.group(1)
+
+            # Çerezleri dict formatına çevir
+            cookies_dict = {}
+            if "cookies" in base_result_dict:
+                for c in base_result_dict["cookies"]:
+                    cookies_dict[c["name"]] = c["value"]
+
+            ua = base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
             
-            resp = call_makrolife_api(
-                "https://www.makrolife.com.tr/api/ilan-sayfalama.php",
-                method="POST",
-                json_payload=json_payload,
-                session=session
-            )
+            headers = {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': ua,
+                'Referer': 'https://www.makrolife.com.tr/ilanlar',
+                'Origin': 'https://www.makrolife.com.tr',
+                'Accept': 'application/json, text/javascript, */*; q=0.01'
+            }
+            if csrf_token:
+                headers['X-CSRF-TOKEN'] = csrf_token
+            
+            json_payload = {"sayfa": page_num, "filtreler": {}}
+            if csrf_token:
+                json_payload["_token"] = csrf_token
+                
+            try:
+                # AJAX Sayfalama API'sine doğrudan JSON+Token ile istek atılıyor
+                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
+                if resp.status_code == 200:
+                    try:
+                        resp_json = resp.json()
+                        if resp_json.get("success"):
+                            html = resp_json.get("html", "")
+                            result = {"content": html, **base_result_dict}
+                        else:
+                            print(f"[API SAYFALAMA] Başarısız yanıt: {str(resp_json)[:100]}", flush=True)
+                            result = None
+                    except ValueError:
+                        print(f"[API SAYFALAMA] JSON Parse Hatası: {resp.text[:200]}", flush=True)
+                        result = None
+                else:
+                    print(f"[API SAYFALAMA] HTTP Hata {resp.status_code}: {resp.text[:200]}", flush=True)
+                    result = None
+            except Exception as e:
+                print(f"[API SAYFALAMA] Hata: {e}", flush=True)
+                result = None
+        
+        if not result or not result.get("content"):
+            consecutive_failures += 1
+            print(f"[FLARESOLVERR SAYFA {page_num}] İçerik alınamadı", flush=True)
+            
+            if page_num <= 3:
+                # İlk 3 sayfada hata: 3 kez retry dene
+                retry_ok = False
+                for retry_i in range(1, 4):
+                    print(f"[FLARESOLVERR] Sayfa {page_num} retry {retry_i}/3...", flush=True)
+                    time.sleep(10)
+                    
+                    if page_num == 1:
+                        result = fetch_via_flaresolverr(page_url)
+                        base_result_dict = result
+                    else:
+                        try:
+                            # Retry için de aynı headers ve cookies kullanılıyor
+                            retry_payload = {"sayfa": page_num}
+                            if csrf_token:
+                                retry_payload["_token"] = csrf_token
+                                
+                            resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=retry_payload, headers=headers, cookies=cookies_dict, timeout=30)
+                            if resp.status_code == 200:
+                                resp_json = resp.json()
+                                if resp_json.get("success"):
+                                    html = resp_json.get("html", "")
+                                    result = {"content": html, **base_result_dict}
+                                else:
+                                    result = None
+                            else:
+                                result = None
+                        except:
+                            result = None
 
-        if not resp or resp.status_code != 200:
-            print(f"[FAST-API SAYFA {page_num}] İstek başarısız", flush=True)
-            return results
-
-        try:
-            html = resp.text
-            page_new, success = process_page_html(html, page_num, session=session)
-            if not success or page_new == 0:
-                print(f"[FAST-API SAYFA {page_num}] Yeni ilan yok veya son sayfa", flush=True)
+                    if result and result.get("content"):
+                        retry_ok = True
+                        consecutive_failures = 0
+                        break
+                if not retry_ok:
+                    print("[FLARESOLVERR] İlk 3 sayfada 3 retry başarısız - tarama iptal", flush=True)
+                    return None
+                # Retry başarılı oldu, bu sayfayı işle
+                html = result["content"]
+                page_new, _ = process_page_html(html, page_num, result)
+                print(f"[FLARESOLVERR SAYFA {page_num}] Retry başarılı! {page_new} ilan (toplam: {len(results)})", flush=True)
+                if page_num % 10 == 0:
+                    time.sleep(3)
+                else:
+                    time.sleep(1.0)
+                continue
+            
+            # Başarısız sayfayı kaydet
+            failed_pages.append(page_num)
+            print(f"[FLARESOLVERR] Sayfa {page_num} retry listesine eklendi", flush=True)
+            
+            if consecutive_failures >= MAX_FAILURES:
+                print(f"[FLARESOLVERR] Art arda {MAX_FAILURES} hata - ana taramaya devam ediliyor", flush=True)
+                # Devam et ama art arda hata sayacını sıfırlama
+            continue
+        
+        consecutive_failures = 0
+        html = result["content"]
+        
+        # HTML'den data-token'ları çıkar
+        token_pattern = r'data-token="([^"]+)"'
+        all_matches = re.findall(token_pattern, html)
+        
+        if not all_matches:
+            if page_num <= 1:
+                print(f"[FLARESOLVERR] Sayfa {page_num} boş - hata", flush=True)
+                return None
+            print(f"[FLARESOLVERR SAYFA {page_num}] Son sayfa geçildi", flush=True)
+            break
+        
+        page_new, _ = process_page_html(html, page_num, base_result_dict)
+        
+        if page_new == 0:
+            # Bu sayfada yeni ilan yok, muhtemelen son sayfa
+            print(f"[FLARESOLVERR SAYFA {page_num}] Yeni ilan yok - son sayfa", flush=True)
+            break
+        
+        print(f"[FLARESOLVERR SAYFA {page_num}] {page_new} ilan bulundu (toplam: {len(results)})", flush=True)
+        
+        # Bekleme
+        if page_num % 10 == 0:
+            time.sleep(3)
+        else:
+            time.sleep(1.0)
+    
+    # ============ BAŞARISIZ SAYFALAR İÇİN RETRY ============
+    if failed_pages and not SCAN_STOP_REQUESTED:
+        print(f"\n[FLARESOLVERR] === RETRY BAŞLIYOR ===", flush=True)
+        print(f"[FLARESOLVERR] Başarısız sayfalar: {failed_pages}", flush=True)
+        
+        for retry_attempt in range(1, RETRY_ATTEMPTS + 1):
+            if not failed_pages or SCAN_STOP_REQUESTED:
                 break
             
-            print(f"[FAST-API SAYFA {page_num}] {page_new} ilan bulundu (toplam: {len(results)})", flush=True)
-            time.sleep(0.5)  # Hızlı geçiş
-        except Exception as e:
-            print(f"[FAST-API SAYFA {page_num}] Hata: {e}", flush=True)
-            break
+            print(f"\n[FLARESOLVERR] Retry {retry_attempt}/{RETRY_ATTEMPTS} - {len(failed_pages)} sayfa kaldı", flush=True)
+            print(f"[FLARESOLVERR] {RETRY_WAIT} saniye bekleniyor...", flush=True)
+            time.sleep(RETRY_WAIT)
+            
+            still_failed = []
+            
+            for failed_page in failed_pages:
+                if SCAN_STOP_REQUESTED:
+                    break
+                
+                if failed_page == 1:
+                    result = fetch_via_flaresolverr(URL)
+                else:
+                    if not base_result_dict:
+                        still_failed.append(failed_page)
+                        continue
+                    
+                    # CSRF token'ı base result'tan alalım
+                    csrf_token = ""
+                    base_html = base_result_dict.get("content", "")
+                    csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', base_html)
+                    if csrf_match:
+                        csrf_token = csrf_match.group(1)
+                    
+                    headers = {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+                    }
+                    if csrf_token:
+                        headers['X-CSRF-TOKEN'] = csrf_token
+                    
+                    cookies_str = "; ".join([f"{c['name']}={c['value']}" for c in base_result_dict.get("cookies", [])])
+                    if cookies_str:
+                        headers['Cookie'] = cookies_str
+                        
+                    post_data_str = urlencode([("sayfa", failed_page)])
+                    fs_payload = {
+                        "cmd": "request.post",
+                        "url": "https://www.makrolife.com.tr/api/ilan-sayfalama.php",
+                        "maxTimeout": 45000,
+                        "postData": post_data_str
+                    }
+                    
+                    try:
+                        resp = requests.post(FLARESOLVERR_URL, json=fs_payload, timeout=60)
+                        if resp.status_code == 200:
+                            fs_res = resp.json()
+                            if fs_res.get("status") == "ok":
+                                # JSON parselama
+                                html_res = fs_res["solution"]["response"]
+                                # Veri bazen <pre> içinde bazen direkt gelebilir
+                                json_str = html_res
+                                if "<body" in html_res:
+                                    json_str = html_res.split("<body>")[1].split("</body>")[0]
+                                
+                                json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
+                                try:
+                                    resp_json = json.loads(json_str)
+                                    if resp_json.get("success"):
+                                        result = {"content": resp_json.get("html", ""), **base_result_dict}
+                                    else:
+                                        result = None
+                                        print(f"[API SAYFALAMA] Başarısız: {str(resp_json)[:100]}", flush=True)
+                                except ValueError:
+                                    print(f"[API SAYFALAMA] JSON Parse Hatası (Ham Veri): {json_str[:200]}", flush=True)
+                                    result = None
+                            else:
+                                result = None
+                        else:
+                            result = None
+                    except Exception as e:
+                        print(f"[API SAYFALAMA] Hata: {e}", flush=True)
+                        result = None
+                        
+                if result and result.get("content"):
+                    html = result["content"]
+                    page_new, success = process_page_html(html, failed_page, base_result_dict if failed_page > 1 else result)
+                    
+                    if success:
+                        print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} BAŞARILI! {page_new} ilan eklendi (toplam: {len(results)})", flush=True)
+                    else:
+                        print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} içerik alındı ama ilan yok", flush=True)
+                else:
+                    print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} hala başarısız", flush=True)
+                    still_failed.append(failed_page)
+                
+                time.sleep(2)  # Retry'lar arası bekleme
+            
+            failed_pages = still_failed
+        
+        if failed_pages:
+            print(f"\n[FLARESOLVERR] Retry sonrası hala başarısız sayfalar: {failed_pages}", flush=True)
+        else:
+            print(f"\n[FLARESOLVERR] Tüm başarısız sayfalar kurtarıldı!", flush=True)
     
+    if len(results) == 0:
+        print("[FLARESOLVERR] Hiç ilan bulunamadı", flush=True)
+        return None
+    
+    print(f"[FLARESOLVERR] Toplam {len(results)} ilan bulundu", flush=True)
     return results
 
 def fetch_via_google_proxy(url):
@@ -1067,9 +1229,7 @@ def github_get_file(filename):
         return None, None
 
     try:
-        # Cache-busting: 409 hatalarını önlemek için en güncel SHA'yı çek
-        import time as _time
-        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename.lstrip('/')}?nc={int(_time.time())}"
+        url = "https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + filename.lstrip("/")
 
         headers = {
             "Authorization": "Bearer " + GITHUB_TOKEN,
@@ -1137,8 +1297,7 @@ def github_save_file(filename, content, sha=None):
         return False
 
     try:
-        # Cache-busting: 409 hatalarını önlemek için en güncel SHA'yı çek
-        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename}?nc={int(time.time())}"
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename}"
         headers = {
             "Authorization": "token " + GITHUB_TOKEN,
             "Accept": "application/vnd.github+json",
@@ -1163,8 +1322,8 @@ def github_save_file(filename, content, sha=None):
         if resp.status_code in (200, 201):
             print(f"[GITHUB] {filename} kaydedildi", flush=True)
             return True
-        elif resp.status_code in (409, 422):
-            print(f"[GITHUB] Konflikt veya dosya mevcut, sha tazeleniyor...", flush=True)
+        elif resp.status_code == 422:
+            print(f"[GITHUB] Dosya mevcut, sha aliniyor...", flush=True)
             _, existing_sha = github_get_file(filename)
             if existing_sha:
                 data["sha"] = existing_sha
@@ -1815,8 +1974,17 @@ def fetch_listings_playwright():
 
         context = new_context()
         page = context.new_page()
+        
+        # HIZLANDIRMA: Gereksiz kaynakları (resim, font, medya) engelle
+        def handle_route(route):
+            if route.request.resource_type in ["image", "media", "font"]:
+                route.abort()
+            else:
+                route.continue_()
+        page.route("**/*", handle_route)
+        
         stealth_sync(page)  # Apply stealth mode to bypass detection
-        print("[PLAYWRIGHT] Stealth mode uygulandi", flush=True)
+        print("[PLAYWRIGHT] Stealth mode ve kaynak kısıtlama uygulandı", flush=True)
 
         while True:
             if SCAN_STOP_REQUESTED:
@@ -1874,7 +2042,10 @@ def fetch_listings_playwright():
                             print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel tıklama denenecek.", flush=True)
                             page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                         
-                        page.wait_for_timeout(5000)
+                        try:
+                            # 5 saniye beklemek yerine içeriğin değişmesini veya timeout'u bekle
+                            page.wait_for_timeout(2000)
+                        except: pass
                         new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         if old_content_hash == new_content_hash:
@@ -1902,7 +2073,7 @@ def fetch_listings_playwright():
                                 clicked = page.evaluate(js_click)
                                 if clicked:
                                     print(f"[SAYFA {page_num}] JS-click başarılı, bekleniyor...", flush=True)
-                                    page.wait_for_timeout(5000)
+                                    page.wait_for_timeout(2000)
                                 else:
                                     print(f"[SAYFA {page_num}] Buton bulunamadı.", flush=True)
                             except Exception as e:
@@ -2104,7 +2275,7 @@ def fetch_listings_playwright():
                 except Exception as e:
                     print(f"[PLAYWRIGHT] Yeniden yükleme hatası: {e}", flush=True)
 
-            page.wait_for_timeout(random.randint(2000, 4000))
+            page.wait_for_timeout(random.randint(500, 1500))
 
         browser.close()
 
@@ -2152,10 +2323,8 @@ def run_scan_with_timeout():
         state["cycle_start"] = today
 
     try:
-        # HIZLI TARAMA: FlareSolverr / API (Playwright yerine varsayılan yapıyoruz)
-        result = fetch_listings_via_flaresolverr()
-        listings = result
-        error_info = None
+        result = fetch_listings_playwright()
+        listings, error_info = result if isinstance(result, tuple) else (result, None)
         
         # Web siteye ulaşılamadıysa veya tarama yarıda kesildiyse
         if listings is None:
