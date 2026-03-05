@@ -217,11 +217,20 @@ def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=No
         html = resp.text
         # Cloudflare veya özel "Güvenlik Doğrulaması" sayfasını algıla
         html_lower = html.lower()
-        if "güvenlik doğrulaması" not in html_lower and \
-           "challengeid" not in html_lower and \
-           "cf-challenge" not in html_lower and \
-           "enable javascript and cookies" not in html_lower and \
-           "checking your browser before accessing" not in html_lower:
+        is_challenge = False
+        if any(kw in html_lower for kw in [
+            "güvenlik doğrulaması", "challengeid", "cf-challenge", 
+            "enable javascript and cookies", "checking your browser before accessing",
+            "access denied"
+        ]):
+            is_challenge = True
+        
+        # Makrolife'a özel: Sadece yorum içeren çok kısa yanıtlar (Block emaresi)
+        if not is_challenge and len(html) < 2000 and "<!-- MAKRO LİFE GAYRİMENKUL -->" in html:
+            print("[API_CALL] Şüpheli kısa/yorumlu yanıt (Blok olabilir), FlareSolverr tetikleniyor...", flush=True)
+            is_challenge = True
+
+        if not is_challenge:
             return resp
 
         print("[POW] Bulmaca tespit edildi, FlareSolverr ile anahtar alınıyor...", flush=True)
@@ -1153,7 +1162,9 @@ def github_get_file(filename):
         return None, None
 
     try:
-        url = "https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + filename.lstrip("/")
+        # Cache-busting: 409 hatalarını önlemek için en güncel SHA'yı çek
+        import time as _time
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename.lstrip('/')}?nc={int(_time.time())}"
 
         headers = {
             "Authorization": "Bearer " + GITHUB_TOKEN,
@@ -1221,7 +1232,8 @@ def github_save_file(filename, content, sha=None):
         return False
 
     try:
-        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename}"
+        # Cache-busting: 409 hatalarını önlemek için en güncel SHA'yı çek
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filename}?nc={int(time.time())}"
         headers = {
             "Authorization": "token " + GITHUB_TOKEN,
             "Accept": "application/vnd.github+json",
