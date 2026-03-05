@@ -155,32 +155,44 @@ def solve_pow(prefix, difficulty):
 
 def call_makrolife_api(url, method="GET", json_payload=None, session=None, ua=None, referer=None, extra_headers=None):
     """Makrolife API'sine istek atar, Cloudflare bulmacasını otomatik çözer."""
+    active_session = session or requests.Session()
+    
+    # Varsayılan başlıklar (Tarayıcı gibi davran)
     headers = {
-        'Accept': 'application/json, text/javascript, */*; q=0.01',
+        'User-Agent': ua or active_session.headers.get('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'),
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
-        'X-Requested-With': 'XMLHttpRequest',
-        'Origin': 'https://www.makrolife.com.tr',
-        'Referer': referer or 'https://www.makrolife.com.tr/ilanlar',
         'Connection': 'keep-alive',
-        'Sec-Fetch-Dest': 'empty',
-        'Sec-Fetch-Mode': 'cors',
-        'Sec-Fetch-Site': 'same-origin',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
         'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Windows"'
     }
-    
+
+    if referer:
+        headers['Referer'] = referer
+        headers['Sec-Fetch-Site'] = 'same-origin'
+
+    # AJAX isteği ise başlıkları güncelle
+    if method == "POST" or "api/" in url:
+        headers.update({
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'same-origin'
+        })
+        if not referer:
+            headers['Referer'] = 'https://www.makrolife.com.tr/ilanlar'
+        
     if ua:
         headers['User-Agent'] = ua
-
-    active_session = session or requests.Session()
     
-    # Session User-Agent senkronizasyonu
-    if 'User-Agent' in active_session.headers and not ua:
-        headers['User-Agent'] = active_session.headers['User-Agent']
-    elif 'User-Agent' not in headers:
-        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        active_session.headers['User-Agent'] = headers['User-Agent']
+    active_session.headers['User-Agent'] = headers['User-Agent']
 
     # XSRF-TOKEN'ı çerezlerden alıp header'a ekle (Laravel standardı)
     from urllib.parse import unquote
@@ -1234,8 +1246,8 @@ def github_save_file(filename, content, sha=None):
         if resp.status_code in (200, 201):
             print(f"[GITHUB] {filename} kaydedildi", flush=True)
             return True
-        elif resp.status_code == 422:
-            print(f"[GITHUB] Dosya mevcut, sha aliniyor...", flush=True)
+        elif resp.status_code in (409, 422):
+            print(f"[GITHUB] Konflikt veya dosya mevcut, sha tazeleniyor...", flush=True)
             _, existing_sha = github_get_file(filename)
             if existing_sha:
                 data["sha"] = existing_sha
