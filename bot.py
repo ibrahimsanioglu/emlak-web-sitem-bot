@@ -434,88 +434,13 @@ def fetch_listings_via_google_proxy():
         consecutive_failures = 0
         html = proxy_result["content"]
         
-        # HTML'i ilan linklerine göre parçala
-        ilan_pattern = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
-        matches = list(re.finditer(ilan_pattern, html, re.IGNORECASE))
+        page_new, _ = process_page_html(html, page_num)
         
-        if not matches:
-            if page_num <= MIN_VALID_PAGES:
-                print(f"[GOOGLE_PROXY] Sayfa {page_num} boş - ilk {MIN_VALID_PAGES} sayfada boş olamaz", flush=True)
-                return None
+        if page_new == 0:
             print(f"[GOOGLE_PROXY SAYFA {page_num}] İlan yok - son sayfa geçildi", flush=True)
             break
-        
-        page_listings = 0
-        for i, match in enumerate(matches):
-            href = match.group(1)
-            kod = match.group(2)
             
-            # if kod in seen_codes: continue <-- REMOVED
-            
-            start_pos = match.start()
-            search_start = max(0, start_pos - 1000)
-            if i < len(matches) - 1:
-                search_end = matches[i+1].start()
-            else:
-                search_end = min(len(html), start_pos + 8000)
-                
-            chunk = html[search_start:search_end]
-            
-            # 1. Başlık
-            baslik = None
-            # 1. Deneme: Heading tagleri (h1-h6)
-            title_match = re.search(r'<h[1-6][^>]*>(?:\s*<a[^>]+>)?\s*([^<]+?)\s*(?:</a>)?\s*</h[1-6]>', chunk, re.IGNORECASE)
-            if title_match:
-                baslik = title_match.group(1).strip()
-            
-            if not baslik:
-                try:
-                    path_parts = href.split("/ilan/")[1].rsplit("-ML-", 1)[0]
-                    baslik = " ".join(word.capitalize() for word in path_parts.replace("-", " ").split())
-                except:
-                    baslik = f"İlan ML-{kod}"
-            
-            if baslik:
-                baslik = baslik.replace("&amp;", "&").replace("&quot;", '"').replace("&#039;", "'").replace("&nbsp;", " ")
-                baslik = re.sub(r'\s*-\s*ML-\d+-\d+\s*$', '', baslik, flags=re.IGNORECASE)
-                
-            # 2. Fiyat
-            fiyat = "Fiyat Yok"
-            price_match = re.search(r'([\d\.,]{4,})\s*(?:<[^>]+>\s*)*(TL|₺|USD|EUR|GBP)', chunk, re.IGNORECASE)
-            if price_match:
-                amount = price_match.group(1)
-                currency = price_match.group(2)
-                candidate = amount
-                if sum(c.isdigit() for c in candidate) >= 3:
-                    currency = currency.replace('₺', 'TL').replace('&#8378;', 'TL').upper()
-                    fiyat = f"{amount.strip()} {currency}"
-            
-            current_result = (
-                fiyat,
-                f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href,
-                baslik,
-                page_num
-            )
-
-            if kod not in results_dict:
-                results_dict[kod] = current_result
-            else:
-                existing_fiyat = results_dict[kod][0]
-                if existing_fiyat == "Fiyat Yok" and fiyat != "Fiyat Yok":
-                    results_dict[kod] = current_result
-                elif existing_fiyat == "Fiyat Yok" and fiyat == "Fiyat Yok":
-                    results_dict[kod] = current_result
-                elif existing_fiyat != "Fiyat Yok" and fiyat != "Fiyat Yok":
-                    results_dict[kod] = current_result
-            
-            page_listings += 1
-
-        # Convert dict to list
-        results = []
-        for kod, val in results_dict.items():
-            results.append((kod, val[0], val[1], val[2], val[3]))
-        
-        print(f"[GOOGLE_PROXY SAYFA {page_num}] {page_listings} link tarandı (benzersiz: {len(results)})", flush=True)
+        print(f"[GOOGLE_PROXY SAYFA {page_num}] {page_new} ilan bulundu (toplam: {len(results)})", flush=True)
         time.sleep(1)
     
     if len(results) == 0:
