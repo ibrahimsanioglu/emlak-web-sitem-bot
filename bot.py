@@ -2032,6 +2032,9 @@ def fetch_listings_playwright():
                         if old_content_hash == new_content_hash:
                             print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, JS-click deneniyor...", flush=True)
                             try:
+                                # Overlay/Popup engellerini aşmak için önce kapatmayı deneyelim
+                                page.evaluate("let closeBtn = document.querySelector('.img-popup-close'); if(closeBtn) closeBtn.click();")
+                                
                                 # Overlay engellerini aşmak için JS ile doğrudan elemana tıklayıp sayfalama AJAX'ını tetikleyelim
                                 js_click = f"""
                                 (function(num) {{
@@ -2237,11 +2240,21 @@ def fetch_listings_playwright():
                 break
 
             if page_num % 5 == 0:
-                page.close()
-                context.close()
+                try:
+                    page.close()
+                    context.close()
+                except:
+                    pass
                 context = new_context()
                 page = context.new_page()
-                print("[PLAYWRIGHT] Context yenilendi", flush=True)
+                stealth_sync(page)
+                print("[PLAYWRIGHT] Context yenilendi, siteye geri dönülüyor...", flush=True)
+                # Yeni context sonrası siteye geri dön (SAYFA 6+ için kritik)
+                try:
+                    page.goto(URL, timeout=90000, wait_until="networkidle")
+                    wait_for_cloudflare(page)
+                except Exception as e:
+                    print(f"[PLAYWRIGHT] Yeniden yükleme hatası: {e}", flush=True)
 
             page.wait_for_timeout(random.randint(2000, 4000))
 
