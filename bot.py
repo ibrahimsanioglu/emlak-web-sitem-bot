@@ -1890,7 +1890,7 @@ def fetch_listings_playwright():
             if page_num == 1:
                 page_url = URL
             else:
-                page_url = URL + "?pager_p=" + str(page_num)
+                page_url = URL + "?page=" + str(page_num)
             print("[SAYFA " + str(page_num) + "] " + page_url, flush=True)
 
             success = False
