@@ -3,7 +3,7 @@ import sys
 import json
 import time
 import random
-from urllib.parse import urlparse, urlunparse
+from urllib.parse import urlparse, urlunparse, urlencode
 import base64
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
@@ -17,26 +17,23 @@ os.makedirs("/data", exist_ok=True)
 print("=" * 60, flush=True)
 print("BOT BASLATILIYOR...", flush=True)
 print(">>> CLOUDFLARE BYPASS v6.3 (URL FIX) <<<", flush=True)
-print("Python version: " + sys.version, flush=True)
-print("Calisma zamani: " + datetime.utcnow().isoformat(), flush=True)
-print("=" * 60, flush=True)
-
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-# Railway'de görünen gerçek admin chat id
-REAL_ADMIN_CHAT_ID = "441336964"
+# Admin chat id (Railway env'den alınır)
+ADMIN_CHAT_ID = os.getenv("CHAT_ID", "")
+REAL_ADMIN_CHAT_ID = ADMIN_CHAT_ID  # Geriye uyumluluk
 
 # Web site API (tek endpoint)
 WEBSITE_API_URL = os.getenv("WEBSITE_API_URL", "https://www.diyarbakiremlakmarket.com/admin/bot_api.php")
 
-# Normal bildirim alacak chat'ler (REAL_ADMIN'e ayrı, butonlu mesaj atacağız)
-CHAT_IDS = [cid for cid in [os.getenv("CHAT_ID"), "7449598531"] if cid and str(cid) != REAL_ADMIN_CHAT_ID]
+# Bildirim alacak chat'ler (Kullanılmıyor, geriye dönük uyumluluk için boş bırakıldı)
+CHAT_IDS = []
 
-# Komut + buton callback'leri için admin listesi
-ADMIN_CHAT_IDS = [cid for cid in {os.getenv("CHAT_ID"), "7449598531", REAL_ADMIN_CHAT_ID} if cid]
+# Komut kabul edecek admin listesi (Kullanılmıyor, geriye dönük uyumluluk için boş bırakıldı)
+ADMIN_CHAT_IDS = []
 # GitHub ayarlari (veri yedekleme icin)
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-GITHUB_REPO = os.getenv("GITHUB_REPO", "emlak-web-sitem/emlak-web-sitem-bot")
+GITHUB_REPO = os.getenv("GITHUB_REPO", "ibrahimsanioglu/emlak-web-sitem-bot")
 
 print("BOT_TOKEN mevcut: " + str(bool(BOT_TOKEN)), flush=True)
 print("CHAT_ID mevcut: " + str(bool(os.getenv("CHAT_ID"))), flush=True)
@@ -122,11 +119,12 @@ def fetch_via_flaresolverr(url, max_timeout=120000):
             html = solution.get("response", "")
             final_url = solution.get("url", url)
             cookies = solution.get("cookies", [])
+            user_agent = solution.get("userAgent", "")
             
             print(f"[FLARESOLVERR] Başarılı! İçerik uzunluğu: {len(html)}, Cookies: {len(cookies)}", flush=True)
             
             if html:
-                return {"content": html, "final_url": final_url, "cookies": cookies}
+                return {"content": html, "final_url": final_url, "cookies": cookies, "userAgent": user_agent}
             return None
 
         except requests.exceptions.ConnectionError:
@@ -161,124 +159,231 @@ def fetch_listings_via_flaresolverr():
     
     print("[FLARESOLVERR] İlan taraması başlıyor...", flush=True)
     
-    def process_page_html(html, page_num):
-        """Sayfa HTML'inden ilanları çıkar ve results/seen_codes'a ekle"""
+    def process_page_html(html, page_num, result_dict=None):
+        """Sayfa HTML'inden data-token'ları çıkarıp API'den verileri çeker ve results'a ekler"""
         nonlocal results, seen_codes
-        
-        # HTML'den ilan linklerini çıkar - ÖNCE BENZERSİZ KODLARI BUL
-        ilan_pattern = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
-        all_matches = re.findall(ilan_pattern, html, re.IGNORECASE)
-        
-        if not all_matches:
-            return 0, False  # 0 ilan, devam et
-        
-        # Benzersiz kodları ve ilk linklerini al (dict ile otomatik dedupe)
-        unique_listings = {}
-        for href, kod in all_matches:
-            if kod not in unique_listings and kod not in seen_codes:
-                unique_listings[kod] = href
-        
-        if not unique_listings:
-            return 0, False  # 0 yeni ilan
-        
-        # Sadece benzersiz ilanları işle
         page_new = 0
-        for kod, href in unique_listings.items():
-            seen_codes.add(kod)
-            
-            # Link pozisyonunu bul
-            link_pos = html.find(f'href="{href}"')
-            if link_pos == -1:
-                link_pos = 0
-            
-            # Chunk al - Kart yapısı geniş, fiyat linkin ~3500 karakter sonrasında
-            search_start = max(0, link_pos - 500)
-            search_end = min(len(html), link_pos + 5000)  # 5000'e çıkarıldı
-            chunk = html[search_start:search_end]
-            
-            # 1. Başlık Çıkarma
-            baslik = None
-            # Heading tagleri
-            title_match = re.search(r'<h[1-6][^>]*>\s*([^<]+?)\s*-\s*ML-\d+-\d+\s*</h[1-6]>', chunk, re.IGNORECASE)
-            if title_match:
-                baslik = title_match.group(1).strip()
-            
-            # data-target-title attribute (daha güvenilir)
-            if not baslik:
-                data_title = re.search(r'data-target-title="([^"]+)"', chunk, re.IGNORECASE)
-                if data_title:
-                    baslik = data_title.group(1).strip()
-            
-            # card-title class
-            if not baslik:
-                class_match = re.search(r'class="[^"]*card-title[^"]*"[^>]*>(?:\s*<a[^>]+>)?\s*([^<]+?)\s*(?:</a>)?\s*</', chunk, re.IGNORECASE)
-                if class_match:
-                    baslik = class_match.group(1).strip()
-
-            # Fallback: URL'den çıkar
-            if not baslik:
-                try:
-                    path_parts = href.split("/ilan/")[1].rsplit("-ML-", 1)[0]
-                    baslik = " ".join(word.capitalize() for word in path_parts.replace("-", " ").split())
-                except:
-                    baslik = f"İlan ML-{kod}"
-            
-            # Temizlik
-            if baslik:
-                baslik = baslik.replace("&amp;", "&").replace("&quot;", '"').replace("&#039;", "'").replace("&nbsp;", " ")
-                baslik = re.sub(r'\s*-\s*ML-\d+-\d+\s*$', '', baslik, flags=re.IGNORECASE)
-            
-            # 2. Fiyat Çıkarma - Makrolife'ın HTML yapısına özel
-            fiyat = "Fiyat Yok"
-            # Öncelik 1: <span class="h5 text-primary m-0">26.000 TL</span>
-            price_match = re.search(r'<span[^>]*class="[^"]*h5[^"]*text-primary[^"]*"[^>]*>\s*([\d\.,]+)\s*(TL|₺)', chunk, re.IGNORECASE)
-            if price_match:
-                amount = price_match.group(1)
-                if sum(c.isdigit() for c in amount) >= 3:
-                    fiyat = f"{amount.strip()} TL"
-            
-            # Öncelik 2: Genel fiyat pattern'i
-            if fiyat == "Fiyat Yok":
-                price_match2 = re.search(r'>\s*([\d\.]+(?:[\.,]\d{3})*)\s*(TL|₺)\s*<', chunk)
-                if price_match2:
-                    amount = price_match2.group(1)
-                    if sum(c.isdigit() for c in amount) >= 3:
-                        fiyat = f"{amount.strip()} TL"
-            
-            results.append((
-                kod,
-                fiyat,
-                f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href,
-                baslik,
-                page_num
-            ))
-            page_new += 1
         
-        return page_new, True
+        blocks = html.split('data-token="')[1:]
+        tokens = []
+        for block in blocks:
+            token = block.split('"')[0]
+            if 'aria-hidden="true"' in block[:150]:
+                continue
+            if token not in tokens:
+                tokens.append(token)
+        
+        if not tokens:
+            print("[API] Sayfada data-token bulunamadı!", flush=True)
+            return 0, False
+            
+        print(f"[API] {len(tokens)} adet token API'ye (ilan-verileri.php) gönderiliyor...", flush=True)
+        
+        # X-CSRF-TOKEN bilgisini HTML metninden regex ile çıkarıyoruz
+        csrf_token = ""
+        csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', html)
+        if csrf_match:
+            csrf_token = csrf_match.group(1)
+        
+        # result_dict (FlareSolverr'dan gelen) içindeki çerezleri requests formatına çevirelim
+        cookies_dict = {}
+        ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        
+        if result_dict:
+            if "cookies" in result_dict:
+                for c in result_dict["cookies"]:
+                    cookies_dict[c["name"]] = c["value"]
+            if "userAgent" in result_dict and result_dict["userAgent"]:
+                ua = result_dict["userAgent"]
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'User-Agent': ua,
+            'Referer': 'https://www.makrolife.com.tr/ilanlar',
+            'Origin': 'https://www.makrolife.com.tr',
+            'Accept': 'application/json, text/javascript, */*; q=0.01'
+        }
+        
+        if csrf_token:
+            headers['X-CSRF-TOKEN'] = csrf_token
+            
+        # API hem JSON hem de _token bekliyor olabilir
+        json_payload = {"tokens": tokens}
+        if csrf_token:
+            json_payload["_token"] = csrf_token
+            
+        try:
+            api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
+            resp = requests.post(api_url, json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
+            
+            if resp.status_code == 200:
+                try:
+                    # Bazı durumlarda yanıt başında boşluk veya BOM karakteri olabilir
+                    text = resp.text.strip()
+                    resp_json = json.loads(text)
+                except ValueError:
+                    print(f"[API] JSON Parse Hatası: {resp.text[:200]}", flush=True)
+                    return page_new, page_new > 0
+                    
+                if resp_json.get("success") and "data" in resp_json:
+                    data = resp_json["data"]
+                    for i in range(len(tokens)):
+                        d = data.get(str(i))
+                        if d and isinstance(d, dict):
+                            kod = d.get('ilan_kodu')
+                            if not kod or kod in seen_codes:
+                                continue
+                            seen_codes.add(kod)
+                            
+                            fiyat = d.get('fiyat', 'Fiyat Yok')
+                            href = d.get('seo_url', '')
+                            baslik = d.get('baslik') or kod
+                            
+                            final_href = f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href
+                            
+                            results.append((
+                                kod,
+                                fiyat,
+                                final_href,
+                                baslik,
+                                page_num
+                            ))
+                            page_new += 1
+                    return page_new, True
+                else:
+                    print(f"[API] Başarısız yanıt veya data yok: {str(resp_json)[:100]}", flush=True)
+            else:
+                print(f"[API] HTTP Hata {resp.status_code}: {resp.text[:200]}", flush=True)
+                # 403 alırsak Cloudflare engellemiş demektir
+        except Exception as e:
+            print(f"[API] Hata: {e}", flush=True)
+            
+        return page_new, page_new > 0
     
     # ============ ANA TARAMA DÖNGÜSÜ ============
+    base_result_dict = None  # Sayfa 1'den gelen FlareSolverr session verilerini saklamak için
+    
     while page_num < MAX_PAGES:
         if SCAN_STOP_REQUESTED:
             print("[FLARESOLVERR] Kullanıcı durdurdu", flush=True)
             break
         
         page_num += 1
+        page_url = URL if page_num == 1 else URL
+        
         if page_num == 1:
-            page_url = URL
+            print(f"[FLARESOLVERR SAYFA 1] {URL}", flush=True)
+            result = fetch_via_flaresolverr(page_url)
+            base_result_dict = result
         else:
-            page_url = URL + "?pager_p=" + str(page_num)
-        
-        print(f"[FLARESOLVERR SAYFA {page_num}] {page_url}", flush=True)
-        
-        result = fetch_via_flaresolverr(page_url)
+            print(f"[FLARESOLVERR SAYFA {page_num}] AJAX tetikleniyor...", flush=True)
+            if not base_result_dict:
+                print(f"[FLARESOLVERR SAYFA {page_num}] Temel oturum bilgisi eksik", flush=True)
+                break
+                
+            # CSRF token'ı base result'tan alalım
+            csrf_token = ""
+            base_html = base_result_dict.get("content", "")
+            csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', base_html)
+            if csrf_match:
+                csrf_token = csrf_match.group(1)
+
+            # Çerezleri dict formatına çevir
+            cookies_dict = {}
+            if "cookies" in base_result_dict:
+                for c in base_result_dict["cookies"]:
+                    cookies_dict[c["name"]] = c["value"]
+
+            ua = base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+            
+            headers = {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': ua,
+                'Referer': 'https://www.makrolife.com.tr/ilanlar',
+                'Origin': 'https://www.makrolife.com.tr',
+                'Accept': 'application/json, text/javascript, */*; q=0.01'
+            }
+            if csrf_token:
+                headers['X-CSRF-TOKEN'] = csrf_token
+            
+            json_payload = {"sayfa": page_num, "filtreler": {}}
+            if csrf_token:
+                json_payload["_token"] = csrf_token
+                
+            try:
+                # AJAX Sayfalama API'sine doğrudan JSON+Token ile istek atılıyor
+                resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
+                if resp.status_code == 200:
+                    try:
+                        resp_json = resp.json()
+                        if resp_json.get("success"):
+                            html = resp_json.get("html", "")
+                            result = {"content": html, **base_result_dict}
+                        else:
+                            print(f"[API SAYFALAMA] Başarısız yanıt: {str(resp_json)[:100]}", flush=True)
+                            result = None
+                    except ValueError:
+                        print(f"[API SAYFALAMA] JSON Parse Hatası: {resp.text[:200]}", flush=True)
+                        result = None
+                else:
+                    print(f"[API SAYFALAMA] HTTP Hata {resp.status_code}: {resp.text[:200]}", flush=True)
+                    result = None
+            except Exception as e:
+                print(f"[API SAYFALAMA] Hata: {e}", flush=True)
+                result = None
         
         if not result or not result.get("content"):
             consecutive_failures += 1
             print(f"[FLARESOLVERR SAYFA {page_num}] İçerik alınamadı", flush=True)
             
             if page_num <= 3:
-                print("[FLARESOLVERR] İlk 3 sayfada hata - tarama iptal", flush=True)
-                return None
+                # İlk 3 sayfada hata: 3 kez retry dene
+                retry_ok = False
+                for retry_i in range(1, 4):
+                    print(f"[FLARESOLVERR] Sayfa {page_num} retry {retry_i}/3...", flush=True)
+                    time.sleep(10)
+                    
+                    if page_num == 1:
+                        result = fetch_via_flaresolverr(page_url)
+                        base_result_dict = result
+                    else:
+                        try:
+                            # Retry için de aynı headers ve cookies kullanılıyor
+                            retry_payload = {"sayfa": page_num}
+                            if csrf_token:
+                                retry_payload["_token"] = csrf_token
+                                
+                            resp = requests.post("https://www.makrolife.com.tr/api/ilan-sayfalama.php", data=retry_payload, headers=headers, cookies=cookies_dict, timeout=30)
+                            if resp.status_code == 200:
+                                resp_json = resp.json()
+                                if resp_json.get("success"):
+                                    html = resp_json.get("html", "")
+                                    result = {"content": html, **base_result_dict}
+                                else:
+                                    result = None
+                            else:
+                                result = None
+                        except:
+                            result = None
+
+                    if result and result.get("content"):
+                        retry_ok = True
+                        consecutive_failures = 0
+                        break
+                if not retry_ok:
+                    print("[FLARESOLVERR] İlk 3 sayfada 3 retry başarısız - tarama iptal", flush=True)
+                    return None
+                # Retry başarılı oldu, bu sayfayı işle
+                html = result["content"]
+                page_new, _ = process_page_html(html, page_num, result)
+                print(f"[FLARESOLVERR SAYFA {page_num}] Retry başarılı! {page_new} ilan (toplam: {len(results)})", flush=True)
+                if page_num % 10 == 0:
+                    time.sleep(3)
+                else:
+                    time.sleep(1.0)
+                continue
             
             # Başarısız sayfayı kaydet
             failed_pages.append(page_num)
@@ -292,18 +397,18 @@ def fetch_listings_via_flaresolverr():
         consecutive_failures = 0
         html = result["content"]
         
-        # HTML'den ilan linklerini çıkar - ÖNCE BENZERSİZ KODLARI BUL
-        ilan_pattern = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
-        all_matches = re.findall(ilan_pattern, html, re.IGNORECASE)
+        # HTML'den data-token'ları çıkar
+        token_pattern = r'data-token="([^"]+)"'
+        all_matches = re.findall(token_pattern, html)
         
         if not all_matches:
-            if page_num <= MIN_VALID_PAGES:
+            if page_num <= 1:
                 print(f"[FLARESOLVERR] Sayfa {page_num} boş - hata", flush=True)
                 return None
             print(f"[FLARESOLVERR SAYFA {page_num}] Son sayfa geçildi", flush=True)
             break
         
-        page_new, _ = process_page_html(html, page_num)
+        page_new, _ = process_page_html(html, page_num, base_result_dict)
         
         if page_new == 0:
             # Bu sayfada yeni ilan yok, muhtemelen son sayfa
@@ -338,17 +443,72 @@ def fetch_listings_via_flaresolverr():
                     break
                 
                 if failed_page == 1:
-                    page_url = URL
+                    result = fetch_via_flaresolverr(URL)
                 else:
-                    page_url = URL + "?pager_p=" + str(failed_page)
-                
-                print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} tekrar deneniyor...", flush=True)
-                
-                result = fetch_via_flaresolverr(page_url)
-                
+                    if not base_result_dict:
+                        still_failed.append(failed_page)
+                        continue
+                    
+                    # CSRF token'ı base result'tan alalım
+                    csrf_token = ""
+                    base_html = base_result_dict.get("content", "")
+                    csrf_match = re.search(r'meta\s+name=["\']csrf-token["\']\s+content=["\']([^"\']+)["\']', base_html)
+                    if csrf_match:
+                        csrf_token = csrf_match.group(1)
+                    
+                    headers = {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'User-Agent': base_result_dict.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+                    }
+                    if csrf_token:
+                        headers['X-CSRF-TOKEN'] = csrf_token
+                    
+                    if cookies_str:
+                        headers['Cookie'] = cookies_str
+                        
+                    post_data_str = urlencode([("sayfa", failed_page)])
+                    fs_payload = {
+                        "cmd": "request.post",
+                        "url": "https://www.makrolife.com.tr/api/ilan-sayfalama.php",
+                        "maxTimeout": 45000,
+                        "postData": post_data_str
+                    }
+                    
+                    try:
+                        resp = requests.post(FLARESOLVERR_URL, json=fs_payload, timeout=60)
+                        if resp.status_code == 200:
+                            fs_res = resp.json()
+                            if fs_res.get("status") == "ok":
+                                # JSON parselama
+                                html_res = fs_res["solution"]["response"]
+                                # Veri bazen <pre> içinde bazen direkt gelebilir
+                                json_str = html_res
+                                if "<body" in html_res:
+                                    json_str = html_res.split("<body>")[1].split("</body>")[0]
+                                
+                                json_str = json_str.replace("<pre>", "").replace("</pre>", "").strip()
+                                try:
+                                    resp_json = json.loads(json_str)
+                                    if resp_json.get("success"):
+                                        result = {"content": resp_json.get("html", ""), **base_result_dict}
+                                    else:
+                                        result = None
+                                        print(f"[API SAYFALAMA] Başarısız: {str(resp_json)[:100]}", flush=True)
+                                except ValueError:
+                                    print(f"[API SAYFALAMA] JSON Parse Hatası (Ham Veri): {json_str[:200]}", flush=True)
+                                    result = None
+                            else:
+                                result = None
+                        else:
+                            result = None
+                    except Exception as e:
+                        print(f"[API SAYFALAMA] Hata: {e}", flush=True)
+                        result = None
+                        
                 if result and result.get("content"):
                     html = result["content"]
-                    page_new, success = process_page_html(html, failed_page)
+                    page_new, success = process_page_html(html, failed_page, base_result_dict if failed_page > 1 else result)
                     
                     if success:
                         print(f"[FLARESOLVERR RETRY] Sayfa {failed_page} BAŞARILI! {page_new} ilan eklendi (toplam: {len(results)})", flush=True)
@@ -427,7 +587,7 @@ def fetch_listings_via_google_proxy():
         if page_num == 1:
             page_url = URL
         else:
-            page_url = URL + "?pager_p=" + str(page_num)
+            page_url = URL + "?page=" + str(page_num)
         
         print(f"[GOOGLE_PROXY SAYFA {page_num}] {page_url}", flush=True)
         
@@ -449,88 +609,13 @@ def fetch_listings_via_google_proxy():
         consecutive_failures = 0
         html = proxy_result["content"]
         
-        # HTML'i ilan linklerine göre parçala
-        ilan_pattern = r'href="(/ilan/[^"]*-ML-(\d+-\d+)[^"]*)"'
-        matches = list(re.finditer(ilan_pattern, html, re.IGNORECASE))
+        page_new, _ = process_page_html(html, page_num)
         
-        if not matches:
-            if page_num <= MIN_VALID_PAGES:
-                print(f"[GOOGLE_PROXY] Sayfa {page_num} boş - ilk {MIN_VALID_PAGES} sayfada boş olamaz", flush=True)
-                return None
+        if page_new == 0:
             print(f"[GOOGLE_PROXY SAYFA {page_num}] İlan yok - son sayfa geçildi", flush=True)
             break
-        
-        page_listings = 0
-        for i, match in enumerate(matches):
-            href = match.group(1)
-            kod = match.group(2)
             
-            # if kod in seen_codes: continue <-- REMOVED
-            
-            start_pos = match.start()
-            search_start = max(0, start_pos - 1000)
-            if i < len(matches) - 1:
-                search_end = matches[i+1].start()
-            else:
-                search_end = min(len(html), start_pos + 5000)
-                
-            chunk = html[search_start:search_end]
-            
-            # 1. Başlık
-            baslik = None
-            # 1. Deneme: Heading tagleri (h1-h6)
-            title_match = re.search(r'<h[1-6][^>]*>(?:\s*<a[^>]+>)?\s*([^<]+?)\s*(?:</a>)?\s*</h[1-6]>', chunk, re.IGNORECASE)
-            if title_match:
-                baslik = title_match.group(1).strip()
-            
-            if not baslik:
-                try:
-                    path_parts = href.split("/ilan/")[1].rsplit("-ML-", 1)[0]
-                    baslik = " ".join(word.capitalize() for word in path_parts.replace("-", " ").split())
-                except:
-                    baslik = f"İlan ML-{kod}"
-            
-            if baslik:
-                baslik = baslik.replace("&amp;", "&").replace("&quot;", '"').replace("&#039;", "'").replace("&nbsp;", " ")
-                baslik = re.sub(r'\s*-\s*ML-\d+-\d+\s*$', '', baslik, flags=re.IGNORECASE)
-                
-            # 2. Fiyat
-            fiyat = "Fiyat Yok"
-            price_match = re.search(r'([\d\.,]+)(?:\s*(?:<[^>]+>)*\s*)(TL|₺|USD|EUR|GBP)', chunk)
-            if price_match:
-                amount = price_match.group(1)
-                currency = price_match.group(2)
-                candidate = amount
-                if sum(c.isdigit() for c in candidate) >= 3:
-                    currency = currency.replace('₺', 'TL').replace('&#8378;', 'TL')
-                    fiyat = f"{amount.strip()} {currency}"
-            
-            current_result = (
-                fiyat,
-                f"https://www.makrolife.com.tr{href}" if href.startswith("/") else href,
-                baslik,
-                page_num
-            )
-
-            if kod not in results_dict:
-                results_dict[kod] = current_result
-            else:
-                existing_fiyat = results_dict[kod][0]
-                if existing_fiyat == "Fiyat Yok" and fiyat != "Fiyat Yok":
-                    results_dict[kod] = current_result
-                elif existing_fiyat == "Fiyat Yok" and fiyat == "Fiyat Yok":
-                    results_dict[kod] = current_result
-                elif existing_fiyat != "Fiyat Yok" and fiyat != "Fiyat Yok":
-                    results_dict[kod] = current_result
-            
-            page_listings += 1
-
-        # Convert dict to list
-        results = []
-        for kod, val in results_dict.items():
-            results.append((kod, val[0], val[1], val[2], val[3]))
-        
-        print(f"[GOOGLE_PROXY SAYFA {page_num}] {page_listings} link tarandı (benzersiz: {len(results)})", flush=True)
+        print(f"[GOOGLE_PROXY SAYFA {page_num}] {page_new} ilan bulundu (toplam: {len(results)})", flush=True)
         time.sleep(1)
     
     if len(results) == 0:
@@ -786,7 +871,7 @@ def telegram_api(method: str, data: dict, timeout: int = 10, max_retries: int = 
 def send_message(text: str, chat_id: str = None, reply_markup=None, disable_preview: bool = True, include_real_admin: bool = True):
     """Telegram'a mesaj gönder.
     - chat_id verilirse sadece o kişiye gider.
-    - chat_id yoksa broadcast: CHAT_IDS + (include_real_admin True ise) REAL_ADMIN_CHAT_ID
+    - chat_id yoksa ADMIN_CHAT_ID'ye gönderir.
     """
     if not BOT_TOKEN:
         print("[TELEGRAM] BOT_TOKEN yok, mesaj atlanıyor", flush=True)
@@ -809,16 +894,10 @@ def send_message(text: str, chat_id: str = None, reply_markup=None, disable_prev
     if chat_id:
         return _post(str(chat_id))
 
-    targets = list(CHAT_IDS)
-    if include_real_admin and str(REAL_ADMIN_CHAT_ID) not in targets:
-        targets.append(str(REAL_ADMIN_CHAT_ID))
+    if ADMIN_CHAT_ID:
+        return _post(str(ADMIN_CHAT_ID))
 
-    ok_any = False
-    for cid in targets:
-        if cid and str(cid).strip():
-            ok_any = _post(str(cid)) or ok_any
-            time.sleep(0.25)
-    return ok_any
+    return False
 
 def answer_callback_query(callback_query_id: str, text: str = None, show_alert: bool = False):
     payload = {"callback_query_id": callback_query_id, "show_alert": show_alert}
@@ -1229,7 +1308,7 @@ def github_save_file(filename, content, sha=None):
         ).decode()
 
         data = {
-            "message": "Update " + filename + " - " + get_turkey_time().strftime("%Y-%m-%d %H:%M"),
+            "message": "Update " + filename + " - " + get_turkey_time().strftime("%Y-%m-%d %H:%M") + " [skip deploy]",
             "content": content_b64,
             "branch": "main"
         }
@@ -1356,74 +1435,6 @@ def load_state(force_refresh=False):
         "scan_sequence": 0
     }
     return STATE_CACHE
-
-
-    # Cache kullan (komutlar çok sık load_state çağırıyor)
-    if (not force_refresh) and isinstance(STATE_CACHE, dict) and STATE_CACHE.get("items") is not None:
-        return STATE_CACHE
-
-    if not GITHUB_TOKEN:
-        # GitHub yoksa (token yoksa) eski davranış: lokal cache -> yeni state
-        if os.path.exists(DATA_FILE):
-            try:
-                with open(DATA_FILE, "r", encoding="utf-8") as f:
-                    state = json.load(f)
-                    print("[STATE] Lokal cache kullanılıyor (GITHUB_TOKEN yok)", flush=True)
-                    STATE_CACHE = state
-                    return state
-            except Exception as e:
-                print("[STATE] Lokal okuma hatası:", e, flush=True)
-
-        print("[STATE] Yeni state oluşturuldu (GITHUB_TOKEN yok)", flush=True)
-        STATE_CACHE = {
-            "cycle_start": get_turkey_time().strftime("%Y-%m-%d"),
-            "items": {},
-            "reported_days": [],
-            "first_run_done": False,
-            "daily_stats": {},
-            "scan_sequence": 0
-        }
-        return STATE_CACHE
-
-    # GitHub ana kaynak
-    state, sha = github_get_file("ilanlar.json")
-    if isinstance(state, dict) and state.get("items") is not None:
-        STATE_GITHUB_SHA = sha
-        STATE_CACHE = state
-        # Railway cache'e yaz (okuma kaynağı değil, sadece yedek)
-        save_state_local(state)
-        print("[STATE] GitHub ANA kaynak kullanılıyor", flush=True)
-        return state
-
-    # GitHub okunamazsa: Railway state kullanma (isteğiniz doğrultusunda)
-    # Cache varsa onu kullan, yoksa yeni state ile devam etme (yanlis yeni ilan spam'ini onlemek icin)
-    if isinstance(STATE_CACHE, dict) and STATE_CACHE.get("items") is not None:
-        print("[STATE] GitHub okunamadi, RAM cache kullaniliyor", flush=True)
-        return STATE_CACHE
-
-    raise RuntimeError("GitHub'dan ilanlar.json okunamadi. (Railway lokal state kullanilmiyor)")
-
-
-    # 2️⃣ GitHub yoksa LOCAL CACHE
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, "r", encoding="utf-8") as f:
-                state = json.load(f)
-                print("[STATE] Lokal cache kullanılıyor", flush=True)
-                return state
-        except Exception as e:
-            print("[STATE] Lokal okuma hatası:", e, flush=True)
-
-    # 3️⃣ TAMAMEN YENİ STATE
-    print("[STATE] Yeni state oluşturuldu", flush=True)
-    return {
-        "cycle_start": get_turkey_time().strftime("%Y-%m-%d"),
-        "items": {},
-        "reported_days": [],
-        "first_run_done": False,
-        "daily_stats": {},
-        "scan_sequence": 0
-    }
 
 
 
@@ -1874,8 +1885,8 @@ def check_telegram_commands():
         if not text or not chat_id:
             continue
 
-        # Sadece admin'lerden komut al
-        if chat_id not in ADMIN_CHAT_IDS:
+        # Sadece admin'den komut al
+        if chat_id != str(ADMIN_CHAT_ID):
             continue
 
         if text.startswith("/"):
@@ -1978,9 +1989,10 @@ def fetch_listings_playwright():
             page_num += 1
             if page_num == 1:
                 page_url = URL
+                print("[SAYFA " + str(page_num) + "] " + page_url, flush=True)
             else:
-                page_url = URL + "?pager_p=" + str(page_num)
-            print("[SAYFA " + str(page_num) + "] " + page_url, flush=True)
+                page_url = URL
+                print("[SAYFA " + str(page_num) + "] AJAX (Sayfa " + str(page_num) + ")", flush=True)
 
             success = False
             selector_found = False
@@ -1991,29 +2003,86 @@ def fetch_listings_playwright():
             
             for retry_attempt in range(MAX_PAGE_RETRIES):
                 try:
-                    # Timeout: 90 saniye (önceki 60'tan artırıldı)
-                    page.goto(page_url, timeout=90000, wait_until="networkidle")
-                    
-                    # Cloudflare challenge kontrolü ve beklemesi
-                    if not wait_for_cloudflare(page):
-                        print(f"[SAYFA {page_num}] Cloudflare challenge geçilemedi", flush=True)
-                        raise TimeoutError("Cloudflare challenge timeout")
-                    
+                    if page_num == 1:
+                        # Timeout: 90 saniye (önceki 60'tan artırıldı)
+                        page.goto(page_url, timeout=90000, wait_until="networkidle")
+                        
+                        # Cloudflare challenge kontrolü ve beklemesi
+                        if not wait_for_cloudflare(page):
+                            print(f"[SAYFA {page_num}] Cloudflare challenge geçilemedi", flush=True)
+                            raise TimeoutError("Cloudflare challenge timeout")
+                    else:
+                        # AJAX sayfalama
+                        # Önce mevcut içeriğin bir parçasını alalım ki değişip değişmediğini anlayalım
+                        old_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
+                        
+                        # Sayfa scriptlerinin (sayfaDegistir vb) yüklenmesini bekle
+                        try:
+                            page.wait_for_function("typeof sayfaDegistir !== 'undefined'", timeout=10000)
+                        except:
+                            print(f"[SAYFA {page_num}] sayfaDegistir fonksiyonu bulunamadı, bekleniyor...", flush=True)
+
+                        print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
+                        try:
+                            # Filtreyi daha geniş tutalım (ilan-sayfalama kelimesi geçsin yeter)
+                            with page.expect_response(lambda r: "ilan-sayfalama" in r.url, timeout=20000) as response_info:
+                                page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
+                            print(f"[SAYFA {page_num}] AJAX yanıtı alındı: {response_info.value.status}", flush=True)
+                        except:
+                            print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel tıklama denenecek.", flush=True)
+                            page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
+                        
+                        page.wait_for_timeout(5000)
+                        new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
+                        
+                        if old_content_hash == new_content_hash:
+                            print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, JS-click deneniyor...", flush=True)
+                            try:
+                                # Overlay/Popup engellerini aşmak için önce kapatmayı deneyelim
+                                page.evaluate("let closeBtn = document.querySelector('.img-popup-close'); if(closeBtn) closeBtn.click();")
+                                
+                                # Overlay engellerini aşmak için JS ile doğrudan elemana tıklayıp sayfalama AJAX'ını tetikleyelim
+                                js_click = f"""
+                                (function(num) {{
+                                    let btn = document.querySelector('a.page-link[data-sayfa="' + num + '"]');
+                                    if(!btn) {{
+                                       // Alternatif: Metne göre bul
+                                       let links = Array.from(document.querySelectorAll('a.page-link, a'));
+                                       btn = links.find(a => a.innerText.trim() === String(num));
+                                    }}
+                                    if(btn) {{
+                                        btn.click();
+                                        return true;
+                                    }}
+                                    return false;
+                                }})({page_num})
+                                """
+                                clicked = page.evaluate(js_click)
+                                if clicked:
+                                    print(f"[SAYFA {page_num}] JS-click başarılı, bekleniyor...", flush=True)
+                                    page.wait_for_timeout(5000)
+                                else:
+                                    print(f"[SAYFA {page_num}] Buton bulunamadı.", flush=True)
+                            except Exception as e:
+                                print(f"[SAYFA {page_num}] JS-click hatası: {str(e)[:50]}", flush=True)
+                        
                     page_loaded = True
                     break
                 except TimeoutError:
                     if retry_attempt < MAX_PAGE_RETRIES - 1:
                         print("[SAYFA " + str(page_num) + "] Timeout - yeniden deneniyor (" + str(retry_attempt + 2) + "/" + str(MAX_PAGE_RETRIES) + ")", flush=True)
                         time.sleep(2)  # Kısa bekleme
-                        # Context yenile
-                        try:
-                            page.close()
-                            context.close()
-                            context = new_context()
-                            page = context.new_page()
-                            stealth_sync(page)  # Apply stealth to new page
-                        except:
-                            pass
+                        
+                        if page_num == 1:
+                            # Context yenile
+                            try:
+                                page.close()
+                                context.close()
+                                context = new_context()
+                                page = context.new_page()
+                                stealth_sync(page)  # Apply stealth to new page
+                            except:
+                                pass
                     else:
                         print("[SAYFA " + str(page_num) + "] Sayfa yüklenemedi - " + str(MAX_PAGE_RETRIES) + " deneme başarısız", flush=True)
                 except Exception as e:
@@ -2077,62 +2146,57 @@ def fetch_listings_playwright():
                 """() => {
                 const out = [];
                 const seen = new Set();
+                
+                // data-token özniteliğine sahip elemanların kapsayıcılarını dolaşalım
+                document.querySelectorAll('[data-token]').forEach(el => {
+                    const token = el.getAttribute("data-token");
+                    if (!token) return;
 
-                // YENİ FORMAT: /ilan/...-ML-XXXX-XX
-                document.querySelectorAll('a[href*="/ilan/"]').forEach(a => {
-                    const href = a.getAttribute("href");
-                    if (!href) return;
+                    // İlan kodu bulmaya çalışalım (genelde h6 veya p içinde ML-XXXXX formatında geçer)
+                    const text = el.innerText || "";
+                    const m = text.match(/(ML-[A-Z0-9-]{3,})/i) || document.body.innerHTML.match(new RegExp('ML-[A-Z0-9-]{3,}', 'i'));
                     
-                    // İlan linki değilse atla (danışman sayfaları vb.)
-                    if (href.includes('/danismanlar/') || href.includes('/iletisim')) return;
+                    let kod = "";
+                    if (m) {
+                        kod = m[0].toUpperCase();
+                    } else {
+                        // Eğer metinden gelmiyorsa, eleman içindeki linklerden arayalım
+                        const a = el.querySelector('a[href*="ML-"]');
+                        if (a) {
+                           const m2 = a.getAttribute("href").match(/(ML-[A-Z0-9-]{3,})/i);
+                           if (m2) kod = m2[1].toUpperCase();
+                        }
+                    }
 
-                    // Yeni format: /ilan/diyarbakir-yenisehir-mahalle-satilik-daire-ML-XXXX-XX
-                    const m = href.match(/-(ML-\d+-\d+)$/i) || href.match(/ML-(\d+-\d+)/i);
-                    if (!m) return;
-
-                    const kod = m[1].startsWith('ML-') ? m[1].substring(3) : m[1];
-                    if (seen.has(kod)) return;
+                    if (!kod || seen.has(kod)) return;
                     seen.add(kod);
 
                     let fiyat = "Fiyat yok";
-                    let title = "";
+                    let title = kod;
 
-                    let el = a;
-                    for (let i = 0; i < 8; i++) {
-                        if (!el.parentElement) break;
-                        el = el.parentElement;
+                    // Başlık ve fiyatı çekmeye çalışalım
+                    const h2 = el.querySelector("h2, h3, h4, h5, h6");
+                    if (h2) title = h2.innerText.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
 
-                        // Yeni yapı: h2 veya class içeren başlık
-                        const h2 = el.querySelector("h2");
-                        const h3 = el.querySelector("h3");
-                        const text = el.innerText || "";
-
-                        if ((h2 || h3) && (text.includes("₺") || text.includes("TL"))) {
-                            title = (h2 || h3).innerText.trim();
-                            // İlan kodunu başlıktan çıkar
-                            title = title.replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
-                            
-                            for (const line of text.split("\\n")) {
-                                if (/^[\d.,]+\s*(₺|TL)$/.test(line.trim())) {
-                                    fiyat = line.trim();
-                                    break;
-                                }
-                            }
+                    for (const line of text.split("\\n")) {
+                        if (/^[\d., ]+\s*(₺|TL)$/i.test(line.trim())) {
+                            fiyat = line.trim();
                             break;
                         }
                     }
 
-                    // Tam URL oluştur
-                    let fullHref = href;
-                    if (!href.startsWith('http')) {
-                        fullHref = 'https://www.makrolife.com.tr' + (href.startsWith('/') ? '' : '/') + href;
+                    // Link oluştur
+                    const aLink = el.querySelector('a');
+                    let fullHref = aLink ? aLink.getAttribute("href") : "";
+                    if (fullHref && !fullHref.startsWith('http')) {
+                        fullHref = 'https://www.makrolife.com.tr' + (fullHref.startsWith('/') ? '' : '/') + fullHref;
                     }
 
                     out.push({
                         kod: kod,
                         fiyat: fiyat,
                         title: title,
-                        link: fullHref
+                        link: fullHref || `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`
                     });
                 });
 
@@ -2181,12 +2245,22 @@ def fetch_listings_playwright():
                 print("[PLAYWRIGHT] Son sayfa (liste boş)", flush=True)
                 break
 
-            if page_num % 5 == 0:
-                page.close()
-                context.close()
+            if page_num % 100 == 0:
+                try:
+                    page.close()
+                    context.close()
+                except:
+                    pass
                 context = new_context()
                 page = context.new_page()
-                print("[PLAYWRIGHT] Context yenilendi", flush=True)
+                stealth_sync(page)
+                print("[PLAYWRIGHT] Context yenilendi, siteye geri dönülüyor...", flush=True)
+                # Yeni context sonrası siteye geri dön (SAYFA 6+ için kritik)
+                try:
+                    page.goto(URL, timeout=90000, wait_until="networkidle")
+                    wait_for_cloudflare(page)
+                except Exception as e:
+                    print(f"[PLAYWRIGHT] Yeniden yükleme hatası: {e}", flush=True)
 
             page.wait_for_timeout(random.randint(2000, 4000))
 
@@ -2371,7 +2445,6 @@ def run_scan_with_timeout():
                 msg += "🏷️ " + title + "\n"
                 msg += "💰 " + fiyat + "\n\n"
                 msg += "🔗 " + link
-                send_message(msg, include_real_admin=False)
                 send_real_admin_new_listing(kod, title, fiyat, link)
                 time.sleep(0.3)
 
@@ -2407,7 +2480,6 @@ def run_scan_with_timeout():
                     msg += "💰 " + eski + " ➜ " + fiyat + "\n"
                     msg += fark_str + " (" + trend + ")\n\n"
                     msg += "🔗 " + state["items"][kod].get("link", "")
-                    send_message(msg, include_real_admin=False)  # real admin de alsın (ayrıca butonlu mesaj da gider)
                     send_real_admin_price_change(kod, state["items"][kod].get("title", ""), eski, fiyat)
                     time.sleep(0.3)
 
@@ -2427,7 +2499,6 @@ def run_scan_with_timeout():
                 msg += "📋 " + kod + "\n"
                 msg += "🏷️ " + item.get("title", "") + "\n"
                 msg += "💰 " + item.get("fiyat", "")
-                send_message(msg, include_real_admin=False)
                 send_real_admin_deleted(kod, item.get("title", ""), item.get("fiyat", ""))
 
                 del state["items"][kod]
