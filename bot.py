@@ -756,36 +756,34 @@ def wait_for_cloudflare(page, timeout=45000):
         _time.sleep(3)
         
         try:
-            # v6.4: Bağımlılık (Global Variables) kontrolü
-            # Site scriptleri 'utils', 'opts', 'log' değişkenlerini bekliyor.
-            # Bunlar gelmeden müdahale edersek sayfa çöker (ReferenceError).
+            # v6.4/v6.5: Ortam kontrolü (Injection sonrası daha esnek)
             env_status = page.evaluate("""() => {
                 const utilsOk = typeof window.utils !== 'undefined';
                 const optsOk = typeof window.opts !== 'undefined';
-                const logOk = typeof window.log !== 'undefined';
                 const captchaReady = typeof grecaptcha !== 'undefined';
                 const detectReady = typeof window.__botDetect !== 'undefined';
                 const sayfaDegistirReady = typeof window.sayfaDegistir !== 'undefined';
                 
-                return { utilsOk, optsOk, logOk, captchaReady, detectReady, sayfaDegistirReady };
+                return { utilsOk, optsOk, captchaReady, detectReady, sayfaDegistirReady };
             }""")
             
+            # v6.5: Bağımlılıklar gelmezse 2 saniye bekle ama loop'u kırma (Injection yaptık zaten)
             if not env_status['utilsOk'] or not env_status['optsOk']:
-                print(f"[CF] Bağımlılıklar bekleniyor: utils:{env_status['utilsOk']}, opts:{env_status['optsOk']}", flush=True)
-                # Henüz insansı hareket yapma, sayfanın kendi scriptleri yüklensin
-                _time.sleep(2)
-                continue
+                 if attempt < 3:
+                    print(f"[CF] Bağımlılık bekleniyor (utils/opts)...", flush=True)
+                    _time.sleep(2)
+                    continue
 
             # v6.3: Diagnostik loglar
             if not env_status['detectReady'] or not env_status['sayfaDegistirReady']:
                 print(f"[CF] Diagnostik: BotDetect: {env_status['detectReady']}, sayfaDegistir: {env_status['sayfaDegistirReady']}", flush=True)
 
-            # Sadece bağımlılıklar tamamlandığında fareyi oynat
+            # İnsansı hareketleri yap
             simulate_human_behavior()
 
-            # v6.1: Manuel tetikleme (Eğer token hala gelmediyse ve ortam hazırsa)
-            if attempt == 4 and env_status['detectReady']:
-                print("[CF] Ortam hazır, manuel doğrulama tetikleniyor...", flush=True)
+            # v6.1: Manuel doğrulama (v6.5: Ortam hazır olmasa bile 5. denemede zorla)
+            if attempt == 5:
+                print("[CF] Doğrulama tetikleniyor...", flush=True)
                 page.evaluate("if(window.__botDetect) window.__botDetect.verify();")
 
             status = page.evaluate("""() => {
@@ -807,13 +805,11 @@ def wait_for_cloudflare(page, timeout=45000):
             ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
             print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan (Dolu: {status['hasData']}, Token: {status['hasToken']})", flush=True)
             
-            # v6.1/v6.2: Settle logic (Token yok ama 15 sn geçti ve data varsa devam et)
+            # v6.5: Daha agresif veri kabulü
             if status['hasData']:
-                if status['hasToken']:
-                    print(f"[CF] Doğrulama BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
-                    return True
-                elif attempt >= 6: # 18 saniye
-                    print(f"[CF] Token gelmedi ama veri var. Devam ediliyor (Image fallback modu)", flush=True)
+                if status['hasToken'] or attempt >= 7: # 21 saniye sonra token yoksa bile veri varsa çık
+                    msg = f"Doğrulama BAŞARILI!" if status['hasToken'] else "Token alınamadı ama veriye güveniliyor."
+                    print(f"[CF] {msg} ({(attempt + 1) * 3} sn)", flush=True)
                     return True
         except Exception as e:
             print(f"[CF] Deneme {attempt + 1} hatası: {e}", flush=True)
@@ -2082,6 +2078,17 @@ def fetch_listings_playwright():
         page.on("console", handle_console_msg)
         page.on("pageerror", lambda exc: print(f"[BROWSER-CRITICAL-ERROR] {exc}", flush=True))
 
+        # v6.5: Ortam Zehirlenmesi / Dependency Injection
+        # Sitenin kendi scriptleri 'utils', 'opts' gibi değişkenler yoksa çöküyor.
+        # Bunları sayfa yüklenmeden (veya başında) biz tanımlayalım.
+        page.add_init_script("""
+            window.utils = window.utils || {};
+            window.opts = window.opts || {};
+            window.log = window.log || function(){};
+            window.generateMagicArray = window.generateMagicArray || function(){ return []; };
+            console.log("[INJECT] Global değişkenler (utils, opts, log) tanımlandı.");
+        """)
+
         while True:
             if SCAN_STOP_REQUESTED:
                 print("[PLAYWRIGHT] Kullanıcı durdurdu", flush=True)
@@ -2166,9 +2173,12 @@ def fetch_listings_playwright():
                                 print(f"[SAYFA {page_num}] JS-click başarılı, değişim bekleniyor...", flush=True)
                                 page.wait_for_timeout(5000)
                             else:
-                                # v6.2: Hard reload fallback (Eğer ne AJAX ne JS-click çalışmazsa)
+                                # v6.2/v6.5: Hard reload fallback (Eğer ne AJAX ne JS-click çalışmazsa)
                                 print(f"[SAYFA {page_num}] AJAX ve JS-click başarısız, sayfayı parametre ile yüklüyorum...", flush=True)
-                                page.goto(f"{URL}?sayfa={page_num}", timeout=60000, wait_until="networkidle")
+                                # URL parametresi ile yükle
+                                page_url_hard = f"{URL}?sayfa={page_num}"
+                                page.goto(page_url_hard, timeout=90000, wait_until="networkidle")
+                                print(f"[SAYFA {page_num}] Hard-reload yapıldı: {page_url_hard}", flush=True)
 
                         # Cloudflare/Token kontrolü (her sayfa geçişinde kısa kontrol)
                         wait_for_cloudflare(page)
