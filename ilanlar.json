@@ -5913,5 +5913,5 @@
   },
   "scan_sequence": 110,
   "last_scan_timestamp": 1772812208.2770553,
-  "auto_scan_enabled": true
+  "auto_scan_enabled": false
 }
