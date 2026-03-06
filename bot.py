@@ -2119,9 +2119,15 @@ def fetch_listings_playwright():
                 # İlan/konteyner gelene kadar bekle
                 page.wait_for_selector('.cb-list-item, .locationDiv, a[href*="/ilan/"]', timeout=20000)
                 
-                # JS'nin verileri doldurması için biraz daha bekle (placeholder sorunu için)
-                print(f"[SAYFA {page_num}] Verilerin dolması bekleniyor...", flush=True)
-                page.wait_for_timeout(3000) 
+                # POPUP KAPATMA - Data yüklenmesini engelleyebilir
+                try:
+                    page.evaluate("let closeBtn = document.querySelector('.img-popup-close'); if(closeBtn) closeBtn.click();")
+                except:
+                    pass
+                
+                # JS'nin verileri doldurması için daha fazla bekle (reCAPTCHA/Verification süreci için)
+                print(f"[SAYFA {page_num}] Verilerin dolması bekleniyor (8 sn)...", flush=True)
+                page.wait_for_timeout(8000) 
                 
                 selector_found = True
                 success = True
@@ -2157,20 +2163,26 @@ def fetch_listings_playwright():
                 const out = [];
                 const seen = new Set();
                 
-                // data-token özniteliğine sahip elemanların kapsayıcılarını veya yeni konteynerları dolaşalım
                 document.querySelectorAll('.cb-list-item, [data-token]').forEach(el => {
                     const token = el.getAttribute("data-token");
                     
                     // İlan kodu bulmaya çalışalım
-                    // Öncelik: text içindeki ML-
-                    const text = el.innerText || "";
-                    const m = text.match(/(ML-[A-Z0-9-]{3,})/i);
-                    
+                    // Öncelik 1: .ilan-kod-ph (Sitenin yeni placeholder yapısı)
                     let kod = "";
-                    if (m) {
-                        kod = m[0].toUpperCase();
-                    } else if (token) {
-                        // Token varsa ama metinde yoksa (nadir), eldeki href veya diğer datalardan kod bulmaya çalış
+                    const kodPH = el.querySelector(".ilan-kod-ph");
+                    if (kodPH && kodPH.innerText.trim().match(/ML-[A-Z0-9-]+/i)) {
+                        kod = kodPH.innerText.trim().match(/ML-[A-Z0-9-]+/i)[0].toUpperCase();
+                    }
+                    
+                    if (!kod) {
+                        // Öncelik 2: text içindeki ML-
+                        const text = el.innerText || "";
+                        const m = text.match(/(ML-[A-Z0-9-]{3,})/i);
+                        if (m) kod = m[0].toUpperCase();
+                    }
+
+                    if (!kod) {
+                        // Öncelik 3: data-target-href içindeki ML- (Attribute içinden)
                         const href = el.getAttribute("data-target-href") || "";
                         const m2 = href.match(/(ML-[A-Z0-9-]{3,})/i);
                         if (m2) kod = m2[0].toUpperCase();
@@ -2187,16 +2199,17 @@ def fetch_listings_playwright():
                     if (dataTitle && dataTitle !== "#" && dataTitle.length > 5) {
                         title = dataTitle;
                     } else {
-                        const h = el.querySelector("h2, h3, h4, h5, h6, .ilan-baslik-ph");
+                        const h = el.querySelector("h2, h3, h4, h5, h6, .ilan-baslik-ph, .ilan-baslik");
                         if (h) title = h.innerText.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
                     }
 
                     // Fiyat bul
-                    const fElem = el.querySelector(".ilan-fiyat-ph, .text-primary");
+                    const fElem = el.querySelector(".ilan-fiyat-ph, .text-primary, .ilan-fiyat");
                     if (fElem && (fElem.innerText.includes("TL") || fElem.innerText.includes("₺"))) {
                         fiyat = fElem.innerText.trim();
                     } else {
-                        for (const line of text.split("\n")) {
+                        const textContent = el.innerText || "";
+                        for (const line of textContent.split("\n")) {
                             if (/^[\d., ]+\s*(₺|TL)$/i.test(line.trim())) {
                                 fiyat = line.trim();
                                 break;
