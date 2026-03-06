@@ -133,16 +133,28 @@ def extract_listings_from_html(html, page_num=0):
         
         # Fiyatı bul (.ilan-fiyat-ph veya text-primary)
         fiyat = "---"
-        fiyat_match = re.search(r'class="[^"]*(?:ilan-fiyat-ph|ilan-fiyat|text-primary|price)[^"]*"[^>]*>(.*?)<', block, re.DOTALL)
+        # Daha seçici eşleşme: hem class'ı kontrol et hem de içinde rakam/TL var mı bak
+        fiyat_match = re.search(r'class="[^"]*(?:ilan-fiyat-ph|ilan-fiyat|price)[^"]*"[^>]*>(.*?)<', block, re.DOTALL)
         if fiyat_match:
-            fiyat = fiyat_match.group(1).strip()
-            # HTML taglerini temizle
-            fiyat = re.sub(r'<.*?>', '', fiyat)
-        else:
-            # Fallback: Blok içinde "TL" geçen sayısal ifadeyi ara
-            tl_match = re.search(r'(\d+(?:[\.,]\d+)*\s*TL)', block, re.IGNORECASE)
-            if tl_match:
-                fiyat = tl_match.group(1).strip()
+            val = re.sub(r'<.*?>', '', fiyat_match.group(1)).strip()
+            if any(char.isdigit() for char in val):
+                fiyat = val
+        
+        if fiyat == "---" or len(fiyat) < 4: # Çok kısa veya boşsa fallback
+            # Fallback 1: text-primary içinde TL geçen değer
+            tp_match = re.search(r'class="[^"]*text-primary[^"]*"[^>]*>([^<]*TL[^<]*)<', block, re.IGNORECASE)
+            if tp_match:
+                fiyat = tp_match.group(1).strip()
+            else:
+                # Fallback 2: Herhangi bir yerde "X.XXX.XXX TL" formatı
+                tl_match = re.search(r'(\d{1,3}(?:[\.,]\d{3})*\s*(?:TL|€|\$))', block, re.IGNORECASE)
+                if tl_match:
+                    fiyat = tl_match.group(1).strip()
+        
+        # Temizlik: Eğer fiyat hala çok garipse (örn sadece "05 TL" gibi çok küçük bir rakamsa ve aslen büyükse)
+        # Şimdilik sadece "---" değerini "0TL"ye dönüştüren hataları engelleyelim
+        if fiyat.lower().startswith("0") and "tl" in fiyat.lower() and len(fiyat) < 6:
+            fiyat = "---"
         
         # Başlığı bul (.ilan-baslik-ph veya h3/h4 vb)
         title = f"İlan {kod}"
@@ -194,17 +206,17 @@ def get_category_urls():
     ]
     return categories
 
-def fetch_listings_via_bot_ua():
+def fetch_listings_via_bot_ua(max_pages_per_cat=3):
     """SEO-Bot Bypass yöntemiyle tüm kategorileri tarar ve ilanları döndürür."""
     all_results = []
     seen_ids = set()
     
     categories = get_category_urls()
-    print(f"[BOT-UA] {len(categories)} kategori taranacak...", flush=True)
+    print(f"[BOT-UA] {len(categories)} kategori x {max_pages_per_cat} sayfa taranacak...", flush=True)
     
     for i, base_cat_url in enumerate(categories):
-        # Her kategori için 3 sayfa tarayalım (kapsamı artırmak için)
-        for p in range(1, 4):
+        # Kategori başına sayfa limiti
+        for p in range(1, max_pages_per_cat + 1):
             cat_url = f"{base_cat_url}?page={p}" if p > 1 else base_cat_url
             html = fetch_via_bot_ua(cat_url)
             if not html:
@@ -2094,6 +2106,12 @@ def handle_command(chat_id, command, message_text):
 
 
     
+    elif command == "/tara_hepsini":
+        state["ua_scan_limit"] = 50 # SEO-bot için derin tarama limiti
+        save_state(state)
+        send_message("🚀 <b>Derin Tarama Başlatılıyor (SEO-Bot)</b>\n\nTüm sayfalar taranacak. Yaklaşık 3-5 dakika sürecektir.", chat_id)
+        return "SCAN"
+        
     else:
         send_message("Bilinmeyen komut. /yardim yazin.", chat_id)
     
@@ -2650,10 +2668,15 @@ def run_scan_with_timeout():
     try:
         # === 0. SEO-BOT BYPASS (En Hızlı ve Yeni Yöntem) ===
         print("[TARAMA] SEO-Bot Bypass yöntemi deneniyor...", flush=True)
-        result = fetch_listings_via_bot_ua()
+        # Manuel tam tarama limitini kontrol et
+        ua_limit = state.get("ua_scan_limit", 3)
+        result = fetch_listings_via_bot_ua(max_pages_per_cat=ua_limit)
         listings, scan_mode = result if isinstance(result, tuple) else (result, None)
         
-        is_quick_scan = (scan_mode == "QUICK_SCAN")
+        # Limiti sıfırla (sadece bu tarama için geçerli olsun)
+        if state.get("ua_scan_limit"):
+            state["ua_scan_limit"] = 3
+            save_state(state)
         
         if not listings or len(listings) < 10:
             print("[TARAMA] SEO-Bot yetersiz sonuç verdi, eski yöntemlere geçiliyor...", flush=True)
