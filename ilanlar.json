@@ -5986,8 +5986,8 @@
       "deleted": 0
     }
   },
-  "scan_sequence": 126,
+  "scan_sequence": 127,
   "last_scan_timestamp": 1772831639.1756203,
   "auto_scan_enabled": true,
-  "ua_scan_limit": 50
+  "ua_scan_limit": 3
 }
