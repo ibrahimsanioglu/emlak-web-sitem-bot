@@ -647,48 +647,49 @@ def wait_for_cloudflare(page, timeout=45000):
     def simulate_human_behavior():
         """İnsansı fare hareketleri ve rastgele duraksamalar (Anti-bot)."""
         try:
+            # Persistent-like mouse movement (start near center or current)
+            curr_x = _random.randint(200, 400)
+            curr_y = _random.randint(200, 400)
+            
             # 1. Rastgele titrek hareketler (Non-linear)
-            for _ in range(_random.randint(3, 6)):
-                current_x, current_y = 100, 100
+            for _ in range(_random.randint(4, 8)):
                 target_x = _random.randint(50, 950)
                 target_y = _random.randint(50, 750)
                 
                 # Hedefe giden yolu küçük, titrek adımlara böl
-                steps = _random.randint(5, 15)
+                steps = _random.randint(10, 25)
                 for i in range(steps):
-                    move_x = current_x + (target_x - current_x) * (i / steps) + _random.randint(-5, 5)
-                    move_y = current_y + (target_y - current_y) * (i / steps) + _random.randint(-5, 5)
+                    # Bezier-like jitter
+                    t = i / steps
+                    # Linear interpolation + jitter
+                    move_x = curr_x + (target_x - curr_x) * t + _random.randint(-3, 3)
+                    move_y = curr_y + (target_y - curr_y) * t + _random.randint(-3, 3)
                     page.mouse.move(move_x, move_y)
-                    _time.sleep(_random.uniform(0.01, 0.05))
+                    _time.sleep(_random.uniform(0.005, 0.02))
                 
-                _time.sleep(_random.uniform(0.2, 0.6))
+                curr_x, curr_y = target_x, target_y
+                _time.sleep(_random.uniform(0.1, 0.4))
             
-            # 2. Sayfayı hafifçe kaydır (Scroll)
-            page.mouse.wheel(0, _random.randint(100, 300))
-            _time.sleep(_random.uniform(0.5, 1.0))
-            page.mouse.wheel(0, -_random.randint(50, 150))
+            # 2. Rastgele bir yere TIKLA (Boş bir alan olabilir - event tetikler)
+            # Ama ilan kodlarını tetikleyen alanlara (cb-list-item) dokunmayalım selector'ı bozmasın
+            try:
+                page.mouse.click(_random.randint(10, 50), _random.randint(10, 50))
+            except: pass
+
+            # 3. Sayfayı hafifçe kaydır (Scroll)
+            page.mouse.wheel(0, _random.randint(150, 400))
+            _time.sleep(_random.uniform(0.3, 0.7))
+            page.mouse.wheel(0, -_random.randint(50, 200))
             
-            # Turnstile checkbox'ı ara ve tıkla
-            turnstile_selectors = [
-                'iframe[src*="challenges.cloudflare.com"]',
-                'iframe[title*="challenge"]',
-                '#turnstile-wrapper iframe',
-                '.cf-turnstile iframe',
-            ]
-            for selector in turnstile_selectors:
-                try:
-                    frames = page.frames
-                    for frame in frames:
-                        if 'challenges.cloudflare.com' in frame.url:
-                            print(f"[CF] Turnstile iframe bulundu: {frame.url}", flush=True)
-                            checkbox = frame.locator('input[type="checkbox"]')
-                            if checkbox.count() > 0:
-                                print("[CF] Turnstile checkbox tıklanıyor...", flush=True)
-                                checkbox.click()
-                                _time.sleep(3)
-                                return True
-                except:
-                    pass
+            # Turnstile checkbox'ı ara ve tıkla (v6.1 - daha hızlı bulur)
+            for frame in page.frames:
+                if 'challenges.cloudflare.com' in frame.url:
+                    checkbox = frame.locator('input[type="checkbox"]')
+                    if checkbox.count() > 0:
+                        print("[CF] Turnstile bulundu, tıklanıyor...", flush=True)
+                        checkbox.click()
+                        _time.sleep(3)
+                        return True
         except Exception as e:
             print(f"[CF] Human simulation hatası: {e}", flush=True)
         return False
@@ -737,6 +738,11 @@ def wait_for_cloudflare(page, timeout=45000):
             simulate_human_behavior()
         
         try:
+            # v6.1: Manuel tetikleme (Eğer token hala gelmediyse)
+            if attempt == 3:
+                print("[CF] Manuel doğrulama tetikleniyor...", flush=True)
+                page.evaluate("if(window.__botDetect) window.__botDetect.verify();")
+
             status = page.evaluate("""() => {
                 const kodElems = document.querySelectorAll('.ilan-kod-ph');
                 let hasData = false;
@@ -750,15 +756,20 @@ def wait_for_cloudflare(page, timeout=45000):
                 }
 
                 const hasToken = !!(window.__botToken && window.__botToken.length > 10);
-                return { hasData, hasToken };
+                return { hasData, hasToken, token: window.__botToken || "YOK" };
             }""")
             
             ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
             print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan (Dolu: {status['hasData']}, Token: {status['hasToken']})", flush=True)
             
-            if status['hasData'] and status['hasToken']:
-                print(f"[CF] Doğrulama BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
-                return True
+            # v6.1: Settle logic (Token yok ama 15 sn geçti ve data varsa devam et)
+            if status['hasData']:
+                if status['hasToken']:
+                    print(f"[CF] Doğrulama BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
+                    return True
+                elif attempt >= 5: # 15 saniye (5 * 3s)
+                    print(f"[CF] Token gelmedi ama veri var. Devam ediliyor (Image fallback modu)", flush=True)
+                    return True
         except Exception as e:
             print(f"[CF] Deneme {attempt + 1} hatası: {e}", flush=True)
     
@@ -2042,58 +2053,48 @@ def fetch_listings_playwright():
                             raise TimeoutError("Cloudflare challenge timeout")
                     else:
                         # AJAX sayfalama
-                        # Önce mevcut içeriğin bir parçasını alalım ki değişip değişmediğini anlayalım
-                        old_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
+                        # Mevcut ilanlardan birinin kodunu alalım (değiştiğini doğrulamak için)
+                        first_kod_before = page.evaluate("() => { let el = document.querySelector('.ilan-kod-ph'); return el ? el.textContent.trim() : ''; }")
                         
-                        # Sayfa scriptlerinin (sayfaDegistir vb) yüklenmesini bekle
                         try:
                             page.wait_for_function("typeof sayfaDegistir !== 'undefined'", timeout=10000)
                         except:
-                            print(f"[SAYFA {page_num}] sayfaDegistir fonksiyonu bulunamadı, bekleniyor...", flush=True)
+                            print(f"[SAYFA {page_num}] sayfaDegistir bulunamadı", flush=True)
 
                         print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
+                        
+                        # AJAX tetikle
+                        page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
+                        
+                        # İçeriğin değişmesini bekle (ML- kodu değişmeli veya yeni ilanlar gelmeli)
                         try:
-                            # Filtreyi daha geniş tutalım (ilan-sayfalama kelimesi geçsin yeter)
-                            with page.expect_response(lambda r: "ilan-sayfalama" in r.url, timeout=20000) as response_info:
-                                page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
-                            print(f"[SAYFA {page_num}] AJAX yanıtı alındı: {response_info.value.status}", flush=True)
+                            # 10 saniye bekle: İlk ilanın kodu değişmeli
+                            page.wait_for_function(
+                                f"(old) => {{ let el = document.querySelector('.ilan-kod-ph'); return el && el.textContent.trim() !== old && el.textContent.includes('ML-'); }}",
+                                arg=first_kod_before,
+                                timeout=15000
+                            )
+                            print(f"[SAYFA {page_num}] Veriler başarıyla güncellendi.", flush=True)
                         except:
-                            print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel tıklama denenecek.", flush=True)
-                            page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
-                        
-                        page.wait_for_timeout(5000)
-                        new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
-                        
-                        if old_content_hash == new_content_hash:
-                            print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, JS-click deneniyor...", flush=True)
-                            try:
-                                # Overlay/Popup engellerini aşmak için önce kapatmayı deneyelim
-                                page.evaluate("let closeBtn = document.querySelector('.img-popup-close'); if(closeBtn) closeBtn.click();")
-                                
-                                # Overlay engellerini aşmak için JS ile doğrudan elemana tıklayıp sayfalama AJAX'ını tetikleyelim
-                                js_click = f"""
-                                (function(num) {{
-                                    let btn = document.querySelector('a.page-link[data-sayfa="' + num + '"]');
-                                    if(!btn) {{
-                                       // Alternatif: Metne göre bul
-                                       let links = Array.from(document.querySelectorAll('a.page-link, a'));
-                                       btn = links.find(a => a.innerText.trim() === String(num));
-                                    }}
-                                    if(btn) {{
-                                        btn.click();
-                                        return true;
-                                    }}
-                                    return false;
-                                }})({page_num})
-                                """
-                                clicked = page.evaluate(js_click)
-                                if clicked:
-                                    print(f"[SAYFA {page_num}] JS-click başarılı, bekleniyor...", flush=True)
-                                    page.wait_for_timeout(5000)
-                                else:
-                                    print(f"[SAYFA {page_num}] Buton bulunamadı.", flush=True)
-                            except Exception as e:
-                                print(f"[SAYFA {page_num}] JS-click hatası: {str(e)[:50]}", flush=True)
+                            print(f"[SAYFA {page_num}] AJAX verisi değişmedi, manuel tıklama denenecek...", flush=True)
+                            # Manuel link tıklama ( fallback )
+                            js_click = f"""
+                            (function(num) {{
+                                let btn = document.querySelector('a.page-link[data-sayfa="' + num + '"]');
+                                if(!btn) {{
+                                   let links = Array.from(document.querySelectorAll('a.page-link, a'));
+                                   btn = links.find(a => a.innerText.trim() === String(num));
+                                }}
+                                if(btn) {{ btn.click(); return true; }}
+                                return false;
+                            }})({page_num})
+                            """
+                            if page.evaluate(js_click):
+                                print(f"[SAYFA {page_num}] JS-click başarılı, değişim bekleniyor...", flush=True)
+                                _time.sleep(5)
+
+                        # Cloudflare/Token kontrolü (her sayfa geçişinde kısa kontrol)
+                        wait_for_cloudflare(page)
                         
                     page_loaded = True
                     break
