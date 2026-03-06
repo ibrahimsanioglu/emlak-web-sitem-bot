@@ -3,6 +3,8 @@ import sys
 import json
 import time
 import random
+import time as _time
+import random as _random
 from urllib.parse import urlparse, urlunparse, urlencode
 import base64
 from datetime import datetime, timedelta
@@ -85,7 +87,6 @@ def fetch_via_flaresolverr(url, max_timeout=120000):
         api_url = api_url + "/v1"
     
     # Retry mekanizması (Connection refused için)
-    import time as _time
     max_retries = 3
     
     for attempt in range(max_retries):
@@ -2056,6 +2057,13 @@ def fetch_listings_playwright():
                         # Mevcut ilanlardan birinin kodunu alalım (değiştiğini doğrulamak için)
                         first_kod_before = page.evaluate("() => { let el = document.querySelector('.ilan-kod-ph'); return el ? el.textContent.trim() : ''; }")
                         
+                        # v6.1: Token kontrolü (Sayfa geçişi için kritik)
+                        has_token = page.evaluate("!!(window.__botToken && window.__botToken.length > 10)")
+                        if not has_token:
+                            print(f"[SAYFA {page_num}] Token eksik, doğrulama zorlanıyor...", flush=True)
+                            page.evaluate("if(window.__botDetect) window.__botDetect.verify();")
+                            page.wait_for_timeout(3000)
+
                         try:
                             page.wait_for_function("typeof sayfaDegistir !== 'undefined'", timeout=10000)
                         except:
@@ -2091,7 +2099,7 @@ def fetch_listings_playwright():
                             """
                             if page.evaluate(js_click):
                                 print(f"[SAYFA {page_num}] JS-click başarılı, değişim bekleniyor...", flush=True)
-                                _time.sleep(5)
+                                page.wait_for_timeout(5000)
 
                         # Cloudflare/Token kontrolü (her sayfa geçişinde kısa kontrol)
                         wait_for_cloudflare(page)
