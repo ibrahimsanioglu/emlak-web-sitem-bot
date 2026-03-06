@@ -2153,7 +2153,7 @@ def fetch_listings_playwright():
             consecutive_failures = 0
 
             listings = page.evaluate(
-                """() => {
+                r"""() => {
                 const out = [];
                 const seen = new Set();
                 
