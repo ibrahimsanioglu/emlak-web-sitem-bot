@@ -2158,87 +2158,99 @@ def fetch_listings_playwright():
 
             consecutive_failures = 0
 
+            # DEBUG: Konsol çıktılarını yakala
+            def handle_console(msg):
+                if "[EXTRACT]" in msg.text:
+                    print(f"[CONSOLE] {msg.text}", flush=True)
+
+            page.on("console", handle_console)
+
             listings = page.evaluate(
                 r"""() => {
+                console.log("[EXTRACT] Basliyor...");
                 const out = [];
                 const seen = new Set();
                 
-                document.querySelectorAll('.cb-list-item, [data-token]').forEach(el => {
-                    const token = el.getAttribute("data-token");
-                    
-                    // İlan kodu bulmaya çalışalım
-                    // Öncelik 1: .ilan-kod-ph (Sitenin yeni placeholder yapısı)
+                // .locationDiv sınıfı da konteynerlar için kullanılıyor
+                const items = document.querySelectorAll('.cb-list-item, [data-token], .locationDiv');
+                console.log("[EXTRACT] Bulunan aday eleman sayisi: " + items.length);
+
+                items.forEach((el, index) => {
+                    // İlan kodunu bulmaya çalışalım (textContent daha güvenlidir)
                     let kod = "";
-                    const kodPH = el.querySelector(".ilan-kod-ph");
-                    if (kodPH && kodPH.innerText.trim().match(/ML-[A-Z0-9-]+/i)) {
-                        kod = kodPH.innerText.trim().match(/ML-[A-Z0-9-]+/i)[0].toUpperCase();
-                    }
                     
-                    if (!kod) {
-                        // Öncelik 2: text içindeki ML-
-                        const text = el.innerText || "";
-                        const m = text.match(/(ML-[A-Z0-9-]{3,})/i);
+                    // 1. .ilan-kod-ph span/div (Sitenin yeni placeholder yapısı)
+                    const kodElem = el.querySelector(".ilan-kod-ph");
+                    if (kodElem) {
+                        const kodText = (kodElem.textContent || "").trim();
+                        const m = kodText.match(/ML-[A-Z0-9-]+/i);
                         if (m) kod = m[0].toUpperCase();
                     }
-
+                    
+                    // 2. Text içeriği (textContent ile gizli metinleri de alalım)
                     if (!kod) {
-                        // Öncelik 3: data-target-href içindeki ML- (Attribute içinden)
-                        const href = el.getAttribute("data-target-href") || "";
-                        const m2 = href.match(/(ML-[A-Z0-9-]{3,})/i);
+                        const m2 = (el.textContent || "").match(/(ML-[A-Z0-9-]{3,})/i);
                         if (m2) kod = m2[0].toUpperCase();
                     }
 
-                    if (!kod || seen.has(kod)) return;
+                    // 3. Attribute (data-target-href içinden)
+                    if (!kod) {
+                        const href = el.getAttribute("data-target-href") || "";
+                        const m3 = href.match(/(ML-[A-Z0-9-]{3,})/i);
+                        if (m3) kod = m3[0].toUpperCase();
+                    }
+
+                    if (!kod) return;
+                    if (seen.has(kod)) return;
                     seen.add(kod);
 
                     let fiyat = "Fiyat yok";
                     let title = kod;
 
-                    // Başlık için öncelik: data-target-title, yoksa h2..h6
+                    // Başlık için öncelik: data-target-title, yoksa placeholder sınıfı
                     const dataTitle = el.getAttribute("data-target-title");
-                    if (dataTitle && dataTitle !== "#" && dataTitle.length > 5) {
+                    if (dataTitle && dataTitle !== "#") {
                         title = dataTitle;
                     } else {
-                        const h = el.querySelector("h2, h3, h4, h5, h6, .ilan-baslik-ph, .ilan-baslik");
-                        if (h) title = h.innerText.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
+                        const h = el.querySelector("h1, h2, h3, h4, h5, h6, .ilan-baslik-ph, .ilan-baslik");
+                        if (h) title = h.textContent.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
                     }
 
                     // Fiyat bul
-                    const fElem = el.querySelector(".ilan-fiyat-ph, .text-primary, .ilan-fiyat");
-                    if (fElem && (fElem.innerText.includes("TL") || fElem.innerText.includes("₺"))) {
-                        fiyat = fElem.innerText.trim();
-                    } else {
-                        const textContent = el.innerText || "";
-                        for (const line of textContent.split("\n")) {
-                            if (/^[\d., ]+\s*(₺|TL)$/i.test(line.trim())) {
-                                fiyat = line.trim();
-                                break;
-                            }
-                        }
+                    const fElem = el.querySelector(".ilan-fiyat-ph, .ilan-fiyat, .text-primary");
+                    if (fElem) {
+                        fiyat = fElem.textContent.trim();
                     }
 
                     // Link oluştur
-                    let fullHref = el.getAttribute("data-target-href");
-                    if (!fullHref || fullHref === "#") {
-                        const aLink = el.querySelector('a.ilan-link, a');
-                        fullHref = aLink ? aLink.getAttribute("href") : "";
+                    let link = el.getAttribute("data-target-href");
+                    if (!link || link === "#") {
+                        const a = el.querySelector('a');
+                        if (a) link = a.getAttribute("href");
                     }
                     
-                    if (fullHref && fullHref !== "#" && !fullHref.startsWith('http')) {
-                        fullHref = 'https://www.makrolife.com.tr' + (fullHref.startsWith('/') ? '' : '/') + fullHref;
+                    if (link && !link.startsWith("http")) {
+                        link = "https://www.makrolife.com.tr" + (link.startsWith("/") ? "" : "/") + link;
                     }
 
                     out.push({
                         kod: kod,
                         fiyat: fiyat,
                         title: title,
-                        link: (fullHref && fullHref !== "#") ? fullHref : `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`
+                        link: link || `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`
                     });
                 });
-
+                
+                console.log("[EXTRACT] Bitti. Basariyla cekilen: " + out.length);
                 return out;
             }"""
             )
+            
+            # İşlem bittiğinde listener'ı kaldır
+            try:
+                page.remove_listener("console", handle_console)
+            except:
+                pass
 
             if not listings:
                 print("[SAYFA " + str(page_num) + "] Bos - tarama bitti", flush=True)
