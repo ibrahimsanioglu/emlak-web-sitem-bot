@@ -726,13 +726,23 @@ def wait_for_cloudflare(page, timeout=45000):
             simulate_human_behavior()
         
         try:
-            ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
-            print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan/konteyner", flush=True)
+            # Sadece konteyner var mı değil, içine veri dolmuş mu (ML- ile başlayan kod var mı) kontrol et
+            is_data_populated = page.evaluate("""() => {
+                const kodElems = document.querySelectorAll('.ilan-kod-ph');
+                for (const el of kodElems) {
+                    if (el.textContent && el.textContent.trim().match(/ML-[A-Z0-9-]+/i)) return true;
+                }
+                // Alternatif: data-token'lardan biri dolu mu?
+                const tokens = document.querySelectorAll('[data-token]');
+                if (tokens.length > 0 && !document.querySelector('.placeholder')) return true; 
+                return false;
+            }""")
             
-            if ilan_count > 0:
-                print(f"[CF] Cloudflare bypass BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
-                # İlanlar yüklendikten sonra JS'nin linkleri/başlıkları doldurması için 2 sn daha bekle
-                page.wait_for_timeout(2000)
+            ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
+            print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} konteyner (Dolu mu: {is_data_populated})", flush=True)
+            
+            if is_data_populated:
+                print(f"[CF] Cloudflare bypass ve Veri Yükleme BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
                 return True
         except Exception as e:
             print(f"[CF] Deneme {attempt + 1} hatası: {e}", flush=True)
@@ -2171,12 +2181,17 @@ def fetch_listings_playwright():
                 const out = [];
                 const seen = new Set();
                 
-                // .locationDiv sınıfı da konteynerlar için kullanılıyor
-                const items = document.querySelectorAll('.cb-list-item, [data-token], .locationDiv');
-                console.log("[EXTRACT] Bulunan aday eleman sayisi: " + items.length);
+                // Bot token kontrolü
+                const botToken = window.__botToken || "YOK";
+                console.log("[EXTRACT] Site Bot Token: " + botToken);
+
+                // aria-hidden="true" olanlar template/gizli kutulardır, onları alma
+                const items = Array.from(document.querySelectorAll('.cb-list-item, [data-token], .locationDiv'))
+                                   .filter(el => el.getAttribute('aria-hidden') !== 'true');
+                
+                console.log("[EXTRACT] Bulunan aday eleman sayisi (filtered): " + items.length);
 
                 items.forEach((el, index) => {
-                    // İlan kodunu bulmaya çalışalım (textContent daha güvenlidir)
                     let kod = "";
                     
                     // 1. .ilan-kod-ph span/div (Sitenin yeni placeholder yapısı)
@@ -2184,10 +2199,14 @@ def fetch_listings_playwright():
                     if (kodElem) {
                         const kodText = (kodElem.textContent || "").trim();
                         const m = kodText.match(/ML-[A-Z0-9-]+/i);
-                        if (m) kod = m[0].toUpperCase();
+                        if (m) {
+                            kod = m[0].toUpperCase();
+                        } else if (index < 3) {
+                            console.log(`[EXTRACT] Kutuda kod bulunamadi [${index}], icerik: ${kodText}`);
+                        }
                     }
                     
-                    // 2. Text içeriği (textContent ile gizli metinleri de alalım)
+                    // 2. Text içeriği
                     if (!kod) {
                         const m2 = (el.textContent || "").match(/(ML-[A-Z0-9-]{3,})/i);
                         if (m2) kod = m2[0].toUpperCase();
@@ -2199,7 +2218,6 @@ def fetch_listings_playwright():
                         const m3 = href.match(/(ML-[A-Z0-9-]{3,})/i);
                         if (m3) kod = m3[0].toUpperCase();
                     }
-
                     if (!kod) return;
                     if (seen.has(kod)) return;
                     seen.add(kod);
@@ -2207,22 +2225,19 @@ def fetch_listings_playwright():
                     let fiyat = "Fiyat yok";
                     let title = kod;
 
-                    // Başlık için öncelik: data-target-title, yoksa placeholder sınıfı
                     const dataTitle = el.getAttribute("data-target-title");
                     if (dataTitle && dataTitle !== "#") {
                         title = dataTitle;
                     } else {
                         const h = el.querySelector("h1, h2, h3, h4, h5, h6, .ilan-baslik-ph, .ilan-baslik");
-                        if (h) title = h.textContent.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
+                        if (h) title = (h.textContent || "").trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
                     }
 
-                    // Fiyat bul
                     const fElem = el.querySelector(".ilan-fiyat-ph, .ilan-fiyat, .text-primary");
                     if (fElem) {
-                        fiyat = fElem.textContent.trim();
+                        fiyat = (fElem.textContent || "").trim();
                     }
 
-                    // Link oluştur
                     let link = el.getAttribute("data-target-href");
                     if (!link || link === "#") {
                         const a = el.querySelector('a');
