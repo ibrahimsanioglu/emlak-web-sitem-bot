@@ -133,11 +133,16 @@ def extract_listings_from_html(html, page_num=0):
         
         # Fiyatı bul (.ilan-fiyat-ph veya text-primary)
         fiyat = "---"
-        fiyat_match = re.search(r'class="[^"]*(?:ilan-fiyat-ph|ilan-fiyat|text-primary)[^"]*"[^>]*>(.*?)<', block, re.DOTALL)
+        fiyat_match = re.search(r'class="[^"]*(?:ilan-fiyat-ph|ilan-fiyat|text-primary|price)[^"]*"[^>]*>(.*?)<', block, re.DOTALL)
         if fiyat_match:
             fiyat = fiyat_match.group(1).strip()
             # HTML taglerini temizle
             fiyat = re.sub(r'<.*?>', '', fiyat)
+        else:
+            # Fallback: Blok içinde "TL" geçen sayısal ifadeyi ara
+            tl_match = re.search(r'(\d+(?:[\.,]\d+)*\s*TL)', block, re.IGNORECASE)
+            if tl_match:
+                fiyat = tl_match.group(1).strip()
         
         # Başlığı bul (.ilan-baslik-ph veya h3/h4 vb)
         title = f"İlan {kod}"
@@ -148,11 +153,16 @@ def extract_listings_from_html(html, page_num=0):
         
         # Linki bul
         link = f"https://www.makrolife.com.tr/ilan/{kod}"
-        link_match = re.search(r'href="(/(?:ilan|ilandetay)[^"]*)"', block)
+        link_match = re.search(r'href="(/(?:ilan|ilandetay|satilik|kiralik|arsa|daire)/[^"]*ML-[^"]*)"', block)
+        if not link_match:
+             # İkinci deneme: daha genel ama /ilanlar haric
+             link_match = re.search(r'href="(/(?:ilan|ilandetay)/[^"]*)"', block)
+             
         if link_match:
             l = link_match.group(1)
-            if not l.startswith("http"):
-                link = "https://www.makrolife.com.tr" + l
+            if "/ilanlar" not in l: # /ilanlar sayfasını alma
+                if not l.startswith("http"):
+                    link = "https://www.makrolife.com.tr" + l
         
         results.append((kod, fiyat, link, title, page_num))
     
@@ -215,6 +225,7 @@ def fetch_listings_via_bot_ua():
             print(f"[BOT-UA] {base_cat_url.split('/')[-1]} (S{p}): {len(listings)} ilan bulundu ({new_count_in_page} yeni)", flush=True)
             time.sleep(random.uniform(0.5, 1.2))
         
+    bot_stats["last_scan_pages"] = sum(1 for _ in categories) * 3 # Yaklaşık sayfa sayısı
     return all_results, "QUICK_SCAN"
 
 def fetch_via_flaresolverr(url, max_timeout=120000):
