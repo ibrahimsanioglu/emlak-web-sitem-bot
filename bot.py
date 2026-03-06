@@ -192,24 +192,30 @@ def fetch_listings_via_bot_ua():
     categories = get_category_urls()
     print(f"[BOT-UA] {len(categories)} kategori taranacak...", flush=True)
     
-    for i, cat_url in enumerate(categories):
-        html = fetch_via_bot_ua(cat_url)
-        if not html:
-            continue
+    for i, base_cat_url in enumerate(categories):
+        # Her kategori için 3 sayfa tarayalım (kapsamı artırmak için)
+        for p in range(1, 4):
+            cat_url = f"{base_cat_url}?page={p}" if p > 1 else base_cat_url
+            html = fetch_via_bot_ua(cat_url)
+            if not html:
+                break # Sayfa gelmiyorsa kategoriyi bitir
+                
+            listings = extract_listings_from_html(html, page_num=p)
+            if not listings:
+                break # İlan yoksa kategoriyi bitir
+                
+            new_count_in_page = 0
+            for item in listings:
+                kod = item[0]
+                if kod not in seen_ids:
+                    all_results.append(item)
+                    seen_ids.add(kod)
+                    new_count_in_page += 1
             
-        listings = extract_listings_from_html(html, page_num=i+1)
-        new_count = 0
-        for item in listings:
-            kod = item[0]
-            if kod not in seen_ids:
-                all_results.append(item)
-                seen_ids.add(kod)
-                new_count += 1
+            print(f"[BOT-UA] {base_cat_url.split('/')[-1]} (S{p}): {len(listings)} ilan bulundu ({new_count_in_page} yeni)", flush=True)
+            time.sleep(random.uniform(0.5, 1.2))
         
-        print(f"[BOT-UA] {cat_url.split('/')[-1]}: {len(listings)} ilan bulundu ({new_count} yeni)", flush=True)
-        time.sleep(random.uniform(0.5, 1.5))
-        
-    return all_results, None
+    return all_results, "QUICK_SCAN"
 
 def fetch_via_flaresolverr(url, max_timeout=120000):
     """FlareSolverr üzerinden sayfa içeriği al (Cloudflare Turnstile bypass)"""
@@ -2634,12 +2640,17 @@ def run_scan_with_timeout():
         # === 0. SEO-BOT BYPASS (En Hızlı ve Yeni Yöntem) ===
         print("[TARAMA] SEO-Bot Bypass yöntemi deneniyor...", flush=True)
         result = fetch_listings_via_bot_ua()
-        listings, error_info = result if isinstance(result, tuple) else (result, None)
+        listings, scan_mode = result if isinstance(result, tuple) else (result, None)
+        
+        is_quick_scan = (scan_mode == "QUICK_SCAN")
         
         if not listings or len(listings) < 10:
             print("[TARAMA] SEO-Bot yetersiz sonuç verdi, eski yöntemlere geçiliyor...", flush=True)
             result = fetch_listings_playwright()
             listings, error_info = result if isinstance(result, tuple) else (result, None)
+            is_quick_scan = False
+        else:
+            error_info = None
         
         # Web siteye ulaşılamadıysa veya tarama yarıda kesildiyse
         if listings is None:
@@ -2679,9 +2690,9 @@ def run_scan_with_timeout():
 
     # === KORUMA: Minimum ilan oranı kontrolü ===
     # Eğer bellekte 100+ ilan varsa ve taramada bunun %40'ından az bulunduysa
-    # Bu bir site hatasıdır, state güncellenmemeli
+    # Bu bir site hatasıdır, state güncellenmemeli (QUICK_SCAN hariç)
     existing_count = len(state.get("items", {}))
-    if not is_first_run and existing_count > 100:
+    if not is_first_run and existing_count > 100 and not is_quick_scan:
         min_expected = int(existing_count * MIN_LISTING_RATIO)
         if len(listings) < min_expected:
             next_interval = get_scan_interval() // 60
@@ -2812,26 +2823,29 @@ def run_scan_with_timeout():
                     time.sleep(0.3)
 
         deleted_count = 0
-        for kod in list(state["items"].keys()):
-            if kod not in current_codes:
-                item = state["items"][kod]
+        if not is_quick_scan:
+            for kod in list(state["items"].keys()):
+                if kod not in current_codes:
+                    item = state["items"][kod]
 
-                history.setdefault("deleted", []).append(
-                    {"kod": kod, "fiyat": item.get("fiyat", ""), "title": item.get("title", ""), "tarih": today}
-                )
+                    history.setdefault("deleted", []).append(
+                        {"kod": kod, "fiyat": item.get("fiyat", ""), "title": item.get("title", ""), "tarih": today}
+                    )
 
-                # Silinen ilan için daily_stats artır
-                state["daily_stats"][today]["deleted"] += 1
+                    # Silinen ilan için daily_stats artır
+                    state["daily_stats"][today]["deleted"] += 1
 
-                msg = "🗑️ <b>İLAN SİLİNDİ</b>\n\n"
-                msg += "📋 " + kod + "\n"
-                msg += "🏷️ " + item.get("title", "") + "\n"
-                msg += "💰 " + item.get("fiyat", "")
-                send_real_admin_deleted(kod, item.get("title", ""), item.get("fiyat", ""))
+                    msg = "🗑️ <b>İLAN SİLİNDİ</b>\n\n"
+                    msg += "📋 " + kod + "\n"
+                    msg += "🏷️ " + item.get("title", "") + "\n"
+                    msg += "💰 " + item.get("fiyat", "")
+                    send_real_admin_deleted(kod, item.get("title", ""), item.get("fiyat", ""))
 
-                del state["items"][kod]
-                deleted_count += 1
-                time.sleep(0.3)
+                    del state["items"][kod]
+                    deleted_count += 1
+                    time.sleep(0.3)
+        else:
+            print("[TARAMA] Quick Scan modu: İlan silme işlemi atlandı.", flush=True)
 
         bot_stats["total_new_listings"] += new_count
         bot_stats["total_price_changes"] += price_change_count
