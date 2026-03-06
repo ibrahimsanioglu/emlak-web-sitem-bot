@@ -645,13 +645,28 @@ def wait_for_cloudflare(page, timeout=45000):
     
     # Human-like davranış: rastgele mouse hareketi
     def simulate_human_behavior():
+        """İnsansı fare hareketleri ve rastgele duraksamalar (Anti-bot)."""
         try:
-            # Rastgele mouse hareketi
-            for _ in range(3):
-                x = _random.randint(100, 800)
-                y = _random.randint(100, 600)
-                page.mouse.move(x, y)
-                _time.sleep(_random.uniform(0.1, 0.3))
+            # 1. Rastgele titrek hareketler (Non-linear)
+            for _ in range(_random.randint(3, 6)):
+                current_x, current_y = 100, 100
+                target_x = _random.randint(50, 950)
+                target_y = _random.randint(50, 750)
+                
+                # Hedefe giden yolu küçük, titrek adımlara böl
+                steps = _random.randint(5, 15)
+                for i in range(steps):
+                    move_x = current_x + (target_x - current_x) * (i / steps) + _random.randint(-5, 5)
+                    move_y = current_y + (target_y - current_y) * (i / steps) + _random.randint(-5, 5)
+                    page.mouse.move(move_x, move_y)
+                    _time.sleep(_random.uniform(0.01, 0.05))
+                
+                _time.sleep(_random.uniform(0.2, 0.6))
+            
+            # 2. Sayfayı hafifçe kaydır (Scroll)
+            page.mouse.wheel(0, _random.randint(100, 300))
+            _time.sleep(_random.uniform(0.5, 1.0))
+            page.mouse.wheel(0, -_random.randint(50, 150))
             
             # Turnstile checkbox'ı ara ve tıkla
             turnstile_selectors = [
@@ -666,58 +681,48 @@ def wait_for_cloudflare(page, timeout=45000):
                     for frame in frames:
                         if 'challenges.cloudflare.com' in frame.url:
                             print(f"[CF] Turnstile iframe bulundu: {frame.url}", flush=True)
-                            # Checkbox'ı bul ve tıkla
                             checkbox = frame.locator('input[type="checkbox"]')
                             if checkbox.count() > 0:
                                 print("[CF] Turnstile checkbox tıklanıyor...", flush=True)
                                 checkbox.click()
-                                _time.sleep(2)
+                                _time.sleep(3)
                                 return True
                 except:
                     pass
-            
-            # Alternatif: doğrudan iframe'e tıkla
-            for selector in turnstile_selectors:
-                try:
-                    iframe_elem = page.locator(selector)
-                    if iframe_elem.count() > 0:
-                        print(f"[CF] Iframe bulundu: {selector}", flush=True)
-                        box = iframe_elem.bounding_box()
-                        if box:
-                            # Checkbox genellikle sol tarafta olur
-                            click_x = box['x'] + 30
-                            click_y = box['y'] + box['height'] / 2
-                            page.mouse.click(click_x, click_y)
-                            print(f"[CF] Iframe tıklandı: ({click_x}, {click_y})", flush=True)
-                            _time.sleep(2)
-                            return True
-                except Exception as e:
-                    print(f"[CF] Iframe tıklama hatası: {e}", flush=True)
-            
         except Exception as e:
             print(f"[CF] Human simulation hatası: {e}", flush=True)
         return False
-    
+
     # İlan linkleri veya konteynerları var mı kontrol et
     try:
         # Sadece konteyner var mı değil, içine veri dolmuş mu kontrol et
-        is_populated = page.evaluate("""() => {
+        # Ayrıca __botToken'ın hazır olup olmadığını kontrol et
+        check_status = page.evaluate("""() => {
             const kods = document.querySelectorAll('.ilan-kod-ph');
-            for(const k of kods) if(k.textContent && k.textContent.includes('ML-')) return true;
-            return false;
+            let hasData = false;
+            for(const k of kods) if(k.textContent && k.textContent.includes('ML-')) { hasData = true; break; }
+            
+            // Alternatif: Görsel linklerinden kod bulabilir miyiz?
+            if (!hasData) {
+                const imgs = document.querySelectorAll('img[src*="ML-"]');
+                if (imgs.length > 0) hasData = true;
+            }
+
+            const hasToken = !!(window.__botToken && window.__botToken.length > 10);
+            return { hasData, hasToken };
         }""")
         
         ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
-        print(f"[CF] Mevcut ilan/konteyner sayısı: {ilan_count} (Populated: {is_populated})", flush=True)
+        print(f"[CF] Mevcut ilan/konteyner: {ilan_count}, Dolu: {check_status['hasData']}, Token Hazır: {check_status['hasToken']}", flush=True)
         
-        if is_populated:
-            print("[CF] İlanlar yüklü ve veriler dolu, devam ediliyor", flush=True)
+        if check_status['hasData'] and check_status['hasToken']:
+            print("[CF] İlanlar yüklü ve Bot Token hazır, devam ediliyor", flush=True)
             return True
     except Exception as e:
-        print(f"[CF] Locator hatası: {e}", flush=True)
+        print(f"[CF] Başlangıç kontrol hatası: {e}", flush=True)
     
     # İlan yoksa bekle (Cloudflare challenge olabilir)
-    print("[CF] İlan bulunamadı, Cloudflare challenge bekleniyor...", flush=True)
+    print("[CF] Bot doğrulaması ve verilerin yüklenmesi bekleniyor...", flush=True)
     
     # İlk deneme: human davranışı simüle et
     simulate_human_behavior()
@@ -727,28 +732,32 @@ def wait_for_cloudflare(page, timeout=45000):
     for attempt in range(max_attempts):
         _time.sleep(3)
         
-        # Her 5 denemede bir mouse hareketi yap
-        if attempt > 0 and attempt % 5 == 0:
+        # Her 4 denemede bir mouse hareketi yap
+        if attempt > 0 and attempt % 4 == 0:
             simulate_human_behavior()
         
         try:
-            # Sadece konteyner var mı değil, içine veri dolmuş mu (ML- ile başlayan kod var mı) kontrol et
-            is_data_populated = page.evaluate("""() => {
+            status = page.evaluate("""() => {
                 const kodElems = document.querySelectorAll('.ilan-kod-ph');
+                let hasData = false;
                 for (const el of kodElems) {
-                    if (el.textContent && el.textContent.trim().match(/ML-[A-Z0-9-]+/i)) return true;
+                    if (el.textContent && el.textContent.trim().match(/ML-[A-Z0-9-]+/i)) { hasData = true; break; }
                 }
-                // Alternatif: data-token'lardan biri dolu mu?
-                const tokens = document.querySelectorAll('[data-token]');
-                if (tokens.length > 0 && !document.querySelector('.placeholder')) return true; 
-                return false;
+                
+                if (!hasData) {
+                    const imgs = document.querySelectorAll('img[src*="ML-"]');
+                    if (imgs.length > 0) hasData = true;
+                }
+
+                const hasToken = !!(window.__botToken && window.__botToken.length > 10);
+                return { hasData, hasToken };
             }""")
             
             ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
-            print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} konteyner (Dolu mu: {is_data_populated})", flush=True)
+            print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan (Dolu: {status['hasData']}, Token: {status['hasToken']})", flush=True)
             
-            if is_data_populated:
-                print(f"[CF] Cloudflare bypass ve Veri Yükleme BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
+            if status['hasData'] and status['hasToken']:
+                print(f"[CF] Doğrulama BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
                 return True
         except Exception as e:
             print(f"[CF] Deneme {attempt + 1} hatası: {e}", flush=True)
@@ -2204,10 +2213,20 @@ def fetch_listings_playwright():
                     if (kodElem) {
                         const kodText = (kodElem.textContent || "").trim();
                         const m = kodText.match(/ML-[A-Z0-9-]+/i);
-                        if (m) {
-                            kod = m[0].toUpperCase();
-                        } else if (index < 3) {
-                            console.log(`[EXTRACT] Kutuda kod bulunamadi [${index}], icerik: ${kodText}`);
+                        if (m) kod = m[0].toUpperCase();
+                    }
+                    
+                    // 2. GÖRSEL FALLBACK (İlan kodu imaj linkinde var)
+                    if (!kod) {
+                        const imgs = Array.from(el.querySelectorAll('img'));
+                        for (const img of imgs) {
+                            const src = img.getAttribute('src') || "";
+                            const mImg = src.match(/ML-\d+-\d+/i);
+                            if (mImg) {
+                                kod = mImg[0].toUpperCase();
+                                console.log(`[EXTRACT] Kod görselden çekildi [${index}]: ${kod}`);
+                                break;
+                            }
                         }
                     }
                     
@@ -2223,7 +2242,10 @@ def fetch_listings_playwright():
                         const m3 = href.match(/(ML-[A-Z0-9-]{3,})/i);
                         if (m3) kod = m3[0].toUpperCase();
                     }
-                    if (!kod) return;
+                    if (!kod) {
+                        if (index < 3) console.log(`[EXTRACT] Kutuda kod bulunamadi [${index}]`);
+                        return;
+                    }
                     if (seen.has(kod)) return;
                     seen.add(kod);
 
@@ -2251,6 +2273,11 @@ def fetch_listings_playwright():
                     
                     if (link && !link.startsWith("http")) {
                         link = "https://www.makrolife.com.tr" + (link.startsWith("/") ? "" : "/") + link;
+                    }
+                    
+                    // Link fallback
+                    if (!link || link === "https://www.makrolife.com.tr/" || link === "https://www.makrolife.com.tr") {
+                        link = `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`;
                     }
 
                     out.push({
