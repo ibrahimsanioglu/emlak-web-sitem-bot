@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import json
 import time
@@ -72,6 +73,143 @@ USE_FLARESOLVERR = os.getenv("USE_FLARESOLVERR", "true").lower() == "true"
 
 print(f"FLARESOLVERR_URL: {FLARESOLVERR_URL}", flush=True)
 print(f"USE_FLARESOLVERR: {USE_FLARESOLVERR}", flush=True)
+
+# === SEO-BOT BYPASS (Facebook Crawler Spoofing) ===
+BOT_USER_AGENTS = [
+    "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+    "Twitterbot/1.0",
+    "WhatsApp/2.21.12.21 A",
+    "Slackbot-LinkExpanding 1.0 (+https://api.slack.com/robots)"
+]
+
+def normalize_price(s):
+    """Fiyat stringini sayısal değere çevirir (Örn: '1.250.000 TL' -> '1250000')."""
+    if not s or s == "---" or "yok" in s.lower():
+        return ""
+    # Sadece rakamları tut
+    num = re.sub(r'[^\d]', '', s)
+    return num
+
+def fetch_via_bot_ua(url, timeout=20):
+    """SEO/Social Media botu gibi davranarak sayfa içeriğini al (Bypass Cloudflare)"""
+    ua = BOT_USER_AGENTS[0] # Varsayılan: Facebook
+    headers = {
+        "User-Agent": ua,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "tr,en-US;q=0.7,en;q=0.3",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Upgrade-Insecure-Requests": "1"
+    }
+    
+    try:
+        print(f"[BOT-UA] Fetch: {url}", flush=True)
+        response = requests.get(url, headers=headers, timeout=timeout)
+        if response.status_code == 200:
+            return response.text
+        else:
+            print(f"[BOT-UA] Hata: {response.status_code}", flush=True)
+            return None
+    except Exception as e:
+        print(f"[BOT-UA] Hatalı İstek: {e}", flush=True)
+        return None
+
+def extract_listings_from_html(html, page_num=0):
+    """HTML içeriğinden ilan verilerini çıkarır (Tuple formatında: kod, fiyat, link, title, page_num)."""
+    if not html:
+        return []
+    
+    results = []
+    # İlan bloklarını bulmaya çalışalım. Facebook botu HTML'inde bloklar genellikle basittir.
+    # regex ile blokları ayırmaya çalışalım (kaba ama etkili)
+    blocks = re.split(r'(?=<div[^>]*class="[^"]*cb-list-item[^"]*"|<div[^>]*class="[^"]*locationDiv[^"]*")', html)
+    
+    for block in blocks:
+        # İlan kodunu bul
+        kod_match = re.search(r'ML-\d+-\d+', block)
+        if not kod_match:
+            continue
+        kod = kod_match.group(0)
+        
+        # Fiyatı bul (.ilan-fiyat-ph veya text-primary)
+        fiyat = "---"
+        fiyat_match = re.search(r'class="[^"]*(?:ilan-fiyat-ph|ilan-fiyat|text-primary)[^"]*"[^>]*>(.*?)<', block, re.DOTALL)
+        if fiyat_match:
+            fiyat = fiyat_match.group(1).strip()
+            # HTML taglerini temizle
+            fiyat = re.sub(r'<.*?>', '', fiyat)
+        
+        # Başlığı bul (.ilan-baslik-ph veya h3/h4 vb)
+        title = f"İlan {kod}"
+        title_match = re.search(r'class="[^"]*(?:ilan-baslik-ph|ilan-baslik)[^"]*"[^>]*>(.*?)<', block, re.DOTALL)
+        if title_match:
+            title = title_match.group(1).strip()
+            title = re.sub(r'<.*?>', '', title)
+        
+        # Linki bul
+        link = f"https://www.makrolife.com.tr/ilan/{kod}"
+        link_match = re.search(r'href="(/(?:ilan|ilandetay)[^"]*)"', block)
+        if link_match:
+            l = link_match.group(1)
+            if not l.startswith("http"):
+                link = "https://www.makrolife.com.tr" + l
+        
+        results.append((kod, fiyat, link, title, page_num))
+    
+    # Blok ayrımı başarısız olduysa direkt regex ile kodları topla (Daha önce yaptığımız gibi)
+    if not results:
+        matches = re.findall(r'ML-\d+-\d+', html)
+        seen = set()
+        for uid in matches:
+            if uid not in seen:
+                results.append((uid, "---", f"https://www.makrolife.com.tr/ilan/{uid}", f"İlan {uid}", page_num))
+                seen.add(uid)
+                
+    return results
+
+def get_category_urls():
+    """Sitemap'ten veya statik olarak önemli kategori linklerini döndürür."""
+    # Önemli başlangıç noktaları
+    categories = [
+        "https://www.makrolife.com.tr/ilanlar",
+        "https://www.makrolife.com.tr/diyarbakir-emlak",
+        "https://www.makrolife.com.tr/diyarbakir/kayapinar-emlak",
+        "https://www.makrolife.com.tr/diyarbakir/baglar-emlak",
+        "https://www.makrolife.com.tr/diyarbakir/yenisehir-emlak",
+        "https://www.makrolife.com.tr/diyarbakir/sur-emlak",
+        "https://www.makrolife.com.tr/diyarbakir/satilik/daire-ilanlari",
+        "https://www.makrolife.com.tr/diyarbakir/kiralik/daire-ilanlari",
+        "https://www.makrolife.com.tr/diyarbakir/satilik/arsa-ilanlari",
+        "https://www.makrolife.com.tr/diyarbakir/satilik/isyeri-ilanlari"
+    ]
+    return categories
+
+def fetch_listings_via_bot_ua():
+    """SEO-Bot Bypass yöntemiyle tüm kategorileri tarar ve ilanları döndürür."""
+    all_results = []
+    seen_ids = set()
+    
+    categories = get_category_urls()
+    print(f"[BOT-UA] {len(categories)} kategori taranacak...", flush=True)
+    
+    for i, cat_url in enumerate(categories):
+        html = fetch_via_bot_ua(cat_url)
+        if not html:
+            continue
+            
+        listings = extract_listings_from_html(html, page_num=i+1)
+        new_count = 0
+        for item in listings:
+            kod = item[0]
+            if kod not in seen_ids:
+                all_results.append(item)
+                seen_ids.add(kod)
+                new_count += 1
+        
+        print(f"[BOT-UA] {cat_url.split('/')[-1]}: {len(listings)} ilan bulundu ({new_count} yeni)", flush=True)
+        time.sleep(random.uniform(0.5, 1.5))
+        
+    return all_results, None
 
 def fetch_via_flaresolverr(url, max_timeout=120000):
     """FlareSolverr üzerinden sayfa içeriği al (Cloudflare Turnstile bypass)"""
@@ -2493,8 +2631,15 @@ def run_scan_with_timeout():
         state["cycle_start"] = today
 
     try:
-        result = fetch_listings_playwright()
+        # === 0. SEO-BOT BYPASS (En Hızlı ve Yeni Yöntem) ===
+        print("[TARAMA] SEO-Bot Bypass yöntemi deneniyor...", flush=True)
+        result = fetch_listings_via_bot_ua()
         listings, error_info = result if isinstance(result, tuple) else (result, None)
+        
+        if not listings or len(listings) < 10:
+            print("[TARAMA] SEO-Bot yetersiz sonuç verdi, eski yöntemlere geçiliyor...", flush=True)
+            result = fetch_listings_playwright()
+            listings, error_info = result if isinstance(result, tuple) else (result, None)
         
         # Web siteye ulaşılamadıysa veya tarama yarıda kesildiyse
         if listings is None:
@@ -2636,7 +2781,7 @@ def run_scan_with_timeout():
                 state["items"][kod]["position"] = position_map[kod]
 
                 eski = state["items"][kod]["fiyat"]
-                if normalize_price(eski) != normalize_price(fiyat):
+                if fiyat != "---" and normalize_price(eski) != normalize_price(fiyat):
                     history.setdefault("price_changes", []).append(
                         {"kod": kod, "eski_fiyat": eski, "yeni_fiyat": fiyat, "tarih": today}
                     )
