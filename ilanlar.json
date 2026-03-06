@@ -232,7 +232,7 @@
       "first_seen_date": "2026-03-05"
     },
     "ML-0533-110": {
-      "fiyat": "4.880.000 TL",
+      "fiyat": "4.800.000 TL",
       "tarih": "2026-03-05",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-0533-110",
       "title": "MAKRO LİFE AHMET KAYA CADDESİ ÜZERİ SIFIR BÜYÜK TİP 2+1 SATILIK DAİRE SATIYOR",
@@ -392,7 +392,7 @@
       "first_seen_date": "2026-03-05"
     },
     "ML-7548-148": {
-      "fiyat": "9.500.000 TL",
+      "fiyat": "Fiyat yok",
       "tarih": "2026-03-05",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-isyeri-ML-7548-148",
       "title": "KAYAPINARDA 50LİK YOLA YAKIN 150 M2 DÜKKAN",
@@ -2491,16 +2491,6 @@
       "position": 250,
       "first_seen_date": "2026-03-05"
     },
-    "ML-5972-51": {
-      "fiyat": "3.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-5972-51",
-      "title": "MASTFROŞ CADDESİ KAYALAR YAPI KALİTESİYLE 2+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730137.469178,
-      "position": 251,
-      "first_seen_date": "2026-03-05"
-    },
     "ML-0429-316": {
       "fiyat": "4.340.000 TL",
       "tarih": "2026-03-05",
@@ -2508,7 +2498,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR EN GÜZEL KONUMDA 2+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730138.6672688,
-      "position": 252,
+      "position": 251,
       "first_seen_date": "2026-03-05"
     },
     "ML-4548-243": {
@@ -2518,7 +2508,7 @@
       "title": "BAYINDIRLIK YAŞAR DÜĞÜN SALONU YANI 3+1 ACİL SATILIK DAİRE !",
       "scan_seq": 85,
       "timestamp": 1772730139.7637937,
-      "position": 253,
+      "position": 252,
       "first_seen_date": "2026-03-05"
     },
     "ML-1143-08": {
@@ -2528,7 +2518,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN BAĞCILARDA ACİL SATILIK 3+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730140.9154625,
-      "position": 254,
+      "position": 253,
       "first_seen_date": "2026-03-05"
     },
     "ML-9021-134": {
@@ -2538,7 +2528,7 @@
       "title": "WİNSTOWN AVM YANI ARA KAT KİRALIK 3+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730141.9946053,
-      "position": 255,
+      "position": 254,
       "first_seen_date": "2026-03-05"
     },
     "ML-5482-139": {
@@ -2548,7 +2538,7 @@
       "title": "CUMHURİYET MAHALLESİNDE 36 DÖNÜM MÜSTAKİL ARSA STRATEJİK KONUMDA YATIRIM FIRSATI",
       "scan_seq": 85,
       "timestamp": 1772730143.1096365,
-      "position": 256,
+      "position": 255,
       "first_seen_date": "2026-03-05"
     },
     "ML-6621-215": {
@@ -2558,7 +2548,7 @@
       "title": "BAĞCILAR HESKİF CADDESİNDE 3+1 LÜKS DAİREMİZ SATILIKTIR",
       "scan_seq": 85,
       "timestamp": 1772730144.2354057,
-      "position": 257,
+      "position": 256,
       "first_seen_date": "2026-03-05"
     },
     "ML-5436-20": {
@@ -2568,7 +2558,7 @@
       "title": "MAKROLİFE GAYRİMENKUL'DEN LUNAPARK KARŞISI MUHTEŞEM LOKASYONDA 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730146.420369,
-      "position": 258,
+      "position": 257,
       "first_seen_date": "2026-03-05"
     },
     "ML-7117-190": {
@@ -2578,7 +2568,7 @@
       "title": "ÜÇKUYULARDA ARA KAT SATILIK 2+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730147.5332937,
-      "position": 259,
+      "position": 258,
       "first_seen_date": "2026-03-05"
     },
     "ML-4765-208": {
@@ -2588,7 +2578,7 @@
       "title": "DİCLEKENT BATI HASTANESİ KARŞISI DEVREN KİRALIK LÜKS İŞYERİ",
       "scan_seq": 85,
       "timestamp": 1772730148.654277,
-      "position": 260,
+      "position": 259,
       "first_seen_date": "2026-03-05"
     },
     "ML-5495-71": {
@@ -2598,7 +2588,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK TESİSLER KAVŞAĞI CİVARI 3+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730149.7351854,
-      "position": 261,
+      "position": 260,
       "first_seen_date": "2026-03-05"
     },
     "ML-7465-142": {
@@ -2608,7 +2598,7 @@
       "title": "WİNSTOWN AVM ARKASI MALİYE KONUTLARINDA 3+1 SATILIK BOŞ DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730150.8347473,
-      "position": 262,
+      "position": 261,
       "first_seen_date": "2026-03-05"
     },
     "ML-7548-180": {
@@ -2618,7 +2608,7 @@
       "title": "BAĞCILAR ÖĞRETMENİM OKULLARI ARKASINDA 2+1 MASRAFLI SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730151.9468982,
-      "position": 263,
+      "position": 262,
       "first_seen_date": "2026-03-05"
     },
     "ML-7113-347": {
@@ -2628,7 +2618,7 @@
       "title": "MAKRO LİFEDEN 50 MT YOLDA YATIRIMLIK 4.5+1 DAİRE SATILIKTIR",
       "scan_seq": 85,
       "timestamp": 1772730153.0624516,
-      "position": 264,
+      "position": 263,
       "first_seen_date": "2026-03-05"
     },
     "ML-7119-505": {
@@ -2638,7 +2628,7 @@
       "title": "WİNSTOWN AVM ARKASI  SATILIK 2+1 FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730154.158503,
-      "position": 265,
+      "position": 264,
       "first_seen_date": "2026-03-05"
     },
     "ML-5478-84": {
@@ -2648,7 +2638,7 @@
       "title": "FABRİKA MAHALLESİNİN EN GÜZEL HAVUZLU 3.5+1 DAİRESİ SATIŞTA",
       "scan_seq": 85,
       "timestamp": 1772730155.2622101,
-      "position": 266,
+      "position": 265,
       "first_seen_date": "2026-03-05"
     },
     "ML-1375-308": {
@@ -2658,7 +2648,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK DUKKAN",
       "scan_seq": 85,
       "timestamp": 1772730156.405909,
-      "position": 267,
+      "position": 266,
       "first_seen_date": "2026-03-05"
     },
     "ML-7548-179": {
@@ -2668,7 +2658,7 @@
       "title": "HATBOYUNDA DOĞAL GAZLI ASANSÖRLÜ 2+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730157.5641835,
-      "position": 268,
+      "position": 267,
       "first_seen_date": "2026-03-05"
     },
     "ML-4441-410": {
@@ -2678,7 +2668,7 @@
       "title": "450 EVLERDE SATILIK 2+1 SIFIR DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730158.7194216,
-      "position": 269,
+      "position": 268,
       "first_seen_date": "2026-03-05"
     },
     "ML-3126-415": {
@@ -2688,7 +2678,7 @@
       "title": "BAĞCILAR'DA KELEPİR FİYATA SATILIK  3+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730159.807245,
-      "position": 270,
+      "position": 269,
       "first_seen_date": "2026-03-05"
     },
     "ML-3126-414": {
@@ -2698,7 +2688,7 @@
       "title": "TEMA PARK CİVARI 4,5+1 TEMİZ AİLE DAİRESİ",
       "scan_seq": 85,
       "timestamp": 1772730160.8914876,
-      "position": 271,
+      "position": 270,
       "first_seen_date": "2026-03-05"
     },
     "ML-0596-3": {
@@ -2708,7 +2698,7 @@
       "title": "Kantar kavşağı Merkezi Konumda, Lüx Plaza Katı 250 m Satılık Premium İşyeri",
       "scan_seq": 85,
       "timestamp": 1772730162.0422702,
-      "position": 272,
+      "position": 271,
       "first_seen_date": "2026-03-05"
     },
     "ML-7119-501": {
@@ -2718,7 +2708,7 @@
       "title": "BAĞCILAR ARAÇ MUAYENE KARŞISI SATILIK 3,5+1 FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730163.1328135,
-      "position": 273,
+      "position": 272,
       "first_seen_date": "2026-03-05"
     },
     "ML-1143-06": {
@@ -2728,7 +2718,7 @@
       "title": "MAKROLİFE GÜVENCESİYLE LÜKS 3+1 KİRALIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730164.2688165,
-      "position": 274,
+      "position": 273,
       "first_seen_date": "2026-03-05"
     },
     "ML-1143-05": {
@@ -2738,7 +2728,7 @@
       "title": "MAKRO LİFE GÜVENCESİYLE CHERY BAYİ CİVARINDA LÜKS 2+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730165.3976731,
-      "position": 275,
+      "position": 274,
       "first_seen_date": "2026-03-05"
     },
     "ML-4765-207": {
@@ -2748,7 +2738,7 @@
       "title": "KAYAPINAR SPOR KOMPLEKSİ YANI YAPILI 3+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730166.6150258,
-      "position": 276,
+      "position": 275,
       "first_seen_date": "2026-03-05"
     },
     "ML-3458-306": {
@@ -2758,7 +2748,7 @@
       "title": "DEVREN KİRALIK  DÖNER DÜKANI BAĞLARIN EN YOĞUN NOKTASI",
       "scan_seq": 85,
       "timestamp": 1772730167.6854508,
-      "position": 277,
+      "position": 276,
       "first_seen_date": "2026-03-05"
     },
     "ML-1143-04": {
@@ -2768,7 +2758,7 @@
       "title": "MAKRO LİFE GÜVENCESİYLE CHERY BAYİ CİVARINDA KİRALIK 2+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730168.787573,
-      "position": 278,
+      "position": 277,
       "first_seen_date": "2026-03-05"
     },
     "ML-5493-430": {
@@ -2778,7 +2768,7 @@
       "title": "ACİL KİRALIKTIR BAĞCILARIN GÖZDE KONUMU HAVALİMANI CADDESİNDE 3+1 LÜKS DAİREMİZ KİRALIKTIR",
       "scan_seq": 85,
       "timestamp": 1772730169.889944,
-      "position": 279,
+      "position": 278,
       "first_seen_date": "2026-03-05"
     },
     "ML-0533-106": {
@@ -2788,7 +2778,7 @@
       "title": "HUZUREVLERİ İŞLEK CADDEDE YÜKSEK KİRA GETİRİLİ SATILIK 400 M2 BODRUM DÜKKAN",
       "scan_seq": 85,
       "timestamp": 1772730170.9968157,
-      "position": 280,
+      "position": 279,
       "first_seen_date": "2026-03-05"
     },
     "ML-7497-28": {
@@ -2798,7 +2788,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN TAŞKIN YAPI DA 3+1 KİRALIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730172.0945206,
-      "position": 281,
+      "position": 280,
       "first_seen_date": "2026-03-05"
     },
     "ML-4543-70": {
@@ -2808,7 +2798,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK ELAZIĞ YOLU ÜZERİ 2+1 KİRALIK HAVUZLU SIFIR DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730173.1727607,
-      "position": 282,
+      "position": 281,
       "first_seen_date": "2026-03-05"
     },
     "ML-1676-92": {
@@ -2818,7 +2808,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN WELAT BLUE GARDENDE SATILIK 6+1 LÜX TRİPLEX VİLLA",
       "scan_seq": 85,
       "timestamp": 1772730174.2716062,
-      "position": 283,
+      "position": 282,
       "first_seen_date": "2026-03-05"
     },
     "ML-1284-106": {
@@ -2828,7 +2818,7 @@
       "title": "MAKROLİFE'DEN BAĞLAR CEZAEVİ ALT KÖŞEDE SATILIK 3+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730175.3987722,
-      "position": 284,
+      "position": 283,
       "first_seen_date": "2026-03-05"
     },
     "ML-6887-103": {
@@ -2838,7 +2828,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK SAĞLIK OCAĞINDA 3+1 FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730176.484689,
-      "position": 285,
+      "position": 284,
       "first_seen_date": "2026-03-05"
     },
     "ML-6976-13": {
@@ -2848,7 +2838,7 @@
       "title": "YENİ YOL'DA SATILIK 3+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730177.5887208,
-      "position": 286,
+      "position": 285,
       "first_seen_date": "2026-03-05"
     },
     "ML-7446-208": {
@@ -2858,7 +2848,7 @@
       "title": "TANLAR ŞEHRİ TERASTA KİRALIK DÜKKAN",
       "scan_seq": 85,
       "timestamp": 1772730178.689823,
-      "position": 287,
+      "position": 286,
       "first_seen_date": "2026-03-05"
     },
     "ML-5478-83": {
@@ -2868,7 +2858,7 @@
       "title": "TEMA PARK KARŞISI SATILIK 4.5+1 KAPALI HAVUZLU ULTRA LÜX DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730179.7707686,
-      "position": 288,
+      "position": 287,
       "first_seen_date": "2026-03-05"
     },
     "ML-5478-82": {
@@ -2878,7 +2868,7 @@
       "title": "SEYRANTEPE'DE BAKIMLI MERKEZİ KONUMDA 2+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730180.8955986,
-      "position": 289,
+      "position": 288,
       "first_seen_date": "2026-03-05"
     },
     "ML-1707-191": {
@@ -2888,7 +2878,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK YENİ CEZAEVİ KARŞISI TUNÇ YAPIDA SIFIR AYARINDA !!!",
       "scan_seq": 85,
       "timestamp": 1772730181.9971805,
-      "position": 290,
+      "position": 289,
       "first_seen_date": "2026-03-05"
     },
     "ML-5470-107": {
@@ -2898,7 +2888,7 @@
       "title": "ELAZIĞ YOLU ÜZERİ 2+1 SATILIK HAVUZLU SIFIR DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730183.2158377,
-      "position": 291,
+      "position": 290,
       "first_seen_date": "2026-03-05"
     },
     "ML-3126-201": {
@@ -2908,7 +2898,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN KİRALIK İŞYERİ",
       "scan_seq": 85,
       "timestamp": 1772730184.3034658,
-      "position": 292,
+      "position": 291,
       "first_seen_date": "2026-03-05"
     },
     "ML-1676-91": {
@@ -2918,7 +2908,7 @@
       "title": "75 YOLU ELAZIĞ CADDESİ'NE BAĞLAYAN NOKTADA EŞŞİZ VİLLAMIZ SATIŞTA",
       "scan_seq": 85,
       "timestamp": 1772730185.4027927,
-      "position": 293,
+      "position": 292,
       "first_seen_date": "2026-03-05"
     },
     "ML-6887-102": {
@@ -2928,7 +2918,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ÜÇKUYULARDA 3+1SATILIK FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730186.577848,
-      "position": 294,
+      "position": 293,
       "first_seen_date": "2026-03-05"
     },
     "ML-5482-138": {
@@ -2938,7 +2928,7 @@
       "title": "DİYARBAKIR YENİŞEHİR TANIŞIK MAHALLESİNDE 10 DÖNÜM SATILIK ARSA",
       "scan_seq": 85,
       "timestamp": 1772730187.6380336,
-      "position": 295,
+      "position": 294,
       "first_seen_date": "2026-03-05"
     },
     "ML-1798-450": {
@@ -2948,7 +2938,7 @@
       "title": "KENT ORMAN 41 VİLLALIK SİTE İÇERİSİNDE SATILIK DÜKKAN",
       "scan_seq": 85,
       "timestamp": 1772730188.7490988,
-      "position": 296,
+      "position": 295,
       "first_seen_date": "2026-03-05"
     },
     "ML-1676-89": {
@@ -2958,7 +2948,7 @@
       "title": "CHERY BAYİ KARŞISI ALTINDAĞ KAYA YAPIDA SATILIK UYGUN FİYATLI 2+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730189.8677297,
-      "position": 297,
+      "position": 296,
       "first_seen_date": "2026-03-05"
     },
     "ML-9021-130": {
@@ -2968,7 +2958,7 @@
       "title": "CEYLAN AVM CİVARI URFA YOLU CADDE ÜSTÜ SATILIK 600 M2 İŞYERİ",
       "scan_seq": 85,
       "timestamp": 1772730190.9571905,
-      "position": 298,
+      "position": 297,
       "first_seen_date": "2026-03-05"
     },
     "ML-3458-305": {
@@ -2978,7 +2968,7 @@
       "title": "EMSALİNİN ALTINDA 2+1 YATIRIMLIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730192.0985043,
-      "position": 299,
+      "position": 298,
       "first_seen_date": "2026-03-05"
     },
     "ML-3458-304": {
@@ -2988,7 +2978,7 @@
       "title": "STDAYUM YOLU ÜZERİNDE 2+1 ORTA KAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730193.2111418,
-      "position": 300,
+      "position": 299,
       "first_seen_date": "2026-03-05"
     },
     "ML-0533-100": {
@@ -2998,7 +2988,7 @@
       "title": "BAĞCILAR ÖĞRETMEN OKULLARI ARKASINDA SATILIK MASRAFSIZ 2+1 BÜYÜK TİP DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730194.366937,
-      "position": 301,
+      "position": 300,
       "first_seen_date": "2026-03-05"
     },
     "ML-5478-80": {
@@ -3008,7 +2998,7 @@
       "title": "SEYRANTEPE'DE BAKIMLI MERKEZİ KONUMDA 3+1 SATILIK FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730195.496674,
-      "position": 302,
+      "position": 301,
       "first_seen_date": "2026-03-05"
     },
     "ML-5470-106": {
@@ -3018,7 +3008,7 @@
       "title": "WİNSTON CİVARI SATILIK 2+1 SIFIR DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730196.5942113,
-      "position": 303,
+      "position": 302,
       "first_seen_date": "2026-03-05"
     },
     "ML-5469-38": {
@@ -3028,7 +3018,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN URFA YOLUNA 2. PARSEL SATILIK 4+1 LUX DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730197.678329,
-      "position": 304,
+      "position": 303,
       "first_seen_date": "2026-03-05"
     },
     "ML-0643-29": {
@@ -3038,7 +3028,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN YENİ CEZAEVİ CİVARI 2+1 KİRALIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730198.8519294,
-      "position": 305,
+      "position": 304,
       "first_seen_date": "2026-03-05"
     },
     "ML-9021-128": {
@@ -3048,7 +3038,7 @@
       "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI CUMHURİYETTE 1200 m2 Müşterek Tarla",
       "scan_seq": 85,
       "timestamp": 1772730199.9506092,
-      "position": 306,
+      "position": 305,
       "first_seen_date": "2026-03-05"
     },
     "ML-7117-18": {
@@ -3058,7 +3048,7 @@
       "title": "RIZVANAĞA CADDESİNDE SATILIK KELEPİR 2+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730201.0799503,
-      "position": 307,
+      "position": 306,
       "first_seen_date": "2026-03-05"
     },
     "ML-5482-137": {
@@ -3068,7 +3058,7 @@
       "title": "Diyarbakır Yenişehir Dokuzçeltik Mahallesi 250 m İmarlı Arsa",
       "scan_seq": 85,
       "timestamp": 1772730202.2053738,
-      "position": 308,
+      "position": 307,
       "first_seen_date": "2026-03-05"
     },
     "ML-9021-127": {
@@ -3078,7 +3068,7 @@
       "title": "OFİS KASAPLAR DURAĞI 2.PARSELDE SIFIR 2+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730203.2606945,
-      "position": 309,
+      "position": 308,
       "first_seen_date": "2026-03-05"
     },
     "ML-6976-11": {
@@ -3088,7 +3078,7 @@
       "title": "MAKROLİFE GAYRİMENKULDEN HUZUR EVLERİNDE SATILIK 2+1 BAKIMLI DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730204.5651267,
-      "position": 310,
+      "position": 309,
       "first_seen_date": "2026-03-05"
     },
     "ML-5436-017": {
@@ -3098,7 +3088,7 @@
       "title": "MAKROLİFE GAYRİMENKUL'DEN KAÇIRILMAZ 2+1 AMERİKAN MUTFAK MUHTEŞEM LOKASYONDA SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730205.6937983,
-      "position": 311,
+      "position": 310,
       "first_seen_date": "2026-03-05"
     },
     "ML-0429-314": {
@@ -3108,7 +3098,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR KAYA AMİD SİTESİNDE 2+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730206.7660093,
-      "position": 312,
+      "position": 311,
       "first_seen_date": "2026-03-05"
     },
     "ML-0429-313": {
@@ -3118,7 +3108,7 @@
       "title": "YENİŞEHİR ÜÇKUYULAR 808 TOKİ KONUTLARINDA YÜKSEK GİRİŞ 3+1 TOKİ DAİRESİ",
       "scan_seq": 85,
       "timestamp": 1772730207.8523521,
-      "position": 313,
+      "position": 312,
       "first_seen_date": "2026-03-05"
     },
     "ML-1656-701": {
@@ -3128,7 +3118,7 @@
       "title": "OFİS MERKEZİ KONUMDA SATILIK 2+1 SIFIR FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730209.0466478,
-      "position": 314,
+      "position": 313,
       "first_seen_date": "2026-03-05"
     },
     "ML-7370-65": {
@@ -3138,7 +3128,7 @@
       "title": "KENT ORMAN TARAFINDA 3+1 FIRSAT SATILIK VİLLA",
       "scan_seq": 85,
       "timestamp": 1772730210.1296725,
-      "position": 315,
+      "position": 314,
       "first_seen_date": "2026-03-05"
     },
     "ML-1656-561": {
@@ -3148,7 +3138,7 @@
       "title": "KAPORA ALINDI",
       "scan_seq": 85,
       "timestamp": 1772730211.296485,
-      "position": 316,
+      "position": 315,
       "first_seen_date": "2026-03-05"
     },
     "ML-4441-408": {
@@ -3158,7 +3148,7 @@
       "title": "BAĞCILAR'DA SATILIK 2.5+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730212.3978848,
-      "position": 317,
+      "position": 316,
       "first_seen_date": "2026-03-05"
     },
     "ML-5493-42": {
@@ -3168,7 +3158,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN ACİL SATILIK AHMET KAYA CADDESİNDE 2+1 YÜKSEK GİRİŞ DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730213.5119948,
-      "position": 318,
+      "position": 317,
       "first_seen_date": "2026-03-05"
     },
     "ML-5479-110": {
@@ -3178,7 +3168,7 @@
       "title": "YENİ ÇEVRE YOLUNA SIFIR DİYARBAKIRDA KAÇIRILMAYACAK YATIRIM FIRSATI",
       "scan_seq": 85,
       "timestamp": 1772730214.6127415,
-      "position": 319,
+      "position": 318,
       "first_seen_date": "2026-03-05"
     },
     "ML-3448-136": {
@@ -3188,7 +3178,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN VALİLİK ARKASINDA ARAKAT 3+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730215.7527018,
-      "position": 320,
+      "position": 319,
       "first_seen_date": "2026-03-05"
     },
     "ML-7416-128": {
@@ -3198,7 +3188,7 @@
       "title": "SATILIK ELAZIG YOLUÜZERİ 2+1 SIFIR DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730216.8635197,
-      "position": 321,
+      "position": 320,
       "first_seen_date": "2026-03-05"
     },
     "ML-3448-135": {
@@ -3208,7 +3198,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN VALİLİK ARKASINDA BAKIMLI 3+1 SATILIK DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730217.9675922,
-      "position": 322,
+      "position": 321,
       "first_seen_date": "2026-03-05"
     },
     "ML-5479-109": {
@@ -3218,7 +3208,7 @@
       "title": "75 CADDE ÜZERİ AR YAPI FARKIYLA SATILIK İŞYERİ",
       "scan_seq": 85,
       "timestamp": 1772730219.0575688,
-      "position": 323,
+      "position": 322,
       "first_seen_date": "2026-03-05"
     },
     "ML-8674-149": {
@@ -3228,7 +3218,7 @@
       "title": "CEYLAN AWM KAVŞAĞINDA ŞEHRİN GÖBEĞİNDE FIRSAT ACİL SATILIK BÜRO !!!!",
       "scan_seq": 85,
       "timestamp": 1772730220.159361,
-      "position": 324,
+      "position": 323,
       "first_seen_date": "2026-03-05"
     },
     "ML-5479-108": {
@@ -3238,7 +3228,7 @@
       "title": "ŞEHİR HASTANESİ CİVARI AR YAPI KALİTESİYLE SATILIK İŞYERİ",
       "scan_seq": 85,
       "timestamp": 1772730221.2857518,
-      "position": 325,
+      "position": 324,
       "first_seen_date": "2026-03-05"
     },
     "ML-5479-107": {
@@ -3248,7 +3238,7 @@
       "title": "ŞEHİR HASTANESİ CİVARI AR YAPI KALİTESİYLE SATILIK İŞYERİ",
       "scan_seq": 85,
       "timestamp": 1772730222.4187467,
-      "position": 326,
+      "position": 325,
       "first_seen_date": "2026-03-05"
     },
     "ML-2140-589": {
@@ -3258,7 +3248,7 @@
       "title": "HAMRAVAT VİLLALARI ARKASINDA MERAM 4 SİTESİNDE SATILIK 4+1 DAİRE!",
       "scan_seq": 85,
       "timestamp": 1772730223.5184753,
-      "position": 327,
+      "position": 326,
       "first_seen_date": "2026-03-05"
     },
     "ML-4553-661": {
@@ -3268,7 +3258,7 @@
       "title": "TARHAN ASMİR VİLLARINDA ACİL SATILIK DUBLEKS VİLLA",
       "scan_seq": 85,
       "timestamp": 1772730224.6273768,
-      "position": 328,
+      "position": 327,
       "first_seen_date": "2026-03-05"
     },
     "ML-9021-124": {
@@ -3278,7 +3268,7 @@
       "title": "ERGANİ'DE MAKAM DAĞI YOL ÜZERİ MANZARALI İMARA ÇOK YAKIN ARSA",
       "scan_seq": 85,
       "timestamp": 1772730225.7390745,
-      "position": 329,
+      "position": 328,
       "first_seen_date": "2026-03-05"
     },
     "ML-5469-37": {
@@ -3288,7 +3278,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN BAĞCILARIN EN GÜZEL KONUMU ARAM TİGRAN CADDE ÜZERİNDE SATILIK 3+1 FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730226.8454456,
-      "position": 330,
+      "position": 329,
       "first_seen_date": "2026-03-05"
     },
     "ML-2450-141": {
@@ -3298,7 +3288,7 @@
       "title": "DAĞKAPI ESKİ DÜNYA DOĞUM YANINDA SATILIK 2+1 BÜRO VE DAİRE KULLANIMINA UYGUN MÜLK",
       "scan_seq": 85,
       "timestamp": 1772730227.9614356,
-      "position": 331,
+      "position": 330,
       "first_seen_date": "2026-03-05"
     },
     "ML-7117-17": {
@@ -3308,7 +3298,7 @@
       "title": "TEKNOKETTE ZANA TECH FARKIYLA SATILIK 2+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730229.0358865,
-      "position": 332,
+      "position": 331,
       "first_seen_date": "2026-03-05"
     },
     "ML-7117-16": {
@@ -3318,7 +3308,7 @@
       "title": "TEKNOKENTTE ZANA TECH FARKIYLA SATILIK ULTRA LÜKS 3,5+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730230.1348724,
-      "position": 333,
+      "position": 332,
       "first_seen_date": "2026-03-05"
     },
     "ML-7119-500": {
@@ -3328,7 +3318,7 @@
       "title": "BAĞCILAR SALI PAZARI YANI SATILIK 2+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730231.3178983,
-      "position": 334,
+      "position": 333,
       "first_seen_date": "2026-03-05"
     },
     "ML-4543-69": {
@@ -3338,7 +3328,7 @@
       "title": "HAVA ALANI KAVŞAĞI 3+1 SİTELİ FIRSAT DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730232.404011,
-      "position": 335,
+      "position": 334,
       "first_seen_date": "2026-03-05"
     },
     "ML-7119-352": {
@@ -3348,7 +3338,7 @@
       "title": "BAĞCILAR ARAM TİGRANDA ACİL SATILIK 4+1 DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730233.5453625,
-      "position": 336,
+      "position": 335,
       "first_seen_date": "2026-03-05"
     },
     "ML-0643-28": {
@@ -3358,2357 +3348,7 @@
       "title": "MAKRO LİFE GAYRİMENKUL'DEN KOŞUYOLU PARKI KARŞISI CADDE ÜZERİ 2+1 BAKIMLI DAİRE",
       "scan_seq": 85,
       "timestamp": 1772730234.6251173,
-      "position": 337,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7112-164": {
-      "fiyat": "4.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-isyeri-ML-7112-164",
-      "title": "KENT MEYDANI CİVARI ANA CD. ÜZERİNDE FIRSAT İŞYERİ!",
-      "scan_seq": 85,
-      "timestamp": 1772730235.763024,
-      "position": 338,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0533-104": {
-      "fiyat": "3.350.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-0533-104",
-      "title": "CEYLAN AVM ARKASI ÇEŞME DURAĞINDA MASRAFSIZ 3+1 ARA KAT SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730236.8824136,
-      "position": 339,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1798-311": {
-      "fiyat": "8.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-sehitlik-mah-satilik-villa-ML-1798-311",
-      "title": "MARDİN YOLU ÜZERİ GENİŞ VE FERAH 5+1 VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730238.0060396,
-      "position": 340,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7497-27": {
-      "fiyat": "2.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-huzurevleri-mah-satilik-daire-ML-7497-27",
-      "title": "MAKROLİFE GAYRİMENKUL'DEN HUZUREVLERİN DE 3+1 SATILIK FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730239.1156726,
-      "position": 341,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0643-27": {
-      "fiyat": "6.130.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-0643-27",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN URFA YOLUNDA ACİL SATILIK 3+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730240.2270916,
-      "position": 342,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2418-87": {
-      "fiyat": "21.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-isyeri-ML-2418-87",
-      "title": "FORUM AVM YANI GELECEĞİ PARLAK SATILIK TERASLI İŞ YERİ",
-      "scan_seq": 85,
-      "timestamp": 1772730241.3386104,
-      "position": 343,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1375-301": {
-      "fiyat": "3.780.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1375-301",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN BAGCILARDA SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730242.4767876,
-      "position": 344,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3126-200": {
-      "fiyat": "13.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-aziziye-mah-satilik-villa-ML-3126-200",
-      "title": "SATILIK' 5+1 Ultra Lüks Özel Tasarım Komple Yenilenmiş Prestij Villa",
-      "scan_seq": 85,
-      "timestamp": 1772730243.6175108,
-      "position": 345,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7113-346": {
-      "fiyat": "13.850.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-villa-ML-7113-346",
-      "title": "450 EVLERDE TAŞINMAYA HAZIR 6+1 VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730244.887386,
-      "position": 346,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6954-116": {
-      "fiyat": "7.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-6954-116",
-      "title": "WİNSTOWN YANI SATILIK 3,5+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730245.9704292,
-      "position": 347,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6954-115": {
-      "fiyat": "7.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-6954-115",
-      "title": "WİNSTOWN CİVARI 3,5+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730247.045032,
-      "position": 348,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0429-312": {
-      "fiyat": "3.440.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-0429-312",
-      "title": "YEİŞEHİR ÜÇKUYULAR TOKİ 808 KONUTLARINDA 2+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730248.146954,
-      "position": 349,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0533-103": {
-      "fiyat": "23.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-kiralik-daire-ML-0533-103",
-      "title": "ARAŞTIRMA HASTANESİ YANI MEMURSEN TOKİ'DE KİRALIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730249.2855997,
-      "position": 350,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7113-344": {
-      "fiyat": "5.120.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-baris-mah-satilik-daire-ML-7113-344",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN ANEMON OTEL YANINDA ÇOK FIRSAT BİR 4+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730250.4062366,
-      "position": 351,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3458-303": {
-      "fiyat": "2.930.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-3458-303",
-      "title": "URFA YOLU ÜZERİNDE MEDA AMAZON SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730251.5160015,
-      "position": 352,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0643-26": {
-      "fiyat": "4.050.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-0643-26",
-      "title": "YENİ CEZAEVİ KARŞISI SATILIK ULTRA LÜKS  2,5+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730252.7952893,
-      "position": 353,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6887-100": {
-      "fiyat": "4.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-6887-100",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN FABRİKA MAHALLESİNDE 3+1 SATILIK FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730253.9024408,
-      "position": 354,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7117-15": {
-      "fiyat": "3.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-kooperatifler-mah-satilik-daire-ML-7117-15",
-      "title": "OFİS RIZVAN AĞA CADDESİNDE ACİL SIFIR YAPI SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730255.0029583,
-      "position": 355,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0508-400": {
-      "fiyat": "4.100.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-0508-400",
-      "title": "FABRİKA MAHALLESİNDE 4+1 FIRSAT DAİRE..",
-      "scan_seq": 85,
-      "timestamp": 1772730256.1392348,
-      "position": 356,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0596-02": {
-      "fiyat": "2.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-kooperatifler-mah-satilik-daire-ML-0596-02",
-      "title": "OFİS KÜTÜPHANE SOKAĞI CİVARI SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730257.2229452,
-      "position": 357,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7112-161": {
-      "fiyat": "4.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-7112-161",
-      "title": "EN GÜZEL KATTA EN GÜZEL CEPHEDE DAİRE FIRSATI",
-      "scan_seq": 85,
-      "timestamp": 1772730258.3157406,
-      "position": 358,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3621-62": {
-      "fiyat": "22.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-kiralik-daire-ML-3621-62",
-      "title": "ÜÇKUYULAR SEMT PAZARINA YAKIN 3+1 KİRALIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730259.400719,
-      "position": 359,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-876": {
-      "fiyat": "4.350.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-yigitcavus-mah-satilik-daire-ML-1324-876",
-      "title": "TEKNOKENT ARKASI 2.5+1 ULTRA LÜX 98 M2 NET SIFIR DAİRE ACİLDİR",
-      "scan_seq": 85,
-      "timestamp": 1772730260.5901089,
-      "position": 360,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5439-153": {
-      "fiyat": "1.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-seyh-samil-mah-satilik-daire-ML-5439-153",
-      "title": "MAKROLIFE GAYRIMENKULDEN PEYNİR PAZARI CİVARI SATILIK 3+1",
-      "scan_seq": 85,
-      "timestamp": 1772730261.6884506,
-      "position": 361,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4553-656": {
-      "fiyat": "10.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-4553-656",
-      "title": "WİNSTON CİVARI SATILIK  3.5+1 LÜKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730262.8324852,
-      "position": 362,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4553-655": {
-      "fiyat": "5.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-kitilbil-mah-satilik-daire-ML-4553-655",
-      "title": "TEKNO KENT ZANA TECH SİDELYA KALİTESİYLE 3,5+1  SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730264.970884,
-      "position": 363,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4441-406": {
-      "fiyat": "3.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-4441-406",
-      "title": "PEYAS MAH. SATILIK MUSTAKİL EV",
-      "scan_seq": 85,
-      "timestamp": 1772730266.0666018,
-      "position": 364,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4441-405": {
-      "fiyat": "22.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokuzceltik-mah-kiralik-daire-ML-4441-405",
-      "title": "ADLİ TIP ARKASINDA KİRALIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730267.172757,
-      "position": 365,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-544": {
-      "fiyat": "3.250.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-1324-544",
-      "title": "ÜÇKUYUDA ULTRA LÜX 2+1 SIFIR DAİRE ACİLDİR",
-      "scan_seq": 85,
-      "timestamp": 1772730268.2854555,
-      "position": 366,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7465-138": {
-      "fiyat": "4.295.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-7465-138",
-      "title": "YENİ CEZAEVİ KARŞISINDA 2+1 SATILIK FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730269.4312513,
-      "position": 367,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-242": {
-      "fiyat": "3.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-4548-242",
-      "title": "ÜÇKUYULARDA 3+1 SİTELİ GÜVENLİKLİ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730270.5426311,
-      "position": 368,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-240": {
-      "fiyat": "5.050.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-4548-240",
-      "title": "OTOGAR ARKASI ŞEHİR HASTANESİ CİVARI 117 NET HAVUZLU LÜX DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730271.6199536,
-      "position": 369,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-239": {
-      "fiyat": "4.100.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-4548-239",
-      "title": "ÜÇKUYULAR 808 TOKİ KONUTLARI 3+1 TOKİ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730272.7675178,
-      "position": 370,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3126-313": {
-      "fiyat": "12.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-yukarikilictasi-mah-satilik-villa-ML-3126-313",
-      "title": "KENT ORMAN ARKASI 4,5+1 SIFIR HAZIR KÖŞE VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730273.8276446,
-      "position": 371,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3126-312": {
-      "fiyat": "12.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-yukarikilictasi-mah-satilik-villa-ML-3126-312",
-      "title": "KENT ORMAN ARKASI 4,5+1 SIFIR HAZIR KÖŞE VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730274.930161,
-      "position": 372,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3126-311": {
-      "fiyat": "3.990.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-isyeri-ML-3126-311",
-      "title": "ŞEHRİN GÖBEĞİNDE YATIRIMLIK VE KİRA GETİRİSİ YÜKSEK ÇETİNLER DİYARLAND'TA SATILIK 2+1 BÜRO",
-      "scan_seq": 85,
-      "timestamp": 1772730276.0533674,
-      "position": 373,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0643-25": {
-      "fiyat": "3.550.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-aziziye-mah-satilik-daire-ML-0643-25",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK SEYRANTEPEDE 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730277.173163,
-      "position": 374,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2418-90": {
-      "fiyat": "1.100.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-5-nisan-mah-satilik-daire-ML-2418-90",
-      "title": "EMEK CADDESİ ORYIL PETROL YAKINI",
-      "scan_seq": 85,
-      "timestamp": 1772730278.3115432,
-      "position": 375,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4553-650": {
-      "fiyat": "2.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-koprubasi-mah-satilik-arsa-ML-4553-650",
-      "title": "SUR KÖPRÜBAŞINDA SATILIK MÜSTAKİL ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730279.41947,
-      "position": 376,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0643-24": {
-      "fiyat": "1.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-mevlana-halit-mah-satilik-daire-ML-0643-24",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK EMEK CADDESİNDE 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730280.9473555,
-      "position": 377,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1798-370": {
-      "fiyat": "850.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-fatih-mah-satilik-daire-ML-1798-370",
-      "title": "BAĞLAR FATİH CAMİİ YANINDA 3+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730282.043686,
-      "position": 378,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2450-139": {
-      "fiyat": "4.350.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-2450-139",
-      "title": "ESKİ SİVEREK CADDESİ'NDE SATILIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730283.3549995,
-      "position": 379,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7548-174": {
-      "fiyat": "17.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-kiralik-daire-ML-7548-174",
-      "title": "450 EVLERDE 2+1 ACİL KİRALIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730284.4962304,
-      "position": 380,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7416-126": {
-      "fiyat": "1.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-5-nisan-mah-satilik-isyeri-ML-7416-126",
-      "title": "130 mt BAĞLAR HASTANESİ KARŞISI BODRUM",
-      "scan_seq": 85,
-      "timestamp": 1772730286.0236583,
-      "position": 381,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7416-125": {
-      "fiyat": "4.150.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-5-nisan-mah-satilik-isyeri-ML-7416-125",
-      "title": "ÖZEL BAĞLAR HASTANESİ KARŞISI 70 MT DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730287.1258469,
-      "position": 382,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2447-035": {
-      "fiyat": "5.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokuzceltik-mah-satilik-daire-ML-2447-035",
-      "title": "ADLİ TIP ARKASI 4+1 ACİL SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730289.0589254,
-      "position": 383,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5436-15": {
-      "fiyat": "4.400.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-5436-15",
-      "title": "MAKROLİFE GAYRİMENKUL'DEN SATILIK YENİŞEHİR FABRİKA MAHALLESİNDE 2,5+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730290.3751743,
-      "position": 384,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1375-306": {
-      "fiyat": "7.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-cankatran-mah-satilik-daire-ML-1375-306",
-      "title": "MAKROLIFE DEN SATILIK SIFIR 3.5+1 DAİRELER",
-      "scan_seq": 85,
-      "timestamp": 1772730291.5098422,
-      "position": 385,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-136": {
-      "fiyat": "10.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokmetas-mah-satilik-arsa-ML-5482-136",
-      "title": "DÖKMETAŞ'TA ELAZIĞ YOLUNA SIFIR ACİL SATILIK 2000M2 TARLA",
-      "scan_seq": 85,
-      "timestamp": 1772730292.6561096,
-      "position": 386,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7548-173": {
-      "fiyat": "3.175.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-yenisehir-mah-satilik-daire-ML-7548-173",
-      "title": "YENİŞEHİR ÇAMLICADA YAPILI 3+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730293.768955,
-      "position": 387,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7548-172": {
-      "fiyat": "3.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-7548-172",
-      "title": "FİYAT DÜŞTÜ DİCLEKENT VİLLALARI KARSISINDA 3+1 SATILIK DAİRE KAPORA ALINDI",
-      "scan_seq": 85,
-      "timestamp": 1772730294.9395504,
-      "position": 388,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5478-79": {
-      "fiyat": "4.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-5478-79",
-      "title": "450 EVLER'DE FULL BAKIMLI  3.5+1 SATILIK FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730296.0445356,
-      "position": 389,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3458-302": {
-      "fiyat": "5.480.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-3458-302",
-      "title": "ELAZIĞ YOLU ÜZERİNDE 3+1 PLAZA DAİRESİ",
-      "scan_seq": 85,
-      "timestamp": 1772730297.410916,
-      "position": 390,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5478-78": {
-      "fiyat": "3.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-gurdogan-mah-satilik-daire-ML-5478-78",
-      "title": "SEYRANTEPE'DE FULL BAKIMLI 3+1 LÜX DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730298.5252295,
-      "position": 391,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5478-77": {
-      "fiyat": "2.900.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-aziziye-mah-satilik-daire-ML-5478-77",
-      "title": "SEYRANTEPE'DE TAŞINMAYA HAZIR MERKEZİ KONUMDA 3+1 SATILIK FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730299.797745,
-      "position": 392,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2409-128": {
-      "fiyat": "6.100.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-2409-128",
-      "title": "STADYUM CİVARI GÜNEŞ DÜĞÜN SALONU YANI SATILIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730301.1994662,
-      "position": 393,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-238": {
-      "fiyat": "2.580.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-4548-238",
-      "title": "KANTARDA YILDIZ YAPI KALITESIYLE 1+1 DAİRELER",
-      "scan_seq": 85,
-      "timestamp": 1772730302.3263898,
-      "position": 394,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-237": {
-      "fiyat": "7.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-isyeri-ML-4548-237",
-      "title": "KANTAR HMF LEON YAPI ALTI SATILIK DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730303.420755,
-      "position": 395,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1706-131": {
-      "fiyat": "4.680.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-1706-131",
-      "title": "LUNA PARK ARKASINDA ACİL SATILIK 4+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730305.7514904,
-      "position": 396,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6887-99": {
-      "fiyat": "1.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-huzurevleri-mah-satilik-daire-ML-6887-99",
-      "title": "HUZUREVLERİ KELEBEK FIRIN CİVARI 2+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730306.9221702,
-      "position": 397,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4444-405": {
-      "fiyat": "23.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-kiralik-daire-ML-4444-405",
-      "title": "YENİYOL'DA 3+1 KİRALIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730308.0399632,
-      "position": 398,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7416-123": {
-      "fiyat": "4.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-oglakli-mah-satilik-isyeri-ML-7416-123",
-      "title": "MOSTİM SANAYİDE 200M2 SATILIK FIRSAT DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730309.5926828,
-      "position": 399,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7416-122": {
-      "fiyat": "8.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-oglakli-mah-satilik-isyeri-ML-7416-122",
-      "title": "MOSTİM SANAYİDE 400M2 SATILIK FIRSAT DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730310.6919546,
-      "position": 400,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7113-342": {
-      "fiyat": "9.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-diclekent-mah-satilik-daire-ML-7113-342",
-      "title": "DÜNYA KAVŞAĞI ARKASINDA TAŞINMAYA HAZIR LÜX 4+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730311.8038948,
-      "position": 401,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-27": {
-      "fiyat": "35.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-aziziye-mah-kiralik-daire-ML-9985-27",
-      "title": "MAKROLIFE GAYRIMENKUL'DEN A PLUS SEYRAN KONUTLARINDA 4+1 KİRALIK DAİRE FIRSATI",
-      "scan_seq": 85,
-      "timestamp": 1772730313.7037337,
-      "position": 402,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-26": {
-      "fiyat": "35.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-aziziye-mah-kiralik-daire-ML-9985-26",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN A PLUS SEYRAN KONUTLARINDA 4+1 KİRALIK DAİRE FIRSATI",
-      "scan_seq": 85,
-      "timestamp": 1772730314.8000648,
-      "position": 403,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7370-63": {
-      "fiyat": "1.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-fatih-mah-satilik-daire-ML-7370-63",
-      "title": "BAĞLAR NÜKHET COŞKUN CADDESİNDE ACİL 2+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730316.3139625,
-      "position": 404,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1375-305": {
-      "fiyat": "4.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-cankatran-mah-satilik-daire-ML-1375-305",
-      "title": "MAKROLIFE DEN SATILIK SIFIR 2+1 DAİRELER",
-      "scan_seq": 85,
-      "timestamp": 1772730317.4114132,
-      "position": 405,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0508-73": {
-      "fiyat": "5.900.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-mezopotamya-mah-satilik-daire-ML-0508-73",
-      "title": "75 PARK KARŞISI KENT MEYDANINA YAKIN ACİL SATILIK FIRSAT 4+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730318.7039874,
-      "position": 406,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1284-105": {
-      "fiyat": "3.825.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-1284-105",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN DİCLEKENTTE 3+1 SATILIK MASRAFSIZ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730319.8094034,
-      "position": 407,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5436-10": {
-      "fiyat": "1.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-selahattin-eyyubi-mah-satilik-daire-ML-5436-10",
-      "title": "MAKROLİFE GAYRİMENKUL'DEN SAKARYA CADDESİ CİVARI SATILIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730321.3336902,
-      "position": 408,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-30": {
-      "fiyat": "8.030.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-oglakli-mah-satilik-arsa-ML-7357-30",
-      "title": "MAKRO LİFE GAYRİMMENKUL'DEN BAĞLAR OĞLAKLI MAHALLESİ TOSUNLUDA ACİL SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730322.4271662,
-      "position": 409,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-28": {
-      "fiyat": "41.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-oglakli-mah-satilik-arsa-ML-7357-28",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN BAĞLAR OĞLAKLI MAH. TOSUNLU MEVKİNDE ACİL SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730323.5227466,
-      "position": 410,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-25": {
-      "fiyat": "5.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-yukarikilictasi-mah-satilik-daire-ML-9985-25",
-      "title": "TEKNOKENT CİVARINDA 3,5+1 LÜKS VE KONFORLU SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730324.6359212,
-      "position": 411,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5478-75": {
-      "fiyat": "4.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-5478-75",
-      "title": "450 EVLER'DE SATILIK 3,5+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730325.7309415,
-      "position": 412,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1656-546": {
-      "fiyat": "5.800.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-1656-546",
-      "title": "75 CADDE ÜZERİ SATILIK 4+1 GENİŞ FERAH DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730326.848491,
-      "position": 413,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3126-150": {
-      "fiyat": "3.950.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-seyrantepe-sanayi-mah-satilik-daire-ML-3126-150",
-      "title": "MERKEZ BÖLGE SEYRANTEPE KAVŞAĞINDA SATILIK 2.5+1 LÜKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730327.984244,
-      "position": 415,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6621-210": {
-      "fiyat": "4.150.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-6621-210",
-      "title": "ACİL SATILIK BAĞCILAR GÖLETLİ PARK KARŞISINDA FULL YAPILI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730329.1173325,
-      "position": 416,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7446-207": {
-      "fiyat": "13.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-mezopotamya-mah-satilik-daire-ML-7446-207",
-      "title": "KARAYIL KALİTESİYLE KAÇIRLMAYACAK 4.5+1 FIRSAT LÜKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730330.2431638,
-      "position": 417,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7465-136": {
-      "fiyat": "3.670.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-mezopotamya-mah-satilik-daire-ML-7465-136",
-      "title": "KENT MEYDANI DIBINDE FULL YAPILI ACİL SATILIK GENİŞ FERAH 3+1 DAİRE !!!",
-      "scan_seq": 85,
-      "timestamp": 1772730331.3099325,
-      "position": 418,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-27": {
-      "fiyat": "6.100.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-hatipoglu-mah-satilik-arsa-ML-7357-27",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN KAYAPINAR BÖLGESİ, HATİPOĞLU MAHALLESİNDE FIRSAT YATIRIMLIK, ACİL SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730332.4116888,
-      "position": 419,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-26": {
-      "fiyat": "2.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-hatipoglu-mah-satilik-arsa-ML-7357-26",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN DİYARBAKIR KAYAPINAR BÖLGESİ, HATİPOĞLU MAHALLESİNDE FIRSAT YATIRIMLIK, ACİL SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730333.583433,
-      "position": 420,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-25": {
-      "fiyat": "7.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-7357-25",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN KAYAPINAR KALDIRIM MAHALLESİNDE ACİL YATIRIMLIK FIRSAT ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730335.9337535,
-      "position": 421,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-24": {
-      "fiyat": "2.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-7357-24",
-      "title": "MAKROLİFE GAYRİMENKUL'DEN KAYAPINAR KALDIRIM MAHALLESİNDE, FIRSAT YATIRIMLIK ACİL SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730337.0423248,
-      "position": 422,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-110": {
-      "fiyat": "5.350.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1324-110",
-      "title": "URFA YOLU ÜZERİ KARKAUŞ KALİTESİ İLE ULTRA LÜX 2.5+1 SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730338.12719,
-      "position": 423,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-355": {
-      "fiyat": "5.490.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-1324-355",
-      "title": "TALAYTEPEDE 2.5+1 DBAKIRIN EN BÜYÜK 2.5+1İ ULTRA LÜX SIFIR",
-      "scan_seq": 85,
-      "timestamp": 1772730339.3134127,
-      "position": 424,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-236": {
-      "fiyat": "3.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-4548-236",
-      "title": "NEVRUZ ARKASI SİVEREK CADDESİ ASB YAPI 2+1 SATILIK FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730340.4347072,
-      "position": 425,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-23": {
-      "fiyat": "2.730.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-7357-23",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN KAYAPINAR KALDIRIM MAHALLESİNDE ACİL SATILIK YATIRIMLIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730341.4927008,
-      "position": 426,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-23": {
-      "fiyat": "2.550.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-hatipoglu-mah-satilik-arsa-ML-9985-23",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI HATİPOĞLUNDA  3000 m2 Müşterek    Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730342.6014297,
-      "position": 427,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-22": {
-      "fiyat": "6.570.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-ovunduler-mah-satilik-arsa-ML-9985-22",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI  BAĞLAR  ÖVÜNDÜLERDE  2629 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730343.685899,
-      "position": 428,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-21": {
-      "fiyat": "6.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-9985-21",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI   KALDIRIM DA 5000 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730344.8059008,
-      "position": 429,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-20": {
-      "fiyat": "2.590.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-9985-20",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI   KALDIRIM DA  2729 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730345.9799047,
-      "position": 430,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-22": {
-      "fiyat": "1.850.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-7357-22",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN KAYAPINAR KALDIRIM MAHALLESİNDE ACİL YATIRIMLIK FIRSAT ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730347.079924,
-      "position": 431,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-135": {
-      "fiyat": "3.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-5482-135",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI   KALDIRIM DA  894 m2 MüştereK KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730348.1661716,
-      "position": 432,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7548-170": {
-      "fiyat": "4.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-7548-170",
-      "title": "FABRİKA MAHALLESİNDE 3+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730349.2528963,
-      "position": 433,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-134": {
-      "fiyat": "3.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-ovunduler-mah-satilik-arsa-ML-5482-134",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI  BAĞLAR  ÖVÜNDÜLERDE  1100 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730350.37436,
-      "position": 434,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-133": {
-      "fiyat": "5.330.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-hatipoglu-mah-satilik-arsa-ML-5482-133",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI HATİPOĞLUNDA  8200 m2 Müşterek    Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730351.4678693,
-      "position": 435,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-132": {
-      "fiyat": "2.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-5482-132",
-      "title": "DİYARBAKIR'IN YENİ YATIRIM ALANI   KALDIRIM DA  1000 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730352.5591,
-      "position": 436,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5436-009": {
-      "fiyat": "8.840.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-5436-009",
-      "title": "MAKROLİFE GAYRİMENKUL'DEN WİNSTON ARKASI KAYALAR YAPIDA 3,5+1 SATILIK ULTRA LÜX DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730353.679866,
-      "position": 437,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5469-36": {
-      "fiyat": "1.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-5-nisan-mah-satilik-daire-ML-5469-36",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN BAĞLAR 5 NİSANDA SATILIK MASRAFLI 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730354.7647395,
-      "position": 438,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5469-35": {
-      "fiyat": "1.320.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-5-nisan-mah-satilik-daire-ML-5469-35",
-      "title": "BAĞLAR 5 NİSANDA SATILIK MASRAFLI 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730355.8759637,
-      "position": 439,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6954-109": {
-      "fiyat": "2.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-huzurevleri-mah-satilik-daire-ML-6954-109",
-      "title": "HUZUR EVLERİNDE 2+1 SİTELİ İLK GÜNDEN HASARSIZ ÇATILI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730356.982495,
-      "position": 440,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-21": {
-      "fiyat": "6.720.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-kaldirim-mah-satilik-arsa-ML-7357-21",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN KAYAPINAR KALDIRIM MAHALLESİ ACİL SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730358.1049569,
-      "position": 441,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-19": {
-      "fiyat": "2.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-yukariakdibek-mah-satilik-arsa-ML-7357-19",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN DİYARBAKIR BAĞLAR YUKARIAKDİBEK MAHALLESİNDE ACİL SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730359.164686,
-      "position": 442,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5436-8": {
-      "fiyat": "12.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-oglakli-mah-kiralik-daire-ML-5436-8",
-      "title": "MAKROLİFE GAYRİMENKULDEN OĞLAKLI TOKİLERDE KİRALIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730360.2778533,
-      "position": 443,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0533-098": {
-      "fiyat": "29.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-kiralik-daire-ML-0533-098",
-      "title": "MAKRO LİFE GAYRİMENKUL  YENİ CEZAEVİ KARŞISINDA 3,5+1 DAİRE KİRALIYOR",
-      "scan_seq": 85,
-      "timestamp": 1772730362.528097,
-      "position": 444,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-419": {
-      "fiyat": "4.380.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-1324-419",
-      "title": "75 CADDE SONUNDA ADLİ TIP ARKASI 110 NET ULTRA LÜX 2.5+1 2 BANYO",
-      "scan_seq": 85,
-      "timestamp": 1772730363.6491187,
-      "position": 445,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-41": {
-      "fiyat": "3.150.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1324-41",
-      "title": "GÖLETLİ CİVARI 2+1 ULTRA LÜX SIFIR AYARINDA TERTEMİZ",
-      "scan_seq": 85,
-      "timestamp": 1772730364.7691298,
-      "position": 446,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1656-541": {
-      "fiyat": "2.560.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-huzurevleri-mah-satilik-daire-ML-1656-541",
-      "title": "GENESİS HASTAHANESİ YANI SATILIK 3+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730365.886198,
-      "position": 447,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0429-302": {
-      "fiyat": "3.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokmetas-mah-satilik-daire-ML-0429-302",
-      "title": "ELAZIĞ YOLU ALTINDAĞ DİNLENME TESİSLERİ KARŞISINDA BEYMEN İNŞAATAN  2+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730366.9624376,
-      "position": 448,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7497-25": {
-      "fiyat": "44.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-mezopotamya-mah-kiralik-daire-ML-7497-25",
-      "title": "MAKRO LİFE GAYRİMENKULDEN LUNAPARK ARKASI 4+1 KİRALIK LÜKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730368.0473843,
-      "position": 449,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-131": {
-      "fiyat": "2.250.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-arsa-ML-5482-131",
-      "title": "ÜÇKUYULARDA ANA CADDE ÜZERİ SATILIK  191 m2 İMARLI KELEPİR  ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730369.1366723,
-      "position": 450,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5495-70": {
-      "fiyat": "4.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-5495-70",
-      "title": "75E YÜRÜME MESAFESİNDE, GENİŞ VE KONFORLU 4+1 AİLE DAİRESİ",
-      "scan_seq": 85,
-      "timestamp": 1772730370.2159228,
-      "position": 451,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4441-403": {
-      "fiyat": "850.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-arsa-ML-4441-403",
-      "title": "ÜÇKUYULAR'DA SATILIK FIRSAT ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730371.302897,
-      "position": 452,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7416-120": {
-      "fiyat": "8.800.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-gommetas-mah-satilik-isyeri-ML-7416-120",
-      "title": "MEGA SANAYİDE 400M2 SATILIK FIRSAT DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730372.4626718,
-      "position": 453,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1656-540": {
-      "fiyat": "10.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-kiralik-daire-ML-1656-540",
-      "title": "TOPTANCILAR SİTESİNDE KİRALIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730373.555646,
-      "position": 454,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7446-206": {
-      "fiyat": "4.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-yenisehir-mah-satilik-daire-ML-7446-206",
-      "title": "KULE CİTY'DE İNANILMAZ 2+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730374.7517755,
-      "position": 455,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1707-190": {
-      "fiyat": "3.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-1707-190",
-      "title": "ÜÇKUYULARDA SIFIR AYARINDA GENİŞ 2+1 SATILIK YUVA",
-      "scan_seq": 85,
-      "timestamp": 1772730375.8359208,
-      "position": 456,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7465-132": {
-      "fiyat": "1.990.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-yenisehir-mah-satilik-daire-ML-7465-132",
-      "title": "YENİŞEHİR VİLAYETTE SATILIK FIRSAT 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730376.9575255,
-      "position": 457,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6621-209": {
-      "fiyat": "5.180.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-6621-209",
-      "title": "ACİL SATILIK' Bağcılar Toptancılar Bölgesinde Masrafsız Geniş ve Ferah 4+1 Satılık Daire",
-      "scan_seq": 85,
-      "timestamp": 1772730378.0851746,
-      "position": 458,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7112-159": {
-      "fiyat": "2.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-7112-159",
-      "title": "TESİSLER CİVARI URFA YOLU ÜZERİ İŞ BANKASI YANINDA ACCCİLL SATILIK 3+1 ARA KAT FIRSAT DAİRE!",
-      "scan_seq": 85,
-      "timestamp": 1772730379.2190914,
-      "position": 459,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9021-123": {
-      "fiyat": "1.900.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-mevlana-halit-mah-satilik-daire-ML-9021-123",
-      "title": "ESKİ MEGA CENTER ARKASI CEZAEVİ ÜST KÖŞE CİVARI 3+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730380.3039556,
-      "position": 460,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6621-208": {
-      "fiyat": "4.400.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-6621-208",
-      "title": "ACİL SATILIK ARAŞTIRMA YOL ÜSTÜNDE 2+1 LÜKS DAİREMİZ SATILIKTIR",
-      "scan_seq": 85,
-      "timestamp": 1772730381.3983314,
-      "position": 461,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1284-104": {
-      "fiyat": "5.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-ali-pasa-mah-satilik-villa-ML-1284-104",
-      "title": "TARİHİ SUR BÖLGESİNDE SATILIK 3+1 VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730382.4672103,
-      "position": 462,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3458-298": {
-      "fiyat": "2.380.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokmetas-mah-satilik-daire-ML-3458-298",
-      "title": "ALTINDAĞ KARŞISINDA 2+1 YATIRIMLIK DAİRELER",
-      "scan_seq": 85,
-      "timestamp": 1772730383.584515,
-      "position": 463,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3458-299": {
-      "fiyat": "3.470.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-3458-299",
-      "title": "YENİŞEHİR DÖNÜMLÜ MAHALESİNDE 2+1 LÜKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730384.703697,
-      "position": 464,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7446-205": {
-      "fiyat": "4.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-yenisehir-mah-satilik-daire-ML-7446-205",
-      "title": "KARAKOÇ KALİTESİ İLE 2+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730385.7635257,
-      "position": 465,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7492-70": {
-      "fiyat": "4.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-7492-70",
-      "title": "DİCLEKENT ANA CADDE ÜZERİ SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730386.864565,
-      "position": 466,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7492-69": {
-      "fiyat": "27.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-yukarikilictasi-mah-satilik-villa-ML-7492-69",
-      "title": "UMUT NAZENDE VİLLALARINDA GÖZ KAMAŞTIRAN LÜKS DUBLEKS VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730387.9659405,
-      "position": 467,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3458-300": {
-      "fiyat": "4.235.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-mezopotamya-mah-satilik-daire-ML-3458-300",
-      "title": "KENT MEYDANI AŞAĞISINDA MUSA ANTERDE 3+1 İÇİ YAPILI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730389.0678828,
-      "position": 468,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5469-33": {
-      "fiyat": "5.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-5469-33",
-      "title": "ÜÇKUYUDA SATILIK ULTRA LÜX 3,5+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730390.177666,
-      "position": 469,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7394-25": {
-      "fiyat": "34.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-yukarikilictasi-mah-satilik-villa-ML-7394-25",
-      "title": "UMUT NAZENDE VİLLALARINDA GÖZ KAMAŞTIRAN LÜKS TRİPLEXS VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730391.2790859,
-      "position": 470,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7113-337": {
-      "fiyat": "6.850.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-7113-337",
-      "title": "75 CADDE GİRİŞİNDE TAŞINMAYA HAZIR CADDE MANZARALI 4.5+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730392.3904889,
-      "position": 471,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3126-121": {
-      "fiyat": "2.930.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-3126-121",
-      "title": "ACİL SATILIK' 450 EVLERDE 2+1 SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730393.5410337,
-      "position": 472,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6621-206": {
-      "fiyat": "3.550.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-gurdogan-mah-satilik-daire-ML-6621-206",
-      "title": "ACİL SATILIK ' 450 EVLERDE 2+1 ORTA KAT SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730394.6226888,
-      "position": 473,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4765-205": {
-      "fiyat": "3.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-4765-205",
-      "title": "ADLİ TIP YANINDA 2+1 FIRSAT SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730395.7456107,
-      "position": 474,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-130": {
-      "fiyat": "7.890.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-hatipoglu-mah-satilik-arsa-ML-5482-130",
-      "title": "HATİPOĞLUNDA SATILIK 11686 M2 KELEPİR TARLA",
-      "scan_seq": 85,
-      "timestamp": 1772730396.8842597,
-      "position": 475,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5470-105": {
-      "fiyat": "16.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-5470-105",
-      "title": "WINSTOWN CİVARI ULTRA LÜKS HAVUZLU SIFIR 4,5+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730397.9761982,
-      "position": 476,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1706-130": {
-      "fiyat": "2.550.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-1706-130",
-      "title": "ÜÇKULAR FG TOKİDE ACİİL ACİL SATILIK 2+1 BAKIMLI DAİRE!!",
-      "scan_seq": 85,
-      "timestamp": 1772730399.0716856,
-      "position": 477,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9985-19": {
-      "fiyat": "3.885.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-baris-mah-satilik-daire-ML-9985-19",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN ZANA DÜĞÜN SALONU KARŞISI 2+1 GENİŞ SATILIK DAİRE!!!",
-      "scan_seq": 85,
-      "timestamp": 1772730400.1723213,
-      "position": 478,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1327-10": {
-      "fiyat": "2.025.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-kooperatifler-mah-satilik-daire-ML-1327-10",
-      "title": "OFİS MERKEZİ KONUMDA İŞYERİNE UYGUN 2,5+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730401.2582858,
-      "position": 479,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1676-85": {
-      "fiyat": "14.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-isyeri-ML-1676-85",
-      "title": "DİYARBAKIR' IN EN GÖZDE LOKASYONUNDA DEVREN KİRALIK İŞYERİ",
-      "scan_seq": 85,
-      "timestamp": 1772730402.3785186,
-      "position": 480,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1656-534": {
-      "fiyat": "4.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-5-nisan-mah-satilik-isyeri-ML-1656-534",
-      "title": "BAĞLAR SAĞLIK OCAĞI MERKEZİ KONUMDA SATILIK FIRSAT İŞYERİ",
-      "scan_seq": 85,
-      "timestamp": 1772730403.4699452,
-      "position": 481,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1656-531": {
-      "fiyat": "2.570.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-kooperatifler-mah-satilik-daire-ML-1656-531",
-      "title": "OFİS GEVRAN CADDESİNDE SATILIK 4+2 FIRSAT DUBLEKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730404.5394664,
-      "position": 482,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1375-303": {
-      "fiyat": "4.290.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-1375-303",
-      "title": "MAKROLIFE GAYRIMENKULDEN SIFIR SATILIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730405.6343274,
-      "position": 483,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3458-296": {
-      "fiyat": "22.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-melikahmet-mah-kiralik-isyeri-ML-3458-296",
-      "title": "ŞEHRİN NABZI OLAN DAĞ KAPI MELIKAHMET YOLU ÜZERINDE KIRALIK DÜKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730406.7303977,
-      "position": 484,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7394-24": {
-      "fiyat": "7.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-7394-24",
-      "title": "75 GÖBEKTE LÜKS SIFIR AYARINDA SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730407.8304212,
-      "position": 485,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7394-22": {
-      "fiyat": "7.900.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokmetas-mah-satilik-villa-ML-7394-22",
-      "title": "ÖZAY AYDIN VİLLARINDA LÜKS KONFORLU 3+1 VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730408.93392,
-      "position": 486,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-128": {
-      "fiyat": "2.700.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-karahankoy-mah-satilik-arsa-ML-5482-128",
-      "title": "Diyarbakır'ın Yeni gözde  yatırım alanı  Bağlar alankozda  Yatırımlık 2700 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730410.0723033,
-      "position": 487,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-127": {
-      "fiyat": "3.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-karahankoy-mah-satilik-arsa-ML-5482-127",
-      "title": "Diyarbakır'ın Yeni gözde  yatırım alanı  Bağlar alankozda  Yatırımlık 3300 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730411.1874993,
-      "position": 488,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-126": {
-      "fiyat": "3.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-karahankoy-mah-satilik-arsa-ML-5482-126",
-      "title": "Diyarbakır'ın Yeni gözde  yatırım alanı  Bağlar alankozda  Yatırımlık 3300 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730412.2910576,
-      "position": 489,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-8674-147": {
-      "fiyat": "2.675.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-8674-147",
-      "title": "HAVALMANI KAVŞAĞINDA CADDE ÜSTÜ 2+1 EN UYGUN FİYATLI YÜKSEK GİRİŞ DAİRE !!!",
-      "scan_seq": 85,
-      "timestamp": 1772730413.3822243,
-      "position": 490,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-125": {
-      "fiyat": "2.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-karahankoy-mah-satilik-arsa-ML-5482-125",
-      "title": "Diyarbakır'ın Yeni gözde  yatırım alanı  Bağlar ALANKOZ'da  Yatırımlık 2500 m2 Müşterek  KELEPİR  Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730414.4838445,
-      "position": 491,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1327-09": {
-      "fiyat": "1.570.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-sehitlik-mah-satilik-daire-ML-1327-09",
-      "title": "ŞEHİTLİK CADDESİNDE BAKIMLI 3+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730415.5703886,
-      "position": 492,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2450-137": {
-      "fiyat": "8.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-isyeri-ML-2450-137",
-      "title": "NEVROZ PARK OPET PETROL ARKASI'NDA SATILIK FIRIN",
-      "scan_seq": 85,
-      "timestamp": 1772730416.6815073,
-      "position": 493,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-8674-143": {
-      "fiyat": "4.950.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-8674-143",
-      "title": "DİCLEKENT BEDUZAMAN CAAMİ CİVARI SATILIK  4+1 DUBLEX DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730417.7450404,
-      "position": 494,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2409-127": {
-      "fiyat": "7.900.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-2409-127",
-      "title": "DAİRE FİYATINA ACİL SATILIK 3+1 DUBLEKS VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730418.8626986,
-      "position": 495,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7492-67": {
-      "fiyat": "8.900.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-isyeri-ML-7492-67",
-      "title": "MASTFROŞ İŞLEK CADDE ÜZERİ SATILIK DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730419.9547725,
-      "position": 496,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7394-21": {
-      "fiyat": "5.900.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-7394-21",
-      "title": "CADDE 75 TE ÖZEL MASRAFLI ACİL SATILIK KAÇIRILMAYACAK FIRSAT",
-      "scan_seq": 85,
-      "timestamp": 1772730421.0518124,
-      "position": 497,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4441-402": {
-      "fiyat": "3.990.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-4441-402",
-      "title": "KANTAR'DA SATILIK 2+1 YERDEN ISITMALI LÜKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730422.1592116,
-      "position": 498,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-9021-121": {
-      "fiyat": "24.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-kiralik-daire-ML-9021-121",
-      "title": "BAĞCILAR HAVAALANI KAVŞAĞI CİVARI 2+1 KİRALIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730423.2518327,
-      "position": 499,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2418-85": {
-      "fiyat": "5.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-mevlana-halit-mah-satilik-isyeri-ML-2418-85",
-      "title": "HATBOYU CADDESİNDE SATILIK 2 KATLI İŞ YERİ",
-      "scan_seq": 85,
-      "timestamp": 1772730424.4388537,
-      "position": 500,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2409-125": {
-      "fiyat": "12.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-2409-125",
-      "title": "TOPTANCILAR DA DAİRE FİYATINA ACİL SATILIK 4.5+1 TRİPLEX VİLLA",
-      "scan_seq": 85,
-      "timestamp": 1772730425.5525131,
-      "position": 501,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7112-158": {
-      "fiyat": "6.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-7112-158",
-      "title": "75.CD ÜZERİ FULL MASRAFLI ACİL SATILIK 4+1 DAİRE!",
-      "scan_seq": 85,
-      "timestamp": 1772730426.715018,
-      "position": 502,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-235": {
-      "fiyat": "5.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-4548-235",
-      "title": "NEVROZ PARK ARKASI ASB YAPI KALİTESİYLE 3,5+1 SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730427.8644066,
-      "position": 503,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-666": {
-      "fiyat": "4.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1324-666",
-      "title": "BAĞCILAR H. HALİT KALİTESİ İLE 2.5+1 ULTRA LÜX 110 NET ACİLDİR",
-      "scan_seq": 85,
-      "timestamp": 1772730428.9417777,
-      "position": 504,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0501-052": {
-      "fiyat": "2.775.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-0501-052",
-      "title": "BAĞCILAR NEVROZ YAKINI HECI SEYİD ARKASI SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730430.0647075,
-      "position": 505,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5479-103": {
-      "fiyat": "2.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-yolalti-mah-satilik-daire-ML-5479-103",
-      "title": "TAPU DAİRESİ YANI SATILIK 1+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730431.1584973,
-      "position": 506,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6621-204": {
-      "fiyat": "45.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-kiralik-daire-ML-6621-204",
-      "title": "ACİL KİRALIK ' WINS TOWN AVM ARKASI 3.5+1 FUL EŞYALI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730432.2260556,
-      "position": 507,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-427": {
-      "fiyat": "4.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-1324-427",
-      "title": "450 EVLERDE 3+1 ULTRA LÜX SIFIR DAİRE KAT KAT SEÇENEKLERİ MEVCUT",
-      "scan_seq": 85,
-      "timestamp": 1772730433.417572,
-      "position": 508,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1375-299": {
-      "fiyat": "3.975.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1375-299",
-      "title": "NEVROZ PARK ARKASI FEMA YAPI KALİTESİYLE 2+1 SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730434.5273802,
-      "position": 509,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-655": {
-      "fiyat": "4.050.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-1324-655",
-      "title": "450 EVLERDE 3+1 ULTRA LÜX SIFIR DAİRE KAT SEÇENEKLERİ MEVCUT",
-      "scan_seq": 85,
-      "timestamp": 1772730435.636593,
-      "position": 510,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-534": {
-      "fiyat": "6.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-1324-534",
-      "title": "SERİN KALİTESİ 3.5+1 ANA CADDE ÜZERİ ULTRA LÜX DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730436.7577739,
-      "position": 511,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-565": {
-      "fiyat": "4.175.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1324-565",
-      "title": "BAĞCILAR NEVROZ CİVARI 2+1 ULTRA LÜX SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730437.8507106,
-      "position": 512,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5972-49": {
-      "fiyat": "3.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-5972-49",
-      "title": "NEVRUZ ARKASI SİVEREK CADDESİ ASB YAPI 2+1 SATILIK FIRSAT DAİRELER",
-      "scan_seq": 85,
-      "timestamp": 1772730439.2248168,
-      "position": 513,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7465-128": {
-      "fiyat": "4.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-mezopotamya-mah-satilik-daire-ML-7465-128",
-      "title": "GAZİLER MUSA ANTERDE CADDE ÜZERİ FUL YAPILI SATILIK 3+1 ULTRA LÜX DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730440.3397038,
-      "position": 514,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1707-189": {
-      "fiyat": "2.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-selahattin-eyyubi-mah-satilik-daire-ML-1707-189",
-      "title": "TESİSLER DİŞ HASTANESİ YANINDA SATILIK 3+1 FUL BAKIMLI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730441.478527,
-      "position": 515,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7416-112": {
-      "fiyat": "1.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-huzurevleri-mah-satilik-daire-ML-7416-112",
-      "title": "HUZUREVLERİ SON DURAKTA 3+1SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730442.6112247,
-      "position": 516,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2447-034": {
-      "fiyat": "4.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-2447-034",
-      "title": "MAKRO LİFE GAYRİMENKULDEN TOPTANCILAR SİTESİNDE 4+1 ACİL SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730443.693352,
-      "position": 517,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-550": {
-      "fiyat": "3.790.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1324-550",
-      "title": "BAĞCILAR ZÜMRÜTKENT CİVARI 95M2 NET İÇİ HARİKAA",
-      "scan_seq": 85,
-      "timestamp": 1772730444.8453753,
-      "position": 518,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-8674-142": {
-      "fiyat": "2.400.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-8674-142",
-      "title": "ÜÇKUYULAR 3.ETAP FG TOKİDE ACİL SATILLIK BAKIMLI 2+1 YÜKSEK GİRİŞ",
-      "scan_seq": 85,
-      "timestamp": 1772730446.021551,
-      "position": 519,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-17": {
-      "fiyat": "2.120.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-isyeri-ML-7357-17",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN TEKEL CADDESİNDE ACİL SATILIK FIRSAT YATIRIMLIK DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730447.1214888,
-      "position": 520,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-8674-141": {
-      "fiyat": "3.850.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-8674-141",
-      "title": "ÜÇKUYULARDA ACİL SATILIK 3+1 DÜŞÜK KATLI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730448.219878,
-      "position": 521,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6621-202": {
-      "fiyat": "5.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-6621-202",
-      "title": "YETİŞEN ALIR DİCLEKENET CADDE ÜSTÜNDE 4.5+1 LÜKS DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730449.3079307,
-      "position": 522,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7370-61": {
-      "fiyat": "1.250.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-kaynartepe-mah-satilik-daire-ML-7370-61",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN KOŞUYOLU ORYIL PETROL CİVARINDA 2+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730450.430013,
-      "position": 523,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7492-65": {
-      "fiyat": "4.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-gommetas-mah-satilik-arsa-ML-7492-65",
-      "title": "BAĞLAR GÖMMETAŞ 2.5 DÖNÜM ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730451.5339162,
-      "position": 524,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-444": {
-      "fiyat": "4.050.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-1324-444",
-      "title": "ÜÇKUYUDA ULTRA LÜX 3+1 KUTU GİBİ 5 YILLIK",
-      "scan_seq": 85,
-      "timestamp": 1772730452.7196295,
-      "position": 525,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-410": {
-      "fiyat": "5.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-1324-410",
-      "title": "MÜTHİŞ KONUMDA ULTRA LÜX 4.5+1 SIFIR AYARINDA",
-      "scan_seq": 85,
-      "timestamp": 1772730453.8463032,
-      "position": 526,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-322": {
-      "fiyat": "4.490.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-1324-322",
-      "title": "MASTFROŞTA 2.5+1 ULTRA LÜX SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730454.9585195,
-      "position": 527,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5495-68": {
-      "fiyat": "3.480.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-satilik-daire-ML-5495-68",
-      "title": "YENİYOL ROBOSKİ PARKI KARŞISI OPET PETROL YANI 3,5+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730456.0809,
-      "position": 528,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7497-21": {
-      "fiyat": "1.150.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-kaynartepe-mah-satilik-daire-ML-7497-21",
-      "title": "MAKROLİFE GAYRİMENKUL'DEN GİRNE CADDESİN DE 2+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730457.2170525,
-      "position": 529,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6954-106": {
-      "fiyat": "2.090.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-6954-106",
-      "title": "KAPORA ALINDI",
-      "scan_seq": 85,
-      "timestamp": 1772730458.317444,
-      "position": 530,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-232": {
-      "fiyat": "3.690.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-1324-232",
-      "title": "DOĞUM ARKASI 3+1 ULTRA LÜX GENİŞ METRE KARE ACİLDİR",
-      "scan_seq": 85,
-      "timestamp": 1772730459.420693,
-      "position": 531,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-234": {
-      "fiyat": "5.800.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-4548-234",
-      "title": "ADLİ TIP ARKASI 4+1 ACİL SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730460.5123348,
-      "position": 532,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5495-670": {
-      "fiyat": "20.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-kiralik-daire-ML-5495-670",
-      "title": "YENİYOL ROBOSKİ PARKI KARŞISINDA 3,5+1 KİRALI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730461.6397026,
-      "position": 533,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-0501-051": {
-      "fiyat": "2.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-aziziye-mah-satilik-daire-ML-0501-051",
-      "title": "SEYRANTEPE TOKİ 3.ETAP TA SATILIK 3+1 BOŞ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730462.7420504,
-      "position": 534,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4543-65": {
-      "fiyat": "22.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-kiralik-daire-ML-4543-65",
-      "title": "METREPOL SİTESİN DE KİRALIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730463.832675,
-      "position": 535,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5479-102": {
-      "fiyat": "4.350.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-5479-102",
-      "title": "BAĞCILARIN EN NEZİH SİTESİNDE ULTRA LÜX 2+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730464.9198823,
-      "position": 536,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6954-104": {
-      "fiyat": "2.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-selahattin-eyyubi-mah-satilik-daire-ML-6954-104",
-      "title": "NİNOVA YANI KOPERATİF ÇATILI 3+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730467.1650817,
-      "position": 538,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6954-103": {
-      "fiyat": "4.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-medya-mah-satilik-daire-ML-6954-103",
-      "title": "WİNSTOWN CİVARI 2+1 KELEPİR SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730468.265218,
-      "position": 539,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7112-157": {
-      "fiyat": "3.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-yenisehir-mah-satilik-daire-ML-7112-157",
-      "title": "DAĞKAPI ADLİYE KARŞISI ANA CD. ÜZERİ AZEL PLAZADA ACİL SATILIK 2+1 FIRSAT BÜRO!",
-      "scan_seq": 85,
-      "timestamp": 1772730469.376919,
-      "position": 540,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1706-124": {
-      "fiyat": "74.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokmetas-mah-satilik-isyeri-ML-1706-124",
-      "title": "SATILIK ÜRETİME HAZIR FIRSAT FABRİKA",
-      "scan_seq": 85,
-      "timestamp": 1772730470.4987142,
-      "position": 541,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7548-168": {
-      "fiyat": "8.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-isyeri-ML-7548-168",
-      "title": "KAYPINAR KENT MEYDANI KARŞISINDA 130 M2 SATILIK DÜKKAN",
-      "scan_seq": 85,
-      "timestamp": 1772730471.6142948,
-      "position": 542,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-6887-98": {
-      "fiyat": "3.700.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-6887-98",
-      "title": "FUAR ALANININ ARKASINDA ÜÇKÜYULARDA 2+1 ACİL SATILIK BOŞ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730472.7341728,
-      "position": 543,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5478-72": {
-      "fiyat": "6.190.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-5478-72",
-      "title": "ACİL SATILIKKAYAPINAR SPOR PARKI MANZARALI 4+1 LÜKS DAİREMİZ SATIŞTADIR",
-      "scan_seq": 85,
-      "timestamp": 1772730473.852223,
-      "position": 544,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7119-76": {
-      "fiyat": "4.200.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-7119-76",
-      "title": "BAĞCILAR YENİHAL CİVARI SATILIK 3+1 GENİŞ FERAH DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730474.9080985,
-      "position": 545,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-426": {
-      "fiyat": "3.100.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-1324-426",
-      "title": "STAD YANI ULTRA LÜX 2+1 SIFIR DAİRE ACİLDİRR",
-      "scan_seq": 85,
-      "timestamp": 1772730475.9670658,
-      "position": 546,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7465-126": {
-      "fiyat": "1.450.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-sehitlik-mah-satilik-daire-ML-7465-126",
-      "title": "YENİŞEHİR ŞEHİTLİKTE FUL YAPILI 3+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730477.0966833,
-      "position": 547,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7112-156": {
-      "fiyat": "19.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-selahattin-eyyubi-mah-kiralik-daire-ML-7112-156",
-      "title": "TESİSLER KAVŞAĞINA YAKIN, İL EMNİYET MÜDÜRLÜĞÜ CİVARINDA 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730478.1757855,
-      "position": 548,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-67": {
-      "fiyat": "3.780.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-1324-67",
-      "title": "ÜÇKUYUDA 2+1 ULTRA LÜX 1 YILLIK SIFIR DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730479.2914774,
-      "position": 549,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-123": {
-      "fiyat": "26.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-kolludere-mah-satilik-arsa-ML-5482-123",
-      "title": "Diyarbakır'ın Yeni gözde  yatırım alanı  Bağlar Kolluderede Yatırımlık 6539 m2 Müstakil KELEPİR Tarla",
-      "scan_seq": 85,
-      "timestamp": 1772730480.415118,
-      "position": 550,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-122": {
-      "fiyat": "10.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-ferit-kosk-mah-satilik-arsa-ML-5482-122",
-      "title": "Dicle Nehri Kıyısında MEZOPOTAMYANIN  Kalbinde Eşsiz Arsa Fırsatı",
-      "scan_seq": 85,
-      "timestamp": 1772730481.5078986,
-      "position": 551,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-121": {
-      "fiyat": "8.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-ferit-kosk-mah-satilik-arsa-ML-5482-121",
-      "title": "Dicle Nehri Kıyısında MEZOPOTAMYANIN  Kalbinde Eşsiz Arsa Fırsatı",
-      "scan_seq": 85,
-      "timestamp": 1772730482.5923412,
-      "position": 552,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5479-101": {
-      "fiyat": "7.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-firat-mah-satilik-daire-ML-5479-101",
-      "title": "YENİ STAD CİVARI SATILIK HAVUZLU DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730483.708346,
-      "position": 553,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-233": {
-      "fiyat": "3.750.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-4548-233",
-      "title": "GAZİLER KARACADAĞ EKMEK FIRINI ARKASI 3+1 FULL BAKIMLI DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730484.8256552,
-      "position": 554,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7357-15": {
-      "fiyat": "1.350.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-sehitlik-mah-satilik-daire-ML-7357-15",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN ŞEHİTLİK MAHALLESİNDE ACİL SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730485.9061704,
-      "position": 555,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7465-125": {
-      "fiyat": "3.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-7465-125",
-      "title": "450 EVLER'DE SIFIR 2+1 FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730487.0336268,
-      "position": 556,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2418-83": {
-      "fiyat": "2.100.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-seyh-samil-mah-satilik-daire-ML-2418-83",
-      "title": "POLİS OKULU KAYA TAKSİ DURAĞI YANI SATILIK 3+1 ASANSÖRLÜ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730488.138409,
-      "position": 557,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-2418-82": {
-      "fiyat": "2.025.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-mevlana-halit-mah-satilik-daire-ML-2418-82",
-      "title": "POLİS OKULU TAN YAPI YAPIŞIĞI SATILIK 3+1 ASANSÖRLÜ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730489.29448,
-      "position": 558,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-7416-111": {
-      "fiyat": "4.700.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-fabrika-mah-satilik-daire-ML-7416-111",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK FABRİKA MAH EN GÜZEL 3+1  DAİRESİ",
-      "scan_seq": 85,
-      "timestamp": 1772730490.4118133,
-      "position": 559,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4548-232": {
-      "fiyat": "4.980.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-4548-232",
-      "title": "WİNSTOWN AVM KARŞISI MALİYE KONUTLARINDA 3+1 SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730491.550072,
-      "position": 560,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1324-144": {
-      "fiyat": "4.650.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-1324-144",
-      "title": "ÜÇKUYUNUN İÇİNDE ULTRA LÜX 3+1 ACİL UYGUN FİYAT",
-      "scan_seq": 85,
-      "timestamp": 1772730492.6825974,
-      "position": 561,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-3733-89": {
-      "fiyat": "4.550.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-uckuyu-mah-satilik-daire-ML-3733-89",
-      "title": "ÜÇKUYULARDA LÜX HAVUZLU 3+1 SATILIK BAKIMLI FIRSAT DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730493.758631,
-      "position": 562,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-1327-08": {
-      "fiyat": "5.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-peyas-mah-satilik-daire-ML-1327-08",
-      "title": "ESKİ CUPPA KAVŞAĞINDA 5+1 DUBLEX SATILIK DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730494.8827796,
-      "position": 563,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-119": {
-      "fiyat": "1.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-huzurevleri-mah-satilik-daire-ML-5482-119",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN HUZUREVLERİNDE SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730496.0000978,
-      "position": 564,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4553-522": {
-      "fiyat": "20.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-kiralik-daire-ML-4553-522",
-      "title": "URFA YOLUNDA KİRALIK  1+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730497.1236944,
-      "position": 565,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4553-521": {
-      "fiyat": "4.550.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-donumlu-mah-satilik-daire-ML-4553-521",
-      "title": "450 EVLERDE SATILIK 3+1 BOŞ DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730498.2076738,
-      "position": 566,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-114": {
-      "fiyat": "25.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-ekinciler-mah-satilik-arsa-ML-5482-114",
-      "title": "Diyarbakır Yenişehir Ekinciler Köyünde Doğayla İç İçe, 47 Dönümlük Yatırım Fırsatı",
-      "scan_seq": 85,
-      "timestamp": 1772730499.3119342,
-      "position": 567,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-113": {
-      "fiyat": "17.500.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-ekinciler-mah-satilik-arsa-ML-5482-113",
-      "title": "Diyarbakır Yenişehir Ekinciler Köyünde Doğayla İç İçe, 33 Dönümlük Yatırım Fırsatı",
-      "scan_seq": 85,
-      "timestamp": 1772730500.4124796,
-      "position": 568,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4553-504": {
-      "fiyat": "3.300.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-4553-504",
-      "title": "MAKRO LİFE GAYRİMENKUL'DEN SATILIK 2+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730501.5253313,
-      "position": 569,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-107": {
-      "fiyat": "7.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-ferit-kosk-mah-satilik-arsa-ML-5482-107",
-      "title": "DİCLE NEHRİ KIYISINDA MEZOPOTAMYANIN KALBİNDE EŞSİZ ARSA FIRSATI",
-      "scan_seq": 85,
-      "timestamp": 1772730502.6378756,
-      "position": 570,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-4553-483": {
-      "fiyat": "5.000.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-daire-ML-4553-483",
-      "title": "GÖLETLİ PARK CİVARI SATILIK 3+1 DAİRE",
-      "scan_seq": 85,
-      "timestamp": 1772730503.7489216,
-      "position": 571,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-106": {
-      "fiyat": "3.850.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-colguzeli-mah-satilik-arsa-ML-5482-106",
-      "title": "ÇÖLGÜZELİNDE GELECEĞİNİZE DEĞER KATACAK 661M2 İMARLI ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730504.8337824,
-      "position": 572,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-105": {
-      "fiyat": "4.600.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-colguzeli-mah-satilik-arsa-ML-5482-105",
-      "title": "DİYARBAKIRIN YENİ YATIRIM BÖLGESİNDE  SATILIK ARSA",
-      "scan_seq": 85,
-      "timestamp": 1772730505.9327488,
-      "position": 573,
-      "first_seen_date": "2026-03-05"
-    },
-    "ML-5482-104": {
-      "fiyat": "4.250.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-baglar-bagcilar-mah-satilik-isyeri-ML-5482-104",
-      "title": "DİYARBAKIR'IN KALBİNDE 2+1 SATILIK LÜKS BÜRO",
-      "scan_seq": 85,
-      "timestamp": 1772730507.042797,
-      "position": 574,
+      "position": 336,
       "first_seen_date": "2026-03-05"
     },
     "ML-4553-670": {
@@ -5721,16 +3361,6 @@
       "position": 217,
       "first_seen_date": "2026-03-05"
     },
-    "ML-1656-545": {
-      "fiyat": "3.425.000 TL",
-      "tarih": "2026-03-05",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-yenisehir-dokmetas-mah-satilik-daire-ML-1656-545",
-      "title": "ALTINDAĞ KARŞISI SATILIK 2,5+1 FIRSAT DAİRE",
-      "scan_seq": 86,
-      "timestamp": 1772743130.8965187,
-      "position": 414,
-      "first_seen_date": "2026-03-05"
-    },
     "ML-1676-087": {
       "fiyat": "5.000.000 TL",
       "tarih": "2026-03-06",
@@ -5739,16 +3369,6 @@
       "scan_seq": 102,
       "timestamp": 1772750496.321804,
       "position": 37,
-      "first_seen_date": "2026-03-06"
-    },
-    "ML-6954-105": {
-      "fiyat": "6.550.000 TL",
-      "tarih": "2026-03-06",
-      "link": "https://www.makrolife.com.tr/ilan/diyarbakir-kayapinar-talaytepe-mah-satilik-daire-ML-6954-105",
-      "title": "ARAŞTIRMA HASTANESİ YANI HOBİ BAHÇELİ 4+1  SATILIK",
-      "scan_seq": 102,
-      "timestamp": 1772750497.7981777,
-      "position": 537,
       "first_seen_date": "2026-03-06"
     }
   },
@@ -5837,11 +3457,11 @@
     },
     "2026-03-06": {
       "new": 2,
-      "price_changes": 0,
-      "deleted": 1
+      "price_changes": 2,
+      "deleted": 239
     }
   },
-  "scan_sequence": 102,
-  "last_scan_timestamp": 1772750500.6858616,
+  "scan_sequence": 103,
+  "last_scan_timestamp": 1772781884.5996308,
   "auto_scan_enabled": true
 }
