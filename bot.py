@@ -464,7 +464,6 @@ def fetch_listings_via_flaresolverr():
                     if csrf_token:
                         headers['X-CSRF-TOKEN'] = csrf_token
                     
-                    cookies_str = "; ".join([f"{c['name']}={c['value']}" for c in base_result_dict.get("cookies", [])])
                     if cookies_str:
                         headers['Cookie'] = cookies_str
                         
@@ -1974,17 +1973,8 @@ def fetch_listings_playwright():
 
         context = new_context()
         page = context.new_page()
-        
-        # HIZLANDIRMA: Gereksiz kaynakları (resim, font, medya) engelle
-        def handle_route(route):
-            if route.request.resource_type in ["image", "media", "font"]:
-                route.abort()
-            else:
-                route.continue_()
-        page.route("**/*", handle_route)
-        
         stealth_sync(page)  # Apply stealth mode to bypass detection
-        print("[PLAYWRIGHT] Stealth mode ve kaynak kısıtlama uygulandı", flush=True)
+        print("[PLAYWRIGHT] Stealth mode uygulandi", flush=True)
 
         while True:
             if SCAN_STOP_REQUESTED:
@@ -2042,10 +2032,7 @@ def fetch_listings_playwright():
                             print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel tıklama denenecek.", flush=True)
                             page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                         
-                        try:
-                            # 5 saniye beklemek yerine içeriğin değişmesini veya timeout'u bekle
-                            page.wait_for_timeout(2000)
-                        except: pass
+                        page.wait_for_timeout(5000)
                         new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         if old_content_hash == new_content_hash:
@@ -2073,7 +2060,7 @@ def fetch_listings_playwright():
                                 clicked = page.evaluate(js_click)
                                 if clicked:
                                     print(f"[SAYFA {page_num}] JS-click başarılı, bekleniyor...", flush=True)
-                                    page.wait_for_timeout(2000)
+                                    page.wait_for_timeout(5000)
                                 else:
                                     print(f"[SAYFA {page_num}] Buton bulunamadı.", flush=True)
                             except Exception as e:
@@ -2275,7 +2262,7 @@ def fetch_listings_playwright():
                 except Exception as e:
                     print(f"[PLAYWRIGHT] Yeniden yükleme hatası: {e}", flush=True)
 
-            page.wait_for_timeout(random.randint(500, 1500))
+            page.wait_for_timeout(random.randint(2000, 4000))
 
         browser.close()
 
