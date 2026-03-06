@@ -755,35 +755,37 @@ def wait_for_cloudflare(page, timeout=45000):
     for attempt in range(max_attempts):
         _time.sleep(3)
         
-        # Her 4 denemede bir mouse hareketi yap
-        if attempt > 0 and attempt % 4 == 0:
-            simulate_human_behavior()
-        
         try:
-            # v6.3: Script tag kontrolü (Eğer fonksiyonlar yoksa neden yok?)
-            is_ready = page.evaluate("""() => {
+            # v6.4: Bağımlılık (Global Variables) kontrolü
+            # Site scriptleri 'utils', 'opts', 'log' değişkenlerini bekliyor.
+            # Bunlar gelmeden müdahale edersek sayfa çöker (ReferenceError).
+            env_status = page.evaluate("""() => {
+                const utilsOk = typeof window.utils !== 'undefined';
+                const optsOk = typeof window.opts !== 'undefined';
+                const logOk = typeof window.log !== 'undefined';
                 const captchaReady = typeof grecaptcha !== 'undefined';
                 const detectReady = typeof window.__botDetect !== 'undefined';
                 const sayfaDegistirReady = typeof window.sayfaDegistir !== 'undefined';
                 
-                // Script taglerini kontrol et
-                const scripts = Array.from(document.querySelectorAll('script')).map(s => {
-                    return { src: s.src, textSnippet: s.innerText.substring(0, 50) };
-                });
-                
-                return { captchaReady, detectReady, sayfaDegistirReady, scripts: scripts.slice(-5) };
+                return { utilsOk, optsOk, logOk, captchaReady, detectReady, sayfaDegistirReady };
             }""")
             
-            if not is_ready['detectReady'] or not is_ready['sayfaDegistirReady']:
-                print(f"[CF] Diagnostik: BotDetect: {is_ready['detectReady']}, sayfaDegistir: {is_ready['sayfaDegistirReady']}", flush=True)
-                print(f"[CF] Son 5 script: {is_ready['scripts']}", flush=True)
+            if not env_status['utilsOk'] or not env_status['optsOk']:
+                print(f"[CF] Bağımlılıklar bekleniyor: utils:{env_status['utilsOk']}, opts:{env_status['optsOk']}", flush=True)
+                # Henüz insansı hareket yapma, sayfanın kendi scriptleri yüklensin
+                _time.sleep(2)
+                continue
 
-            if attempt == 2 and not is_ready['detectReady']:
-                 print("[CF] BotDetect kütüphanesi yüklenmemiş, bekleniyor...", flush=True)
+            # v6.3: Diagnostik loglar
+            if not env_status['detectReady'] or not env_status['sayfaDegistirReady']:
+                print(f"[CF] Diagnostik: BotDetect: {env_status['detectReady']}, sayfaDegistir: {env_status['sayfaDegistirReady']}", flush=True)
 
-            # v6.1: Manuel tetikleme (Eğer token hala gelmediyse)
-            if attempt == 3:
-                print("[CF] Manuel doğrulama tetikleniyor...", flush=True)
+            # Sadece bağımlılıklar tamamlandığında fareyi oynat
+            simulate_human_behavior()
+
+            # v6.1: Manuel tetikleme (Eğer token hala gelmediyse ve ortam hazırsa)
+            if attempt == 4 and env_status['detectReady']:
+                print("[CF] Ortam hazır, manuel doğrulama tetikleniyor...", flush=True)
                 page.evaluate("if(window.__botDetect) window.__botDetect.verify();")
 
             status = page.evaluate("""() => {
@@ -810,7 +812,7 @@ def wait_for_cloudflare(page, timeout=45000):
                 if status['hasToken']:
                     print(f"[CF] Doğrulama BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
                     return True
-                elif attempt >= 5: # 15 saniye (5 * 3s)
+                elif attempt >= 6: # 18 saniye
                     print(f"[CF] Token gelmedi ama veri var. Devam ediliyor (Image fallback modu)", flush=True)
                     return True
         except Exception as e:
