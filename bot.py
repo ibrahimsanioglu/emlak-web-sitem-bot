@@ -643,46 +643,67 @@ def wait_for_cloudflare(page, timeout=45000):
         print(f"[CF] İçerik önizleme: {page_content[:500]}...", flush=True)
     except Exception as e:
         print(f"[CF] İçerik okunamadı: {e}", flush=True)
+
+    # Bezier Eğrisi Hesapla (v6.2)
+    def get_bezier_point(p0, p1, p2, p3, t):
+        """Dört noktalı bir Bezier eğrisi üzerinde t noktasını hesaplar (0 <= t <= 1)."""
+        cx = 3 * (p1[0] - p0[0])
+        bx = 3 * (p2[0] - p1[0]) - cx
+        ax = p3[0] - p0[0] - cx - bx
+        cy = 3 * (p1[1] - p0[1])
+        by = 3 * (p2[1] - p1[1]) - cy
+        ay = p3[1] - p0[1] - cy - by
+        
+        t2 = t * t
+        t3 = t2 * t
+        x = (ax * t3) + (bx * t2) + (cx * t) + p0[0]
+        y = (ay * t3) + (by * t2) + (cy * t) + p0[1]
+        return x, y
     
     # Human-like davranış: rastgele mouse hareketi
     def simulate_human_behavior():
-        """İnsansı fare hareketleri ve rastgele duraksamalar (Anti-bot)."""
+        """Bezier eğrileri ile insansı fare hareketleri ve rastgele duraksamalar (Anti-bot)."""
         try:
-            # Persistent-like mouse movement (start near center or current)
-            curr_x = _random.randint(200, 400)
-            curr_y = _random.randint(200, 400)
+            # Mevcut fare pozisyonu (veya rastgele başlangıç)
+            start_x = _random.randint(200, 400)
+            start_y = _random.randint(200, 400)
             
-            # 1. Rastgele titrek hareketler (Non-linear)
-            for _ in range(_random.randint(4, 8)):
-                target_x = _random.randint(50, 950)
-                target_y = _random.randint(50, 750)
+            for _ in range(_random.randint(3, 5)):
+                # Dört kontrol noktası belirle (Bezier için)
+                p0 = (start_x, start_y)
+                p1 = (_random.randint(0, 1000), _random.randint(0, 800))
+                p2 = (_random.randint(0, 1000), _random.randint(0, 800))
+                p3 = (_random.randint(50, 950), _random.randint(50, 750))
                 
-                # Hedefe giden yolu küçük, titrek adımlara böl
-                steps = _random.randint(10, 25)
-                for i in range(steps):
-                    # Bezier-like jitter
+                # Adım sayısı (ne kadar fazlaysa o kadar pürüzsüz)
+                steps = _random.randint(20, 40)
+                for i in range(steps + 1):
                     t = i / steps
-                    # Linear interpolation + jitter
-                    move_x = curr_x + (target_x - curr_x) * t + _random.randint(-3, 3)
-                    move_y = curr_y + (target_y - curr_y) * t + _random.randint(-3, 3)
-                    page.mouse.move(move_x, move_y)
-                    _time.sleep(_random.uniform(0.005, 0.02))
+                    curr_x, curr_y = get_bezier_point(p0, p1, p2, p3, t)
+                    
+                    # Hafif "jitter" (titreme) ekle
+                    curr_x += _random.uniform(-1, 1)
+                    curr_y += _random.uniform(-1, 1)
+                    
+                    page.mouse.move(curr_x, curr_y)
+                    # Hızı değişken tut (insanlar bir noktada hızlanır bir noktada yavaşlar)
+                    wait_time = 0.005 + (0.015 * _random.random())
+                    _time.sleep(wait_time)
                 
-                curr_x, curr_y = target_x, target_y
-                _time.sleep(_random.uniform(0.1, 0.4))
+                start_x, start_y = p3
+                _time.sleep(_random.uniform(0.1, 0.3))
             
-            # 2. Rastgele bir yere TIKLA (Boş bir alan olabilir - event tetikler)
-            # Ama ilan kodlarını tetikleyen alanlara (cb-list-item) dokunmayalım selector'ı bozmasın
+            # 2. Rastgele bir yere TIKLA (Boş bir alan)
             try:
-                page.mouse.click(_random.randint(10, 50), _random.randint(10, 50))
+                page.mouse.click(_random.randint(5, 40), _random.randint(5, 40))
             except: pass
 
             # 3. Sayfayı hafifçe kaydır (Scroll)
-            page.mouse.wheel(0, _random.randint(150, 400))
-            _time.sleep(_random.uniform(0.3, 0.7))
-            page.mouse.wheel(0, -_random.randint(50, 200))
+            page.mouse.wheel(0, _random.randint(200, 500))
+            _time.sleep(_random.uniform(0.4, 0.8))
+            page.mouse.wheel(0, -_random.randint(100, 250))
             
-            # Turnstile checkbox'ı ara ve tıkla (v6.1 - daha hızlı bulur)
+            # Turnstile handles
             for frame in page.frames:
                 if 'challenges.cloudflare.com' in frame.url:
                     checkbox = frame.locator('input[type="checkbox"]')
@@ -739,6 +760,15 @@ def wait_for_cloudflare(page, timeout=45000):
             simulate_human_behavior()
         
         try:
+            # v6.2: reCAPTCHA ve BotDetect hazır mı?
+            is_ready = page.evaluate("""() => {
+                const captchaReady = typeof grecaptcha !== 'undefined';
+                const detectReady = typeof window.__botDetect !== 'undefined';
+                return { captchaReady, detectReady };
+            }""")
+            if attempt == 2 and not is_ready['detectReady']:
+                 print("[CF] BotDetect kütüphanesi yüklenmemiş, bekleniyor...", flush=True)
+
             # v6.1: Manuel tetikleme (Eğer token hala gelmediyse)
             if attempt == 3:
                 print("[CF] Manuel doğrulama tetikleniyor...", flush=True)
@@ -763,7 +793,7 @@ def wait_for_cloudflare(page, timeout=45000):
             ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
             print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan (Dolu: {status['hasData']}, Token: {status['hasToken']})", flush=True)
             
-            # v6.1: Settle logic (Token yok ama 15 sn geçti ve data varsa devam et)
+            # v6.1/v6.2: Settle logic (Token yok ama 15 sn geçti ve data varsa devam et)
             if status['hasData']:
                 if status['hasToken']:
                     print(f"[CF] Doğrulama BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
@@ -2017,6 +2047,18 @@ def fetch_listings_playwright():
         stealth_sync(page)  # Apply stealth mode to bypass detection
         print("[PLAYWRIGHT] Stealth mode uygulandi", flush=True)
 
+        # Intercept bot-verify network (v6.2)
+        def handle_network_responses(response):
+            if "/api/bot-verify.php" in response.url:
+                try:
+                    status = response.status
+                    body = response.text()
+                    print(f"[NETWORK] /api/bot-verify.php -> {status} Body: {body[:100]}", flush=True)
+                except:
+                    print(f"[NETWORK] /api/bot-verify.php -> {response.status} (Body okunamadı)", flush=True)
+
+        page.on("response", handle_network_responses)
+
         while True:
             if SCAN_STOP_REQUESTED:
                 print("[PLAYWRIGHT] Kullanıcı durdurdu", flush=True)
@@ -2100,6 +2142,10 @@ def fetch_listings_playwright():
                             if page.evaluate(js_click):
                                 print(f"[SAYFA {page_num}] JS-click başarılı, değişim bekleniyor...", flush=True)
                                 page.wait_for_timeout(5000)
+                            else:
+                                # v6.2: Hard reload fallback (Eğer ne AJAX ne JS-click çalışmazsa)
+                                print(f"[SAYFA {page_num}] AJAX ve JS-click başarısız, sayfayı parametre ile yüklüyorum...", flush=True)
+                                page.goto(f"{URL}?sayfa={page_num}", timeout=60000, wait_until="networkidle")
 
                         # Cloudflare/Token kontrolü (her sayfa geçişinde kısa kontrol)
                         wait_for_cloudflare(page)
