@@ -700,12 +700,18 @@ def wait_for_cloudflare(page, timeout=45000):
     
     # İlan linkleri veya konteynerları var mı kontrol et
     try:
-        # Yeni yöntem: konteyner ara veya link ara
-        ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
-        print(f"[CF] Mevcut ilan/konteyner sayısı: {ilan_count}", flush=True)
+        # Sadece konteyner var mı değil, içine veri dolmuş mu kontrol et
+        is_populated = page.evaluate("""() => {
+            const kods = document.querySelectorAll('.ilan-kod-ph');
+            for(const k of kods) if(k.textContent && k.textContent.includes('ML-')) return true;
+            return false;
+        }""")
         
-        if ilan_count > 0:
-            print("[CF] İlanlar/Konteynerlar yüklü, devam ediliyor", flush=True)
+        ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
+        print(f"[CF] Mevcut ilan/konteyner sayısı: {ilan_count} (Populated: {is_populated})", flush=True)
+        
+        if is_populated:
+            print("[CF] İlanlar yüklü ve veriler dolu, devam ediliyor", flush=True)
             return True
     except Exception as e:
         print(f"[CF] Locator hatası: {e}", flush=True)
@@ -2168,10 +2174,9 @@ def fetch_listings_playwright():
 
             consecutive_failures = 0
 
-            # DEBUG: Konsol çıktılarını yakala
+            # DEBUG: TÜM Konsol çıktılarını yakala (Filtreyi kaldırdık)
             def handle_console(msg):
-                if "[EXTRACT]" in msg.text:
-                    print(f"[CONSOLE] {msg.text}", flush=True)
+                print(f"[BROWSER-CONSOLE] [{msg.type}] {msg.text}", flush=True)
 
             page.on("console", handle_console)
 
