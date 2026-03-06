@@ -28,7 +28,7 @@
       "title": "ARAŞTIRMA YAKINI ÜÇKUYULARDA FIRSAT SATILIK DÜKKAN",
       "scan_seq": 85,
       "timestamp": 1772729860.090619,
-      "position": 0,
+      "position": 12,
       "first_seen_date": "2026-03-05"
     },
     "ML-2418-004": {
@@ -5268,7 +5268,7 @@
       "title": "ADLİ TIP ARKASI 4+1 ACİL SATILIK DAİRE",
       "scan_seq": 104,
       "timestamp": 1772784860.308126,
-      "position": 550,
+      "position": 6,
       "first_seen_date": "2026-03-06"
     },
     "ML-5495-670": {
@@ -5598,7 +5598,7 @@
       "title": "URFA YOLUNDA KİRALIK  1+1 DAİRE",
       "scan_seq": 104,
       "timestamp": 1772784898.837328,
-      "position": 8,
+      "position": 11,
       "first_seen_date": "2026-03-06"
     },
     "ML-4553-521": {
@@ -5698,7 +5698,7 @@
       "title": "SUR KARABAŞ’TA 16472 m² MÜSTAKİL ARAZİ | DİCLE VE HEVSEL MANZARALI | YATIRIM FIRSATI",
       "scan_seq": 105,
       "timestamp": 1772794543.9769702,
-      "position": 16,
+      "position": 8,
       "first_seen_date": "2026-03-06"
     },
     "ML-7497-030": {
@@ -5718,7 +5718,7 @@
       "title": "SUR KARABAŞ’TA 32.698 m² MÜSTAKİL ARAZİ | DİCLE VE HEVSEL MANZARALI | YATIRIM FIRSATI",
       "scan_seq": 105,
       "timestamp": 1772794546.3904135,
-      "position": 28,
+      "position": 9,
       "first_seen_date": "2026-03-06"
     },
     "ML-4553-682": {
@@ -5728,7 +5728,7 @@
       "title": "ÜÇ KUYULARDA ARSA PAYINDAN SATILIK 2+1 DAİRE",
       "scan_seq": 105,
       "timestamp": 1772794547.5555735,
-      "position": 29,
+      "position": 7,
       "first_seen_date": "2026-03-06"
     },
     "ML-5478-082": {
@@ -5820,6 +5820,76 @@
       "timestamp": 1772794557.9813566,
       "position": 581,
       "first_seen_date": "2026-03-06"
+    },
+    "ML-7113-357": {
+      "fiyat": "---",
+      "tarih": "2026-03-07",
+      "link": "https://www.makrolife.com.tr/ilan/ML-7113-357",
+      "title": "İlan ML-7113-357",
+      "scan_seq": 125,
+      "timestamp": 1772831272.4815814,
+      "position": 0,
+      "first_seen_date": "2026-03-07"
+    },
+    "ML-7113-356": {
+      "fiyat": "---",
+      "tarih": "2026-03-07",
+      "link": "https://www.makrolife.com.tr/ilan/ML-7113-356",
+      "title": "İlan ML-7113-356",
+      "scan_seq": 125,
+      "timestamp": 1772831273.8493488,
+      "position": 1,
+      "first_seen_date": "2026-03-07"
+    },
+    "ML-7113-355": {
+      "fiyat": "---",
+      "tarih": "2026-03-07",
+      "link": "https://www.makrolife.com.tr/ilan/ML-7113-355",
+      "title": "İlan ML-7113-355",
+      "scan_seq": 125,
+      "timestamp": 1772831274.99,
+      "position": 2,
+      "first_seen_date": "2026-03-07"
+    },
+    "ML-3458-309": {
+      "fiyat": "---",
+      "tarih": "2026-03-07",
+      "link": "https://www.makrolife.com.tr/ilan/ML-3458-309",
+      "title": "İlan ML-3458-309",
+      "scan_seq": 125,
+      "timestamp": 1772831276.1095176,
+      "position": 3,
+      "first_seen_date": "2026-03-07"
+    },
+    "ML-1707-203": {
+      "fiyat": "---",
+      "tarih": "2026-03-07",
+      "link": "https://www.makrolife.com.tr/ilan/ML-1707-203",
+      "title": "İlan ML-1707-203",
+      "scan_seq": 125,
+      "timestamp": 1772831277.2040203,
+      "position": 4,
+      "first_seen_date": "2026-03-07"
+    },
+    "ML-7416-138": {
+      "fiyat": "---",
+      "tarih": "2026-03-07",
+      "link": "https://www.makrolife.com.tr/ilan/ML-7416-138",
+      "title": "İlan ML-7416-138",
+      "scan_seq": 125,
+      "timestamp": 1772831278.342909,
+      "position": 5,
+      "first_seen_date": "2026-03-07"
+    },
+    "ML-1707-202": {
+      "fiyat": "7.880.000 TL",
+      "tarih": "2026-03-07",
+      "link": "https://www.makrolife.com.tr/ilanlar",
+      "title": "İlan ML-1707-202",
+      "scan_seq": 125,
+      "timestamp": 1772831279.442055,
+      "position": 10,
+      "first_seen_date": "2026-03-07"
     }
   },
   "reported_days": [],
@@ -5911,12 +5981,12 @@
       "deleted": 246
     },
     "2026-03-07": {
-      "new": 0,
+      "new": 7,
       "price_changes": 0,
       "deleted": 0
     }
   },
-  "scan_sequence": 124,
-  "last_scan_timestamp": 1772831017.31994,
+  "scan_sequence": 125,
+  "last_scan_timestamp": 1772831280.8784318,
   "auto_scan_enabled": true
 }
