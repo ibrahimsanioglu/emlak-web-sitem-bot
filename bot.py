@@ -398,7 +398,7 @@ def fetch_listings_via_flaresolverr():
         html = result["content"]
         
         # HTML'den data-token'ları çıkar
-        token_pattern = r'data-token="([^"]+)"'
+        token_pattern = r'data-token=["\']([^"\']+)["\']'
         all_matches = re.findall(token_pattern, html)
         
         if not all_matches:
@@ -698,13 +698,14 @@ def wait_for_cloudflare(page, timeout=45000):
             print(f"[CF] Human simulation hatası: {e}", flush=True)
         return False
     
-    # İlan linkleri var mı kontrol et
+    # İlan linkleri veya konteynerları var mı kontrol et
     try:
-        ilan_count = page.locator('a[href*="/ilan/"]').count()
-        print(f"[CF] Mevcut ilan linki sayısı: {ilan_count}", flush=True)
+        # Yeni yöntem: konteyner ara veya link ara
+        ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
+        print(f"[CF] Mevcut ilan/konteyner sayısı: {ilan_count}", flush=True)
         
         if ilan_count > 0:
-            print("[CF] İlanlar zaten yüklü, devam ediliyor", flush=True)
+            print("[CF] İlanlar/Konteynerlar yüklü, devam ediliyor", flush=True)
             return True
     except Exception as e:
         print(f"[CF] Locator hatası: {e}", flush=True)
@@ -725,11 +726,13 @@ def wait_for_cloudflare(page, timeout=45000):
             simulate_human_behavior()
         
         try:
-            ilan_count = page.locator('a[href*="/ilan/"]').count()
-            print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan linki", flush=True)
+            ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
+            print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan/konteyner", flush=True)
             
             if ilan_count > 0:
                 print(f"[CF] Cloudflare bypass BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
+                # İlanlar yüklendikten sonra JS'nin linkleri/başlıkları doldurması için 2 sn daha bekle
+                page.wait_for_timeout(2000)
                 return True
         except Exception as e:
             print(f"[CF] Deneme {attempt + 1} hatası: {e}", flush=True)
@@ -741,9 +744,10 @@ def wait_for_cloudflare(page, timeout=45000):
         _time.sleep(5)
         simulate_human_behavior()
         _time.sleep(3)
-        ilan_count = page.locator('a[href*="/ilan/"]').count()
+        ilan_count = page.locator('.cb-list-item, .locationDiv, a[href*="/ilan/"]').count()
         if ilan_count > 0:
-            print(f"[CF] Yenileme sonrası başarılı! {ilan_count} ilan", flush=True)
+            print(f"[CF] Yenileme sonrası başarılı! {ilan_count} ilan/konteyner", flush=True)
+            page.wait_for_timeout(2000)
             return True
     except Exception as e:
         print(f"[CF] Yenileme hatası: {e}", flush=True)
@@ -2110,9 +2114,15 @@ def fetch_listings_playwright():
                 continue
             
             # İlan selector'ı ara (kısa timeout - boş sayfa tespiti için)
-            # YENİ SELECTOR: /ilan/...-ML-XXXX-XX formatı
+            # YENİ SELECTOR: Konteyner veya ilan linki (JS yüklenmemiş olsa bile konteyner vardır)
             try:
-                page.wait_for_selector('a[href*="/ilan/"]', timeout=15000)
+                # İlan/konteyner gelene kadar bekle
+                page.wait_for_selector('.cb-list-item, .locationDiv, a[href*="/ilan/"]', timeout=20000)
+                
+                # JS'nin verileri doldurması için biraz daha bekle (placeholder sorunu için)
+                print(f"[SAYFA {page_num}] Verilerin dolması bekleniyor...", flush=True)
+                page.wait_for_timeout(3000) 
+                
                 selector_found = True
                 success = True
             except TimeoutError:
@@ -2147,25 +2157,23 @@ def fetch_listings_playwright():
                 const out = [];
                 const seen = new Set();
                 
-                // data-token özniteliğine sahip elemanların kapsayıcılarını dolaşalım
-                document.querySelectorAll('[data-token]').forEach(el => {
+                // data-token özniteliğine sahip elemanların kapsayıcılarını veya yeni konteynerları dolaşalım
+                document.querySelectorAll('.cb-list-item, [data-token]').forEach(el => {
                     const token = el.getAttribute("data-token");
-                    if (!token) return;
-
-                    // İlan kodu bulmaya çalışalım (genelde h6 veya p içinde ML-XXXXX formatında geçer)
+                    
+                    // İlan kodu bulmaya çalışalım
+                    // Öncelik: text içindeki ML-
                     const text = el.innerText || "";
-                    const m = text.match(/(ML-[A-Z0-9-]{3,})/i) || document.body.innerHTML.match(new RegExp('ML-[A-Z0-9-]{3,}', 'i'));
+                    const m = text.match(/(ML-[A-Z0-9-]{3,})/i);
                     
                     let kod = "";
                     if (m) {
                         kod = m[0].toUpperCase();
-                    } else {
-                        // Eğer metinden gelmiyorsa, eleman içindeki linklerden arayalım
-                        const a = el.querySelector('a[href*="ML-"]');
-                        if (a) {
-                           const m2 = a.getAttribute("href").match(/(ML-[A-Z0-9-]{3,})/i);
-                           if (m2) kod = m2[1].toUpperCase();
-                        }
+                    } else if (token) {
+                        // Token varsa ama metinde yoksa (nadir), eldeki href veya diğer datalardan kod bulmaya çalış
+                        const href = el.getAttribute("data-target-href") || "";
+                        const m2 = href.match(/(ML-[A-Z0-9-]{3,})/i);
+                        if (m2) kod = m2[0].toUpperCase();
                     }
 
                     if (!kod || seen.has(kod)) return;
@@ -2174,21 +2182,36 @@ def fetch_listings_playwright():
                     let fiyat = "Fiyat yok";
                     let title = kod;
 
-                    // Başlık ve fiyatı çekmeye çalışalım
-                    const h2 = el.querySelector("h2, h3, h4, h5, h6");
-                    if (h2) title = h2.innerText.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
+                    // Başlık için öncelik: data-target-title, yoksa h2..h6
+                    const dataTitle = el.getAttribute("data-target-title");
+                    if (dataTitle && dataTitle !== "#" && dataTitle.length > 5) {
+                        title = dataTitle;
+                    } else {
+                        const h = el.querySelector("h2, h3, h4, h5, h6, .ilan-baslik-ph");
+                        if (h) title = h.innerText.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
+                    }
 
-                    for (const line of text.split("\\n")) {
-                        if (/^[\d., ]+\s*(₺|TL)$/i.test(line.trim())) {
-                            fiyat = line.trim();
-                            break;
+                    // Fiyat bul
+                    const fElem = el.querySelector(".ilan-fiyat-ph, .text-primary");
+                    if (fElem && (fElem.innerText.includes("TL") || fElem.innerText.includes("₺"))) {
+                        fiyat = fElem.innerText.trim();
+                    } else {
+                        for (const line of text.split("\n")) {
+                            if (/^[\d., ]+\s*(₺|TL)$/i.test(line.trim())) {
+                                fiyat = line.trim();
+                                break;
+                            }
                         }
                     }
 
                     // Link oluştur
-                    const aLink = el.querySelector('a');
-                    let fullHref = aLink ? aLink.getAttribute("href") : "";
-                    if (fullHref && !fullHref.startsWith('http')) {
+                    let fullHref = el.getAttribute("data-target-href");
+                    if (!fullHref || fullHref === "#") {
+                        const aLink = el.querySelector('a.ilan-link, a');
+                        fullHref = aLink ? aLink.getAttribute("href") : "";
+                    }
+                    
+                    if (fullHref && fullHref !== "#" && !fullHref.startsWith('http')) {
                         fullHref = 'https://www.makrolife.com.tr' + (fullHref.startsWith('/') ? '' : '/') + fullHref;
                     }
 
@@ -2196,7 +2219,7 @@ def fetch_listings_playwright():
                         kod: kod,
                         fiyat: fiyat,
                         title: title,
-                        link: fullHref || `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`
+                        link: (fullHref && fullHref !== "#") ? fullHref : `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`
                     });
                 });
 
