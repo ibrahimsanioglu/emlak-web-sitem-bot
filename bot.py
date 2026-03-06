@@ -760,12 +760,24 @@ def wait_for_cloudflare(page, timeout=45000):
             simulate_human_behavior()
         
         try:
-            # v6.2: reCAPTCHA ve BotDetect hazır mı?
+            # v6.3: Script tag kontrolü (Eğer fonksiyonlar yoksa neden yok?)
             is_ready = page.evaluate("""() => {
                 const captchaReady = typeof grecaptcha !== 'undefined';
                 const detectReady = typeof window.__botDetect !== 'undefined';
-                return { captchaReady, detectReady };
+                const sayfaDegistirReady = typeof window.sayfaDegistir !== 'undefined';
+                
+                // Script taglerini kontrol et
+                const scripts = Array.from(document.querySelectorAll('script')).map(s => {
+                    return { src: s.src, textSnippet: s.innerText.substring(0, 50) };
+                });
+                
+                return { captchaReady, detectReady, sayfaDegistirReady, scripts: scripts.slice(-5) };
             }""")
+            
+            if not is_ready['detectReady'] or not is_ready['sayfaDegistirReady']:
+                print(f"[CF] Diagnostik: BotDetect: {is_ready['detectReady']}, sayfaDegistir: {is_ready['sayfaDegistirReady']}", flush=True)
+                print(f"[CF] Son 5 script: {is_ready['scripts']}", flush=True)
+
             if attempt == 2 and not is_ready['detectReady']:
                  print("[CF] BotDetect kütüphanesi yüklenmemiş, bekleniyor...", flush=True)
 
@@ -2058,6 +2070,15 @@ def fetch_listings_playwright():
                     print(f"[NETWORK] /api/bot-verify.php -> {response.status} (Body okunamadı)", flush=True)
 
         page.on("response", handle_network_responses)
+
+        # Catch all console messages and errors (v6.3)
+        def handle_console_msg(msg):
+            # Sadece önemli logları ve tüm hataları al
+            if msg.type in ["error", "warning"] or "[EXTRACT]" in msg.text or "[NETWORK]" in msg.text:
+                print(f"[BROWSER-CONSOLE] [{msg.type}] {msg.text}", flush=True)
+        
+        page.on("console", handle_console_msg)
+        page.on("pageerror", lambda exc: print(f"[BROWSER-CRITICAL-ERROR] {exc}", flush=True))
 
         while True:
             if SCAN_STOP_REQUESTED:
