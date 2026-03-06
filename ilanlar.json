@@ -5692,7 +5692,7 @@
       "first_seen_date": "2026-03-06"
     },
     "ML-5482-144": {
-      "fiyat": "15.650.000 TL",
+      "fiyat": "05Tl",
       "tarih": "2026-03-06",
       "link": "https://www.makrolife.com.tr/ilan/diyarbakir-sur-karabas-mah-satilik-arsa-ML-5482-144",
       "title": "SUR KARABAŞ’TA 16472 m² MÜSTAKİL ARAZİ | DİCLE VE HEVSEL MANZARALI | YATIRIM FIRSATI",
@@ -5862,7 +5862,7 @@
       "first_seen_date": "2026-03-07"
     },
     "ML-1707-203": {
-      "fiyat": "---",
+      "fiyat": "0Tl",
       "tarih": "2026-03-07",
       "link": "https://www.makrolife.com.tr/ilan/ML-1707-203",
       "title": "İlan ML-1707-203",
@@ -5982,11 +5982,11 @@
     },
     "2026-03-07": {
       "new": 7,
-      "price_changes": 0,
+      "price_changes": 2,
       "deleted": 0
     }
   },
-  "scan_sequence": 125,
-  "last_scan_timestamp": 1772831280.8784318,
+  "scan_sequence": 126,
+  "last_scan_timestamp": 1772831639.1756203,
   "auto_scan_enabled": true
 }
