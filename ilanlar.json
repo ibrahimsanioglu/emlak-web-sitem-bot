@@ -5988,6 +5988,6 @@
   },
   "scan_sequence": 128,
   "last_scan_timestamp": 1772879399.2522829,
-  "auto_scan_enabled": false,
+  "auto_scan_enabled": true,
   "ua_scan_limit": 3
 }
