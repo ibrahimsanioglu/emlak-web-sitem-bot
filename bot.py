@@ -669,93 +669,102 @@ def wait_for_cloudflare(page, timeout=45000):
             # 1. Çerez uyarısını kapat (Ekran görüntüsünde görünen kritik engel)
             cookie_selectors = [
                 'button:has-text("Kabul")',
-                'button:has-text("Anladım")',
-                '.cookie-accept',
+                'button:has-text("Tümünü Kabul Et")',
                 '#cookie-notification button',
-                '.img-popup-close'
+                '.cookie-accept',
+                '.img-popup-close',
+                '.modal-close'
             ]
             for selector in cookie_selectors:
-                if page.locator(selector).count() > 0:
-                    print(f"[CF] Çerez/Popup bulundu ({selector}), kapatılıyor...", flush=True)
-                    page.locator(selector).first.click()
-                    _time.sleep(1)
+                try:
+                    if page.locator(selector).count() > 0:
+                        print(f"[CF] Çerez/Popup bulundu ({selector}), kapatılıyor...", flush=True)
+                        page.locator(selector).first.click(timeout=5000)
+                        _time.sleep(1)
+                except: pass
             
-            # 2. window.__botToken kontrolü (Sitenin veriyi yüklemek için beklediği token)
+            # 2. KRİTİK: Eğer hala gitmediyse JS ile zorla kaldır (DOM'dan sil)
+            page.evaluate("""() => {
+                const selectors = [
+                    '.cookie-notification', '#cookie-notification', '.img-popup', 
+                    '[class*="cookie"]', '[id*="cookie"]', '.modal-backdrop'
+                ];
+                selectors.forEach(s => {
+                    document.querySelectorAll(s).forEach(el => el.remove());
+                });
+                document.body.style.overflow = 'auto';
+                const overlay = document.querySelector('.overlay, .backdrop');
+                if(overlay) overlay.remove();
+            }""")
+            
+            # 3. window.__botToken kontrolü
             is_bt_ready = page.evaluate("typeof window.__botToken !== 'undefined' && window.__botToken !== ''")
             if is_bt_ready:
-                print(f"[CF] Bot-Token HAZIR.", flush=True)
                 return True
         except: pass
         return False
 
     def simulate_human():
         try:
-            # 1. Kavisli fare hareketleri (Tüm ekranı kapsayacak şekilde)
-            curr_x, curr_y = 50, 50
-            for _ in range(4):
-                target_x = _random.randint(100, 1200)
-                target_y = _random.randint(100, 800)
-                bezier_mouse_move(page, curr_x, curr_y, target_x, target_y)
-                curr_x, curr_y = target_x, target_y
-                _time.sleep(_random.uniform(0.1, 0.3))
+            # 1. Sayfa merkezine odaklan ve tıkla
+            viewport = page.viewport_size
+            mid_x = viewport['width'] / 2 if viewport else 500
+            mid_y = viewport['height'] / 2 if viewport else 400
             
-            # 2. Sayfada boş bir alana (örn: body) tıkla (Focus ve bot-verify tetikleme)
-            page.mouse.click(_random.randint(10, 50), _random.randint(10, 50))
+            bezier_mouse_move(page, 50, 50, mid_x + _random.randint(-100, 100), mid_y + _random.randint(-100, 100))
+            page.mouse.click(mid_x + _random.randint(-100, 100), mid_y + _random.randint(-100, 100))
             _time.sleep(_random.uniform(0.5, 1.0))
 
-            # 3. Sayfayı aşağı ve sonra yukarı kaydır (V-Shape scroll)
-            page.mouse.wheel(0, 500)
+            # 2. Daha aktif scroll
+            page.mouse.wheel(0, 400)
             _time.sleep(_random.uniform(0.5, 1.0))
-            page.mouse.wheel(0, -500)
+            page.mouse.wheel(0, -300)
             _time.sleep(_random.uniform(0.5, 1.0))
             
-            # 4. Turnstile iframelerini kontrol et
-            turnstile_selectors = ['iframe[src*="challenges.cloudflare.com"]', 'iframe[title*="challenge"]']
-            for selector in turnstile_selectors:
-                for frame in page.frames:
-                    if 'challenges.cloudflare.com' in frame.url:
-                        checkbox = frame.locator('input[type="checkbox"]')
-                        if checkbox.count() > 0:
-                            print("[CF] Turnstile checkbox tıklanıyor...", flush=True)
-                            checkbox.click()
-                            _time.sleep(2)
+            # 3. Turnstile iframelerini kontrol et
+            for frame in page.frames:
+                if 'challenges.cloudflare.com' in frame.url:
+                    checkbox = frame.locator('input[type="checkbox"]')
+                    if checkbox.count() > 0:
+                        print("[CF] Turnstile checkbox tıklanıyor...", flush=True)
+                        checkbox.click()
+                        _time.sleep(2)
         except: pass
 
-    # İlk kontrol
+    # İlk temizlik
     handle_popups()
-    
-    # 2. Önemli: Sayfaya girer girmez bir kez insan hareketi yap (BT tetikleme)
+    _time.sleep(2)
     simulate_human()
     
-    # Döngü içinde bekle ve her adımda insansı davran
+    # Döngü içinde bekle
     max_wait = 60 # saniye
     start_time = _time.time()
     
     while _time.time() - start_time < max_wait:
         handle_popups()
         
-        # İlanlar gelmiş mi? 
-        # NOT: Bazı sitelerde ilan linkleri olsa bile içleri boş (loading) olabilir.
-        # İlan linklerinin görünürlüğünü ve metin içeriğini de kontrol edelim.
-        ilanlar = page.locator('a[href*="/ilan/"]')
-        ilan_count = ilanlar.count()
+        ilan_selectors = [
+            'a[href*="/ilan/"]',
+            '.ilan-kart',
+            '.listing-item',
+            '[data-token]'
+        ]
         
-        if ilan_count >= 5:
-            # En az bir ilanın metin içeriği var mı (skeleton bitti mi)?
-            has_content = page.evaluate("""() => {
-                const links = Array.from(document.querySelectorAll('a[href*="/ilan/"]'));
-                return links.some(a => a.innerText.trim().length > 5);
-            }""")
-            
-            if has_content:
-                print(f"[CF] İlanlar başarıyla yüklendi: {ilan_count} adet", flush=True)
-                return True
-            else:
-                print(f"[CF] İlanlar bulundu ancak hala yükleniyor (gri kutucuk)...", flush=True)
-            
-        print(f"[CF] Bekleniyor... (İlan Sayısı: {ilan_count})", flush=True)
+        for s in ilan_selectors:
+            count = page.locator(s).count()
+            if count >= 3:
+                has_content = page.evaluate(f"""(sel) => {{
+                    const items = Array.from(document.querySelectorAll(sel));
+                    return items.some(el => el.innerText.trim().length > 10);
+                }}""", s)
+                
+                if has_content:
+                    print(f"[CF] İçerik yüklendi! ({s}: {count})", flush=True)
+                    return True
+        
+        print(f"[CF] Bekleniyor (İçerik henüz dolmadı)...", flush=True)
         simulate_human()
-        _time.sleep(4)
+        _time.sleep(5)
         
         # Eğer sayfa başlığı hala Cloudflare "Just a moment" ise yenileme düşün
         if "Just a moment" in page.title():
