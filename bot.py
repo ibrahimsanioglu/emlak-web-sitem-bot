@@ -690,20 +690,26 @@ def wait_for_cloudflare(page, timeout=45000):
 
     def simulate_human():
         try:
-            # Rastgele kavisli hareketler
-            curr_x, curr_y = 100, 100
-            for _ in range(3):
-                target_x = _random.randint(200, 1000)
-                target_y = _random.randint(200, 800)
+            # 1. Kavisli fare hareketleri (Tüm ekranı kapsayacak şekilde)
+            curr_x, curr_y = 50, 50
+            for _ in range(4):
+                target_x = _random.randint(100, 1200)
+                target_y = _random.randint(100, 800)
                 bezier_mouse_move(page, curr_x, curr_y, target_x, target_y)
                 curr_x, curr_y = target_x, target_y
-                _time.sleep(_random.uniform(0.2, 0.5))
+                _time.sleep(_random.uniform(0.1, 0.3))
             
-            # Sayfayı biraz aşağı kaydır (Bot-check tetiklensin)
-            page.mouse.wheel(0, _random.randint(300, 600))
-            _time.sleep(1)
+            # 2. Sayfada boş bir alana (örn: body) tıkla (Focus ve bot-verify tetikleme)
+            page.mouse.click(_random.randint(10, 50), _random.randint(10, 50))
+            _time.sleep(_random.uniform(0.5, 1.0))
+
+            # 3. Sayfayı aşağı ve sonra yukarı kaydır (V-Shape scroll)
+            page.mouse.wheel(0, 500)
+            _time.sleep(_random.uniform(0.5, 1.0))
+            page.mouse.wheel(0, -500)
+            _time.sleep(_random.uniform(0.5, 1.0))
             
-            # Turnstile iframelerini kontrol et
+            # 4. Turnstile iframelerini kontrol et
             turnstile_selectors = ['iframe[src*="challenges.cloudflare.com"]', 'iframe[title*="challenge"]']
             for selector in turnstile_selectors:
                 for frame in page.frames:
@@ -718,6 +724,9 @@ def wait_for_cloudflare(page, timeout=45000):
     # İlk kontrol
     handle_popups()
     
+    # 2. Önemli: Sayfaya girer girmez bir kez insan hareketi yap (BT tetikleme)
+    simulate_human()
+    
     # Döngü içinde bekle ve her adımda insansı davran
     max_wait = 60 # saniye
     start_time = _time.time()
@@ -725,17 +734,28 @@ def wait_for_cloudflare(page, timeout=45000):
     while _time.time() - start_time < max_wait:
         handle_popups()
         
-        # İlanlar gelmiş mi? (data-token olan elemanlar veya spesifik ilan linkleri)
-        ilan_count = page.locator('a[href*="/ilan/"]').count()
-        token_count = page.locator('[data-token]').count()
+        # İlanlar gelmiş mi? 
+        # NOT: Bazı sitelerde ilan linkleri olsa bile içleri boş (loading) olabilir.
+        # İlan linklerinin görünürlüğünü ve metin içeriğini de kontrol edelim.
+        ilanlar = page.locator('a[href*="/ilan/"]')
+        ilan_count = ilanlar.count()
         
-        if ilan_count > 0 or token_count > 2:
-            print(f"[CF] İlanlar/Tokenlar yüklendi: {ilan_count} ilan, {token_count} token", flush=True)
-            return True
+        if ilan_count >= 5:
+            # En az bir ilanın metin içeriği var mı (skeleton bitti mi)?
+            has_content = page.evaluate("""() => {
+                const links = Array.from(document.querySelectorAll('a[href*="/ilan/"]'));
+                return links.some(a => a.innerText.trim().length > 5);
+            }""")
             
-        print(f"[CF] Bekleniyor... (İlan: {ilan_count}, Token: {token_count})", flush=True)
+            if has_content:
+                print(f"[CF] İlanlar başarıyla yüklendi: {ilan_count} adet", flush=True)
+                return True
+            else:
+                print(f"[CF] İlanlar bulundu ancak hala yükleniyor (gri kutucuk)...", flush=True)
+            
+        print(f"[CF] Bekleniyor... (İlan Sayısı: {ilan_count})", flush=True)
         simulate_human()
-        _time.sleep(3)
+        _time.sleep(4)
         
         # Eğer sayfa başlığı hala Cloudflare "Just a moment" ise yenileme düşün
         if "Just a moment" in page.title():
@@ -747,9 +767,11 @@ def wait_for_cloudflare(page, timeout=45000):
     try:
         page.reload(wait_until="networkidle", timeout=60000)
         _time.sleep(5)
+        simulate_human()
         if page.locator('a[href*="/ilan/"]').count() > 0: return True
     except: pass
     
+    print("[CF] Cloudflare/Bot-Check geçilemedi.", flush=True)
     return False
 
 
