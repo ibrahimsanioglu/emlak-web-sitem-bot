@@ -640,131 +640,116 @@ def take_screenshot(page, name="hata"):
         print(f"[SCREENSHOT] Hata: {e}", flush=True)
         return None
 
+def bezier_mouse_move(page, start_x, start_y, end_x, end_y, steps=15):
+    """İnsan benzeri kavisli fare hareketi"""
+    import random as _random
+    import time as _time
+    
+    # Kontrol noktası (rastgele kavis için)
+    control_x = (start_x + end_x) / 2 + _random.randint(-150, 150)
+    control_y = (start_y + end_y) / 2 + _random.randint(-150, 150)
+    
+    for i in range(steps + 1):
+        t = i / steps
+        # Quadratic Bezier Curve formülü
+        x = (1 - t)**2 * start_x + 2 * (1 - t) * t * control_x + t**2 * end_x
+        y = (1 - t)**2 * start_y + 2 * (1 - t) * t * control_y + t**2 * end_y
+        page.mouse.move(x, y)
+        _time.sleep(_random.uniform(0.01, 0.03))
+
 def wait_for_cloudflare(page, timeout=45000):
-    """Cloudflare JS Challenge'ının tamamlanmasını bekle - AGRESİF YAKLAŞIM"""
+    """Cloudflare challenge ve Bot-Check engellerini aşmak için gelişmiş bekleyici"""
     import time as _time
     import random as _random
     
-    print("[CF] Sayfa içeriği kontrol ediliyor...", flush=True)
+    print("[CF] Sayfa durumu kontrol ediliyor...", flush=True)
     
-    # Sayfa içeriğinin ilk 500 karakterini logla (debug için)
-    try:
-        page_content = page.content()
-        page_title = page.title()
-        print(f"[CF] Sayfa başlığı: {page_title}", flush=True)
-        # print(f"[CF] İçerik önizleme: {page_content[:500]}...", flush=True)
-    except Exception as e:
-        print(f"[CF] İçerik okunamadı: {e}", flush=True)
-    
-    # Human-like davranış: rastgele mouse hareketi
-    def simulate_human_behavior():
+    def handle_popups():
         try:
-            # Rastgele mouse hareketi
-            for _ in range(3):
-                x = _random.randint(100, 800)
-                y = _random.randint(100, 600)
-                page.mouse.move(x, y)
-                _time.sleep(_random.uniform(0.1, 0.3))
-            
-            # Turnstile checkbox'ı ara ve tıkla
-            turnstile_selectors = [
-                'iframe[src*="challenges.cloudflare.com"]',
-                'iframe[title*="challenge"]',
-                '#turnstile-wrapper iframe',
-                '.cf-turnstile iframe',
+            # 1. Çerez uyarısını kapat (Ekran görüntüsünde görünen kritik engel)
+            cookie_selectors = [
+                'button:has-text("Kabul")',
+                'button:has-text("Anladım")',
+                '.cookie-accept',
+                '#cookie-notification button',
+                '.img-popup-close'
             ]
-            for selector in turnstile_selectors:
-                try:
-                    frames = page.frames
-                    for frame in frames:
-                        if 'challenges.cloudflare.com' in frame.url:
-                            print(f"[CF] Turnstile iframe bulundu: {frame.url}", flush=True)
-                            # Checkbox'ı bul ve tıkla
-                            checkbox = frame.locator('input[type="checkbox"]')
-                            if checkbox.count() > 0:
-                                print("[CF] Turnstile checkbox tıklanıyor...", flush=True)
-                                checkbox.click()
-                                _time.sleep(2)
-                                return True
-                except:
-                    pass
+            for selector in cookie_selectors:
+                if page.locator(selector).count() > 0:
+                    print(f"[CF] Çerez/Popup bulundu ({selector}), kapatılıyor...", flush=True)
+                    page.locator(selector).first.click()
+                    _time.sleep(1)
             
-            # Alternatif: doğrudan iframe'e tıkla
-            for selector in turnstile_selectors:
-                try:
-                    iframe_elem = page.locator(selector)
-                    if iframe_elem.count() > 0:
-                        print(f"[CF] Iframe bulundu: {selector}", flush=True)
-                        box = iframe_elem.bounding_box()
-                        if box:
-                            # Checkbox genellikle sol tarafta olur
-                            click_x = box['x'] + 30
-                            click_y = box['y'] + box['height'] / 2
-                            page.mouse.click(click_x, click_y)
-                            print(f"[CF] Iframe tıklandı: ({click_x}, {click_y})", flush=True)
-                            _time.sleep(2)
-                            return True
-                except Exception as e:
-                    print(f"[CF] Iframe tıklama hatası: {e}", flush=True)
-            
-        except Exception as e:
-            print(f"[CF] Human simulation hatası: {e}", flush=True)
+            # 2. window.__botToken kontrolü (Sitenin veriyi yüklemek için beklediği token)
+            is_bt_ready = page.evaluate("typeof window.__botToken !== 'undefined' && window.__botToken !== ''")
+            if is_bt_ready:
+                print(f"[CF] Bot-Token HAZIR.", flush=True)
+                return True
+        except: pass
         return False
+
+    def simulate_human():
+        try:
+            # Rastgele kavisli hareketler
+            curr_x, curr_y = 100, 100
+            for _ in range(3):
+                target_x = _random.randint(200, 1000)
+                target_y = _random.randint(200, 800)
+                bezier_mouse_move(page, curr_x, curr_y, target_x, target_y)
+                curr_x, curr_y = target_x, target_y
+                _time.sleep(_random.uniform(0.2, 0.5))
+            
+            # Sayfayı biraz aşağı kaydır (Bot-check tetiklensin)
+            page.mouse.wheel(0, _random.randint(300, 600))
+            _time.sleep(1)
+            
+            # Turnstile iframelerini kontrol et
+            turnstile_selectors = ['iframe[src*="challenges.cloudflare.com"]', 'iframe[title*="challenge"]']
+            for selector in turnstile_selectors:
+                for frame in page.frames:
+                    if 'challenges.cloudflare.com' in frame.url:
+                        checkbox = frame.locator('input[type="checkbox"]')
+                        if checkbox.count() > 0:
+                            print("[CF] Turnstile checkbox tıklanıyor...", flush=True)
+                            checkbox.click()
+                            _time.sleep(2)
+        except: pass
+
+    # İlk kontrol
+    handle_popups()
     
-    # İlan linkleri var mı kontrol et
-    try:
-        ilan_count = page.locator('a[href*="/ilan/"]').count()
-        print(f"[CF] Mevcut ilan linki sayısı: {ilan_count}", flush=True)
+    # Döngü içinde bekle ve her adımda insansı davran
+    max_wait = 60 # saniye
+    start_time = _time.time()
+    
+    while _time.time() - start_time < max_wait:
+        handle_popups()
         
-        if ilan_count > 0:
-            print("[CF] İlanlar zaten yüklü, devam ediliyor", flush=True)
+        # İlanlar gelmiş mi? (data-token olan elemanlar veya spesifik ilan linkleri)
+        ilan_count = page.locator('a[href*="/ilan/"]').count()
+        token_count = page.locator('[data-token]').count()
+        
+        if ilan_count > 0 or token_count > 2:
+            print(f"[CF] İlanlar/Tokenlar yüklendi: {ilan_count} ilan, {token_count} token", flush=True)
             return True
-    except Exception as e:
-        print(f"[CF] Locator hatası: {e}", flush=True)
-    
-    # İlan yoksa bekle (Cloudflare challenge olabilir)
-    print("[CF] İlan bulunamadı, Cloudflare challenge bekleniyor...", flush=True)
-    
-    # İlk deneme: human davranışı simüle et
-    simulate_human_behavior()
-    
-    # 60 saniye boyunca 3 saniyede bir kontrol et (20 deneme)
-    max_attempts = 20
-    for attempt in range(max_attempts):
+            
+        print(f"[CF] Bekleniyor... (İlan: {ilan_count}, Token: {token_count})", flush=True)
+        simulate_human()
         _time.sleep(3)
         
-        # Her 5 denemede bir mouse hareketi yap
-        if attempt > 0 and attempt % 5 == 0:
-            simulate_human_behavior()
-        
-        try:
-            ilan_count = page.locator('a[href*="/ilan/"]').count()
-            print(f"[CF] Deneme {attempt + 1}/{max_attempts}: {ilan_count} ilan linki", flush=True)
-            
-            if ilan_count > 0:
-                print(f"[CF] Cloudflare bypass BAŞARILI! ({(attempt + 1) * 3} saniye sonra)", flush=True)
-                return True
-        except Exception as e:
-            print(f"[CF] Deneme {attempt + 1} hatası: {e}", flush=True)
-    
-    # Son çare: sayfayı yenile ve tekrar dene
-    print("[CF] Son çare: Sayfa yenileniyor...", flush=True)
+        # Eğer sayfa başlığı hala Cloudflare "Just a moment" ise yenileme düşün
+        if "Just a moment" in page.title():
+            print("[CF] Cloudflare challenge ekranında takılı kalındı.", flush=True)
+
+    # Son çare ekran görüntüsü ve reload
+    take_screenshot(page, "cf_timeout")
+    print("[CF] Zaman aşımı, son deneme için reload yapılıyor...", flush=True)
     try:
-        # Hata anında ekran görüntüsü al
-        take_screenshot(page, "cf_fail")
-        
         page.reload(wait_until="networkidle", timeout=60000)
         _time.sleep(5)
-        simulate_human_behavior()
-        _time.sleep(3)
-        ilan_count = page.locator('a[href*="/ilan/"]').count()
-        if ilan_count > 0:
-            print(f"[CF] Yenileme sonrası başarılı! {ilan_count} ilan", flush=True)
-            return True
-    except Exception as e:
-        print(f"[CF] Yenileme hatası: {e}", flush=True)
+        if page.locator('a[href*="/ilan/"]').count() > 0: return True
+    except: pass
     
-    print("[CF] Cloudflare bypass BAŞARISIZ - tüm denemeler tükendi", flush=True)
     return False
 
 
@@ -2057,15 +2042,20 @@ def fetch_listings_playwright():
                             print(f"[SAYFA {page_num}] Cloudflare geçilemedi", flush=True)
                             last_error_screenshot = take_screenshot(page, f"cf_fail_p{page_num}")
                             raise TimeoutError("Cloudflare challenge geçilemedi")
+                        
+                        # Kullanıcı talebi: İlk sayfa yüklendikten sonra 10 saniye bekle
+                        print(f"[SAYFA {page_num}] İlanların yüklenmesi için 10 saniye bekleniyor...", flush=True)
+                        page.wait_for_timeout(10000)
                     else:
                         # AJAX sayfalama
                         # Önce mevcut içeriği alalım
                         old_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
-                        # İnsan benzeri rastgele hareketler
-                        x = random.randint(200, 800)
-                        y = random.randint(200, 600)
-                        page.mouse.move(x, y)
+                        # Popup/Çerez engellerini AJAX öncesi temizle
+                        page.evaluate("let closeBtn = document.querySelector('.img-popup-close, .cookie-accept, button:has-text(\"Kabul\")'); if(closeBtn) closeBtn.click();")
+
+                        # İnsan benzeri rastgele kavisli hareketler
+                        bezier_mouse_move(page, random.randint(100, 300), random.randint(100, 300), random.randint(500, 900), random.randint(400, 700))
                         time.sleep(random.uniform(0.5, 1.5))
 
                         print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
@@ -2078,7 +2068,10 @@ def fetch_listings_playwright():
                             print(f"[SAYFA {page_num}] AJAX yanıtı gecikti, manuel tıklama denenecek.", flush=True)
                             page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                         
-                        page.wait_for_timeout(5000)
+                        # Kullanıcı talebi: Sayfa geçişinden sonra 10 saniye bekle
+                        print(f"[SAYFA {page_num}] İçeriğin yüklenmesi için 10 saniye bekleniyor...", flush=True)
+                        page.wait_for_timeout(10000)
+                        
                         new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         if old_content_hash == new_content_hash:
@@ -2104,8 +2097,8 @@ def fetch_listings_playwright():
                                 """
                                 clicked = page.evaluate(js_click)
                                 if clicked:
-                                    print(f"[SAYFA {page_num}] JS-tıklama yapıldı, bekleniyor...", flush=True)
-                                    page.wait_for_timeout(5000)
+                                    print(f"[SAYFA {page_num}] JS-tıklama yapıldı, 10 saniye bekleniyor...", flush=True)
+                                    page.wait_for_timeout(10000)
                                 else:
                                     print(f"[SAYFA {page_num}] Sayfa butonu bulunamadı!", flush=True)
                                     last_error_screenshot = take_screenshot(page, f"pagination_fail_p{page_num}")
