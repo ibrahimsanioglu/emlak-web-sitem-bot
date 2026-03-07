@@ -627,6 +627,19 @@ def fetch_listings_via_google_proxy():
 
 
 # === CLOUDFLARE BYPASS HELPER ===
+def take_screenshot(page, name="hata"):
+    """Ekran görüntüsü al ve /data/ klasörüne kaydet"""
+    try:
+        os.makedirs("/data/screenshots", exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"/data/screenshots/{name}_{timestamp}.png"
+        page.screenshot(path=filename, full_page=True)
+        print(f"[SCREENSHOT] Kaydedildi: {filename}", flush=True)
+        return filename
+    except Exception as e:
+        print(f"[SCREENSHOT] Hata: {e}", flush=True)
+        return None
+
 def wait_for_cloudflare(page, timeout=45000):
     """Cloudflare JS Challenge'ının tamamlanmasını bekle - AGRESİF YAKLAŞIM"""
     import time as _time
@@ -639,7 +652,7 @@ def wait_for_cloudflare(page, timeout=45000):
         page_content = page.content()
         page_title = page.title()
         print(f"[CF] Sayfa başlığı: {page_title}", flush=True)
-        print(f"[CF] İçerik önizleme: {page_content[:500]}...", flush=True)
+        # print(f"[CF] İçerik önizleme: {page_content[:500]}...", flush=True)
     except Exception as e:
         print(f"[CF] İçerik okunamadı: {e}", flush=True)
     
@@ -737,6 +750,9 @@ def wait_for_cloudflare(page, timeout=45000):
     # Son çare: sayfayı yenile ve tekrar dene
     print("[CF] Son çare: Sayfa yenileniyor...", flush=True)
     try:
+        # Hata anında ekran görüntüsü al
+        take_screenshot(page, "cf_fail")
+        
         page.reload(wait_until="networkidle", timeout=60000)
         _time.sleep(5)
         simulate_human_behavior()
@@ -898,6 +914,35 @@ def send_message(text: str, chat_id: str = None, reply_markup=None, disable_prev
         return _post(str(ADMIN_CHAT_ID))
 
     return False
+
+def send_photo(photo_path, caption=None, chat_id=None):
+    """Telegram'a yerel bir fotoğraf gönder"""
+    if not BOT_TOKEN:
+        return False
+    
+    target_chat_id = chat_id or ADMIN_CHAT_ID
+    if not target_chat_id:
+        return False
+        
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendPhoto"
+    
+    try:
+        with open(photo_path, 'rb') as photo:
+            files = {'photo': photo}
+            data = {'chat_id': target_chat_id}
+            if caption:
+                data['caption'] = caption[:1024]
+            
+            resp = requests.post(url, data=data, files=files, timeout=60)
+            if resp.status_code == 200:
+                print(f"[TELEGRAM] Fotoğraf gönderildi: {photo_path}", flush=True)
+                return True
+            else:
+                print(f"[TELEGRAM] Fotoğraf gönderme hatası: {resp.status_code} {resp.text}", flush=True)
+                return False
+    except Exception as e:
+        print(f"[TELEGRAM] Fotoğraf gönderme hatası: {e}", flush=True)
+        return False
 
 def answer_callback_query(callback_query_id: str, text: str = None, show_alert: bool = False):
     payload = {"callback_query_id": callback_query_id, "show_alert": show_alert}
@@ -1900,7 +1945,6 @@ def check_telegram_commands():
 def fetch_listings_playwright():
     global SCAN_STOP_REQUESTED, ACTIVE_SCAN
 
-
     ACTIVE_SCAN = True
     SCAN_STOP_REQUESTED = False
 
@@ -1924,13 +1968,16 @@ def fetch_listings_playwright():
             return google_result
         print("[GOOGLE_PROXY] Başarısız, Playwright'a geçiliyor...", flush=True)
 
-    print("[PLAYWRIGHT] Baslatiliyor...", flush=True)
+    print("[PLAYWRIGHT] Başlatılıyor...", flush=True)
 
     results = []
     seen_codes = set()
     page_num = 0
     consecutive_failures = 0
     MAX_FAILURES = 3
+
+    # Hata durumunda son ekran görüntüsü yolunu saklamak için
+    last_error_screenshot = None
 
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -1974,7 +2021,7 @@ def fetch_listings_playwright():
         context = new_context()
         page = context.new_page()
         stealth_sync(page)  # Apply stealth mode to bypass detection
-        print("[PLAYWRIGHT] Stealth mode uygulandi", flush=True)
+        print("[PLAYWRIGHT] Stealth mode uygulandı", flush=True)
 
         while True:
             if SCAN_STOP_REQUESTED:
@@ -1989,13 +2036,11 @@ def fetch_listings_playwright():
             page_num += 1
             if page_num == 1:
                 page_url = URL
-                print("[SAYFA " + str(page_num) + "] " + page_url, flush=True)
+                print(f"[SAYFA {page_num}] Yükleniyor: {page_url}", flush=True)
             else:
-                page_url = URL
-                print("[SAYFA " + str(page_num) + "] AJAX (Sayfa " + str(page_num) + ")", flush=True)
+                print(f"[SAYFA {page_num}] AJAX/Click geçişi yapılıyor...", flush=True)
 
             success = False
-            selector_found = False
             
             # Sayfa yükle - RETRY MANTİĞİ (3 deneme)
             MAX_PAGE_RETRIES = 3
@@ -2004,54 +2049,54 @@ def fetch_listings_playwright():
             for retry_attempt in range(MAX_PAGE_RETRIES):
                 try:
                     if page_num == 1:
-                        # Timeout: 90 saniye (önceki 60'tan artırıldı)
+                        # Timeout: 90 saniye
                         page.goto(page_url, timeout=90000, wait_until="networkidle")
                         
-                        # Cloudflare challenge kontrolü ve beklemesi
+                        # Cloudflare challenge kontrolü
                         if not wait_for_cloudflare(page):
-                            print(f"[SAYFA {page_num}] Cloudflare challenge geçilemedi", flush=True)
-                            raise TimeoutError("Cloudflare challenge timeout")
+                            print(f"[SAYFA {page_num}] Cloudflare geçilemedi", flush=True)
+                            last_error_screenshot = take_screenshot(page, f"cf_fail_p{page_num}")
+                            raise TimeoutError("Cloudflare challenge geçilemedi")
                     else:
                         # AJAX sayfalama
-                        # Önce mevcut içeriğin bir parçasını alalım ki değişip değişmediğini anlayalım
+                        # Önce mevcut içeriği alalım
                         old_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
-                        # Sayfa scriptlerinin (sayfaDegistir vb) yüklenmesini bekle
-                        try:
-                            page.wait_for_function("typeof sayfaDegistir !== 'undefined'", timeout=10000)
-                        except:
-                            print(f"[SAYFA {page_num}] sayfaDegistir fonksiyonu bulunamadı, bekleniyor...", flush=True)
+                        # İnsan benzeri rastgele hareketler
+                        x = random.randint(200, 800)
+                        y = random.randint(200, 600)
+                        page.mouse.move(x, y)
+                        time.sleep(random.uniform(0.5, 1.5))
 
                         print(f"[SAYFA {page_num}] sayfaDegistir({page_num}) tetikleniyor...", flush=True)
                         try:
-                            # Filtreyi daha geniş tutalım (ilan-sayfalama kelimesi geçsin yeter)
+                            # AJAX yanıtını bekle
                             with page.expect_response(lambda r: "ilan-sayfalama" in r.url, timeout=20000) as response_info:
                                 page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
-                            print(f"[SAYFA {page_num}] AJAX yanıtı alındı: {response_info.value.status}", flush=True)
+                            print(f"[SAYFA {page_num}] AJAX yanıtı: {response_info.value.status}", flush=True)
                         except:
-                            print(f"[SAYFA {page_num}] AJAX yanıtı/fonksiyon zaman aşımı, manuel tıklama denenecek.", flush=True)
+                            print(f"[SAYFA {page_num}] AJAX yanıtı gecikti, manuel tıklama denenecek.", flush=True)
                             page.evaluate(f"if(typeof sayfaDegistir !== 'undefined') {{ sayfaDegistir({page_num}); }}")
                         
                         page.wait_for_timeout(5000)
                         new_content_hash = page.evaluate("document.querySelector('body').innerText.substring(0, 500)")
                         
                         if old_content_hash == new_content_hash:
-                            print(f"[SAYFA {page_num}] sayfaDegistir etkisiz kaldı, JS-click deneniyor...", flush=True)
+                            print(f"[SAYFA {page_num}] İçerik değişmedi, Buton tıklaması deneniyor...", flush=True)
                             try:
-                                # Overlay/Popup engellerini aşmak için önce kapatmayı deneyelim
-                                page.evaluate("let closeBtn = document.querySelector('.img-popup-close'); if(closeBtn) closeBtn.click();")
+                                # Popup'ları temizle
+                                page.evaluate("let closeBtn = document.querySelector('.img-popup-close, .modal-close, .close'); if(closeBtn) closeBtn.click();")
                                 
-                                # Overlay engellerini aşmak için JS ile doğrudan elemana tıklayıp sayfalama AJAX'ını tetikleyelim
                                 js_click = f"""
                                 (function(num) {{
                                     let btn = document.querySelector('a.page-link[data-sayfa="' + num + '"]');
                                     if(!btn) {{
-                                       // Alternatif: Metne göre bul
-                                       let links = Array.from(document.querySelectorAll('a.page-link, a'));
-                                       btn = links.find(a => a.innerText.trim() === String(num));
+                                        let links = Array.from(document.querySelectorAll('a.page-link, .pagination a, ul.pagination li a'));
+                                        btn = links.find(a => a.innerText.trim() === String(num));
                                     }}
                                     if(btn) {{
-                                        btn.click();
+                                        btn.scrollIntoView({{behavior: 'smooth', block: 'center'}});
+                                        setTimeout(() => btn.click(), 500);
                                         return true;
                                     }}
                                     return false;
@@ -2059,153 +2104,114 @@ def fetch_listings_playwright():
                                 """
                                 clicked = page.evaluate(js_click)
                                 if clicked:
-                                    print(f"[SAYFA {page_num}] JS-click başarılı, bekleniyor...", flush=True)
+                                    print(f"[SAYFA {page_num}] JS-tıklama yapıldı, bekleniyor...", flush=True)
                                     page.wait_for_timeout(5000)
                                 else:
-                                    print(f"[SAYFA {page_num}] Buton bulunamadı.", flush=True)
+                                    print(f"[SAYFA {page_num}] Sayfa butonu bulunamadı!", flush=True)
+                                    last_error_screenshot = take_screenshot(page, f"pagination_fail_p{page_num}")
                             except Exception as e:
-                                print(f"[SAYFA {page_num}] JS-click hatası: {str(e)[:50]}", flush=True)
+                                print(f"[SAYFA {page_num}] Tıklama hatası: {str(e)[:100]}", flush=True)
                         
                     page_loaded = True
                     break
                 except TimeoutError:
                     if retry_attempt < MAX_PAGE_RETRIES - 1:
-                        print("[SAYFA " + str(page_num) + "] Timeout - yeniden deneniyor (" + str(retry_attempt + 2) + "/" + str(MAX_PAGE_RETRIES) + ")", flush=True)
-                        time.sleep(2)  # Kısa bekleme
-                        
+                        print(f"[SAYFA {page_num}] Timeout! Yeniden deneniyor ({retry_attempt + 2}/{MAX_PAGE_RETRIES})...", flush=True)
+                        time.sleep(5)
                         if page_num == 1:
-                            # Context yenile
                             try:
                                 page.close()
                                 context.close()
                                 context = new_context()
                                 page = context.new_page()
-                                stealth_sync(page)  # Apply stealth to new page
-                            except:
-                                pass
+                                stealth_sync(page)
+                            except: pass
                     else:
-                        print("[SAYFA " + str(page_num) + "] Sayfa yüklenemedi - " + str(MAX_PAGE_RETRIES) + " deneme başarısız", flush=True)
+                        print(f"[SAYFA {page_num}] Sayfa yüklenemedi (Tüm denemeler tükendi)", flush=True)
                 except Exception as e:
-                    if retry_attempt < MAX_PAGE_RETRIES - 1:
-                        print("[SAYFA " + str(page_num) + "] Hata (" + str(e)[:50] + ") - yeniden deneniyor", flush=True)
-                        time.sleep(2)
-                    else:
-                        print("[SAYFA " + str(page_num) + "] Sayfa yükleme hatası: " + str(e), flush=True)
-            
+                    print(f"[SAYFA {page_num}] Beklenmeyen hata: {e}", flush=True)
+                    if retry_attempt == MAX_PAGE_RETRIES - 1:
+                        last_error_screenshot = take_screenshot(page, f"error_p{page_num}")
+
             if not page_loaded:
                 consecutive_failures += 1
-                # İlk 3 sayfadan birine ulaşılamazsa taramayı tamamen iptal et
                 if page_num <= 3:
-                    error_msg = f"Sayfa {page_num}'e ulaşılamadı (3 defa denendi) - Web sitesi erişilemez durumda"
-                    print(f"[PLAYWRIGHT] {error_msg}", flush=True)
+                    error_msg = f"Sayfa {page_num} yüklenemedi. Site erişilemez durumda olabilir."
+                    if last_error_screenshot:
+                        send_photo(last_error_screenshot, f"❌ HATA: Sayfa {page_num} yüklenemedi.")
                     browser.close()
                     ACTIVE_SCAN = False
-                    return (None, error_msg)  # Hata bilgisi ile birlikte döndür
+                    return (None, error_msg)
+                
                 if consecutive_failures >= MAX_FAILURES:
-                    error_msg = f"Sayfa {page_num}'e ulaşılamadı (3 defa denendi) - Art arda 3 sayfa hatası"
-                    print(f"[PLAYWRIGHT] {error_msg}", flush=True)
+                    error_msg = f"Art arda {MAX_FAILURES} sayfa hatası. Tarama durduruldu."
                     browser.close()
                     ACTIVE_SCAN = False
-                    return (None, error_msg)  # Hata bilgisi ile birlikte döndür
+                    return (None, error_msg)
                 continue
             
-            # İlan selector'ı ara (kısa timeout - boş sayfa tespiti için)
-            # YENİ SELECTOR: /ilan/...-ML-XXXX-XX formatı
-            try:
-                page.wait_for_selector('a[href*="/ilan/"]', timeout=15000)
-                selector_found = True
-                success = True
-            except TimeoutError:
-                # KORUMA: İlk 10 sayfada boş = site hatası, son sayfa olamaz
-                if page_num <= MIN_VALID_PAGES:
-                    error_msg = f"Sayfa {page_num} boş geldi - site erişim hatası (ilk {MIN_VALID_PAGES} sayfada boş sayfa olamaz)"
-                    print(f"[KORUMA] {error_msg}", flush=True)
-                    browser.close()
-                    ACTIVE_SCAN = False
-                    return (None, error_msg)
-                # Normal son sayfa tespiti (sayfa 10+)
-                print("[SAYFA " + str(page_num) + "] Ilan bulunamadi - son sayfa gecildi, tarama bitti", flush=True)
-                break
-            except Exception as e:
-                print("[SAYFA " + str(page_num) + "] Selector hatası: " + str(e), flush=True)
-                break
-
-            if not success:
-                consecutive_failures += 1
-                if consecutive_failures >= MAX_FAILURES:
-                    error_msg = f"Sayfa {page_num} sonrası art arda 3 sayfa hatası - Tarama iptal edildi"
-                    print(f"[PLAYWRIGHT] {error_msg}", flush=True)
-                    browser.close()
-                    ACTIVE_SCAN = False
-                    return (None, error_msg)
-                continue
-
             consecutive_failures = 0
 
+            # İçerik kontrolü ve ilan çekme
+            try:
+                page.wait_for_selector('a[href*="/ilan/"]', timeout=15000)
+                success = True
+            except TimeoutError:
+                if page_num <= MIN_VALID_PAGES:
+                    error_msg = f"Kritik Hata: Sayfa {page_num} boş çıktı! (İlk {MIN_VALID_PAGES} sayfa boş olamaz)"
+                    print(f"[KRİTİK] {error_msg}", flush=True)
+                    scr = take_screenshot(page, f"empty_p{page_num}")
+                    if scr:
+                        send_photo(scr, f"⚠️ KRİTİK: Sayfa {page_num} boş geldi!")
+                    browser.close()
+                    ACTIVE_SCAN = False
+                    return (None, error_msg)
+                print(f"[SAYFA {page_num}] İlan bulunamadı, tarama bitiriliyor.", flush=True)
+                break
+
+            # İlanları parse et
             listings = page.evaluate(
                 """() => {
                 const out = [];
                 const seen = new Set();
-                
-                // data-token özniteliğine sahip elemanların kapsayıcılarını dolaşalım
                 document.querySelectorAll('[data-token]').forEach(el => {
                     const token = el.getAttribute("data-token");
                     if (!token) return;
-
-                    // İlan kodu bulmaya çalışalım (genelde h6 veya p içinde ML-XXXXX formatında geçer)
                     const text = el.innerText || "";
                     const m = text.match(/(ML-[A-Z0-9-]{3,})/i) || document.body.innerHTML.match(new RegExp('ML-[A-Z0-9-]{3,}', 'i'));
-                    
-                    let kod = "";
-                    if (m) {
-                        kod = m[0].toUpperCase();
-                    } else {
-                        // Eğer metinden gelmiyorsa, eleman içindeki linklerden arayalım
+                    let kod = m ? m[0].toUpperCase() : "";
+                    if (!kod) {
                         const a = el.querySelector('a[href*="ML-"]');
                         if (a) {
                            const m2 = a.getAttribute("href").match(/(ML-[A-Z0-9-]{3,})/i);
                            if (m2) kod = m2[1].toUpperCase();
                         }
                     }
-
                     if (!kod || seen.has(kod)) return;
                     seen.add(kod);
-
                     let fiyat = "Fiyat yok";
                     let title = kod;
-
-                    // Başlık ve fiyatı çekmeye çalışalım
                     const h2 = el.querySelector("h2, h3, h4, h5, h6");
                     if (h2) title = h2.innerText.trim().replace(/\s*-\s*ML-\d+-\d+\s*$/i, '');
-
                     for (const line of text.split("\\n")) {
                         if (/^[\d., ]+\s*(₺|TL)$/i.test(line.trim())) {
                             fiyat = line.trim();
                             break;
                         }
                     }
-
-                    // Link oluştur
                     const aLink = el.querySelector('a');
                     let fullHref = aLink ? aLink.getAttribute("href") : "";
                     if (fullHref && !fullHref.startsWith('http')) {
                         fullHref = 'https://www.makrolife.com.tr' + (fullHref.startsWith('/') ? '' : '/') + fullHref;
                     }
-
-                    out.push({
-                        kod: kod,
-                        fiyat: fiyat,
-                        title: title,
-                        link: fullHref || `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`
-                    });
+                    out.push({kod, fiyat, title, link: fullHref || `https://www.makrolife.com.tr/ilandetay?ilan_kodu=${kod}`});
                 });
-
                 return out;
             }"""
             )
 
             if not listings:
-                print("[SAYFA " + str(page_num) + "] Bos - tarama bitti", flush=True)
+                print(f"[SAYFA {page_num}] Liste boş, tarama bitti.", flush=True)
                 break
 
             new_on_page = 0
@@ -2213,62 +2219,36 @@ def fetch_listings_playwright():
                 if item["kod"] not in seen_codes:
                     seen_codes.add(item["kod"])
                     new_on_page += 1
-                    results.append(
-                        (
-                            item["kod"],
-                            item["fiyat"],
-                            item["link"],
-                            item["title"],
-                            page_num,
-                        )
-                    )
+                    results.append((item["kod"], item["fiyat"], item["link"], item["title"], page_num))
             
-            if new_on_page == 0:
-                print("[PLAYWRIGHT] Sayfada yeni ilan yok - döngü tespiti, tarama bitiriliyor", flush=True)
-                break
+            print(f"[SAYFA {page_num}] {len(listings)} ilan bulundu. (Yeni: {new_on_page}, Toplam: {len(results)})", flush=True)
+            
+            if new_on_page == 0 and page_num > 1:
+                print("[SAYFA] Yeni ilan yok, son sayfaya gelinmiş olabilir.", flush=True)
+                # break # Bazı sitelerde mükerrer ilanlar olabilir, hemen kırmayalım
 
-            # İlerleme mesajı (sayfa bazlı)
             if page_num % 25 == 0:
-                send_message(
-                    "🔄 <b>TARAMA DEVAM EDİYOR</b>\n\n"
-                    f"📄 Sayfa: {page_num}\n"
-                    f"📊 Toplam ilan: {len(results)}\n"
-                    f"⏱️ Süre: {format_duration(time.time() - scan_start)}"
-                )
-
-            print(
-                "[SAYFA " + str(page_num) + "] " + str(len(listings)) + " ilan | Toplam: " + str(len(results)),
-                flush=True,
-            )
-
-            if len(listings) == 0:
-                print("[PLAYWRIGHT] Son sayfa (liste boş)", flush=True)
-                break
+                send_message(f"🔄 <b>TARAMA DEVAM EDİYOR</b>\n📄 Sayfa: {page_num}\n📊 İlan: {len(results)}")
 
             if page_num % 100 == 0:
                 try:
                     page.close()
                     context.close()
-                except:
-                    pass
-                context = new_context()
-                page = context.new_page()
-                stealth_sync(page)
-                print("[PLAYWRIGHT] Context yenilendi, siteye geri dönülüyor...", flush=True)
-                # Yeni context sonrası siteye geri dön (SAYFA 6+ için kritik)
-                try:
+                    context = new_context()
+                    page = context.new_page()
+                    stealth_sync(page)
                     page.goto(URL, timeout=90000, wait_until="networkidle")
                     wait_for_cloudflare(page)
-                except Exception as e:
-                    print(f"[PLAYWRIGHT] Yeniden yükleme hatası: {e}", flush=True)
+                except: pass
 
             page.wait_for_timeout(random.randint(2000, 4000))
 
         browser.close()
 
     bot_stats["last_scan_pages"] = page_num
-    print("[PLAYWRIGHT] Tamamlandi: " + str(len(results)) + " ilan, " + str(page_num) + " sayfa", flush=True)
-    return (results, None)  # Başarılı, hata yok
+    print(f"[PLAYWRIGHT] Tamamlandı: {len(results)} ilan, {page_num} sayfa", flush=True)
+    return (results, None)
+
 
 def run_scan_with_timeout():
     global bot_stats, ACTIVE_SCAN, MANUAL_SCAN_LIMIT, SCAN_STOP_REQUESTED
