@@ -666,105 +666,90 @@ def wait_for_cloudflare(page, timeout=45000):
     
     def handle_popups():
         try:
-            # 1. Çerez uyarısını kapat (Ekran görüntüsünde görünen kritik engel)
+            # 1. Bekleme Süresi Kontrolü (bot-verify için en az 6 sn kritik)
+            is_bt_ready = page.evaluate("typeof window.__botToken !== 'undefined' && window.__botToken !== ''")
+            if is_bt_ready:
+                # print(f"[CF] Bot-Token ALINDI.", flush=True)
+                return True
+
+            # 2. Popup/Çerez Temizliği (Sadece ilk bir kez dene, sonra JS ile sil)
             cookie_selectors = [
                 'button:has-text("Kabul")',
                 'button:has-text("Tümünü Kabul Et")',
-                '#cookie-notification button',
                 '.cookie-accept',
-                '.img-popup-close',
-                '.modal-close'
+                '.img-popup-close'
             ]
             for selector in cookie_selectors:
                 try:
                     if page.locator(selector).count() > 0:
-                        print(f"[CF] Çerez/Popup bulundu ({selector}), kapatılıyor...", flush=True)
-                        page.locator(selector).first.click(timeout=5000)
+                        page.locator(selector).first.click(timeout=3000)
                         _time.sleep(1)
                 except: pass
             
-            # 2. KRİTİK: Eğer hala gitmediyse JS ile zorla kaldır (DOM'dan sil)
+            # 3. JS ile Zorunlu Temizlik (Overlay'leri kaldır ki mouse hareketleri sayfa tarafından algılansın)
             page.evaluate("""() => {
-                const selectors = [
-                    '.cookie-notification', '#cookie-notification', '.img-popup', 
-                    '[class*="cookie"]', '[id*="cookie"]', '.modal-backdrop'
-                ];
-                selectors.forEach(s => {
+                ['.cookie-notification', '#cookie-notification', '.img-popup', '.modal-backdrop', '.overlay'].forEach(s => {
                     document.querySelectorAll(s).forEach(el => el.remove());
                 });
                 document.body.style.overflow = 'auto';
-                const overlay = document.querySelector('.overlay, .backdrop');
-                if(overlay) overlay.remove();
             }""")
-            
-            # 3. window.__botToken kontrolü
-            is_bt_ready = page.evaluate("typeof window.__botToken !== 'undefined' && window.__botToken !== ''")
-            if is_bt_ready:
-                return True
         except: pass
         return False
 
     def simulate_human():
         try:
-            # 1. Sayfa merkezine odaklan ve tıkla
-            viewport = page.viewport_size
-            mid_x = viewport['width'] / 2 if viewport else 500
-            mid_y = viewport['height'] / 2 if viewport else 400
+            # Kavisli, değişken hızlı fare hareketleri (Bot tespiti için kritik)
+            viewport = page.viewport_size or {'width': 1280, 'height': 800}
+            for _ in range(_random.randint(2, 4)):
+                target_x = _random.randint(100, viewport['width'] - 100)
+                target_y = _random.randint(100, viewport['height'] - 100)
+                bezier_mouse_move(page, _random.randint(0, 100), _random.randint(0, 100), target_x, target_y, steps=_random.randint(20, 40))
+                _time.sleep(_random.uniform(0.1, 0.4))
             
-            bezier_mouse_move(page, 50, 50, mid_x + _random.randint(-100, 100), mid_y + _random.randint(-100, 100))
-            page.mouse.click(mid_x + _random.randint(-100, 100), mid_y + _random.randint(-100, 100))
-            _time.sleep(_random.uniform(0.5, 1.0))
-
-            # 2. Daha aktif scroll
-            page.mouse.wheel(0, 400)
-            _time.sleep(_random.uniform(0.5, 1.0))
-            page.mouse.wheel(0, -300)
-            _time.sleep(_random.uniform(0.5, 1.0))
-            
-            # 3. Turnstile iframelerini kontrol et
-            for frame in page.frames:
-                if 'challenges.cloudflare.com' in frame.url:
-                    checkbox = frame.locator('input[type="checkbox"]')
-                    if checkbox.count() > 0:
-                        print("[CF] Turnstile checkbox tıklanıyor...", flush=True)
-                        checkbox.click()
-                        _time.sleep(2)
+            # Sayfayı hafifçe kaydır (Scroll event tetiklensin)
+            page.mouse.wheel(0, _random.randint(200, 500))
+            _time.sleep(0.5)
+            page.mouse.wheel(0, _random.randint(-200, -500))
         except: pass
 
-    # İlk temizlik
-    handle_popups()
-    _time.sleep(2)
-    simulate_human()
-    
-    # Döngü içinde bekle
-    max_wait = 60 # saniye
+    # --- ANA DÖNGÜ ---
+    print("[CF] Bot doğrulaması için aktif etkileşim simülasyonu başlıyor...", flush=True)
     start_time = _time.time()
+    max_wait = 60
     
     while _time.time() - start_time < max_wait:
         handle_popups()
-        
-        ilan_selectors = [
-            'a[href*="/ilan/"]',
-            '.ilan-kart',
-            '.listing-item',
-            '[data-token]'
-        ]
-        
-        for s in ilan_selectors:
-            count = page.locator(s).count()
-            if count >= 3:
-                has_content = page.evaluate(f"""(sel) => {{
-                    const items = Array.from(document.querySelectorAll(sel));
-                    return items.some(el => el.innerText.trim().length > 10);
-                }}""", s)
-                
-                if has_content:
-                    print(f"[CF] İçerik yüklendi! ({s}: {count})", flush=True)
-                    return True
-        
-        print(f"[CF] Bekleniyor (İçerik henüz dolmadı)...", flush=True)
         simulate_human()
-        _time.sleep(5)
+        
+        # Token ve İçerik Kontrolü
+        token_ready = page.evaluate("typeof window.__botToken !== 'undefined' && window.__botToken !== ''")
+        ilan_selectors = ['a[href*="/ilan/"]', '.ilan-kart', '[data-token]']
+        
+        ilan_count = 0
+        for s in ilan_selectors:
+            ilan_count = max(ilan_count, page.locator(s).count())
+        
+        if token_ready and ilan_count >= 3:
+            # Metin içeriği var mı (skeleton bitti mi)?
+            has_content = page.evaluate("""() => {
+                const items = Array.from(document.querySelectorAll('a[href*="/ilan/"], .ilan-kart'));
+                return items.some(el => el.innerText.trim().length > 10);
+            }""")
+            
+            if has_content:
+                print(f"[CF] BAŞARILI: Token alındı ve {ilan_count} ilan yüklendi.", flush=True)
+                return True
+        
+        elapsed = int(_time.time() - start_time)
+        print(f"[CF] {elapsed}. sn: Bekleniyor (Token: {'VAR' if token_ready else 'YOK'}, İlan: {ilan_count})", flush=True)
+        _time.sleep(4)
+        
+        # Eğer çok uzun sürdüyse ve token hala yoksa bir kez yenile
+        if elapsed > 40 and not token_ready:
+            print("[CF] Kritik gecikme, sayfa yenileniyor...", flush=True)
+            page.reload(wait_until="domcontentloaded")
+            _time.sleep(5)
+            start_time = _time.time() # Süreyi sıfırla
         
         # Eğer sayfa başlığı hala Cloudflare "Just a moment" ise yenileme düşün
         if "Just a moment" in page.title():
