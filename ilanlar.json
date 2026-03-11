@@ -5984,10 +5984,15 @@
       "new": 7,
       "price_changes": 2,
       "deleted": 0
+    },
+    "2026-03-11": {
+      "new": 0,
+      "price_changes": 0,
+      "deleted": 0
     }
   },
-  "scan_sequence": 131,
-  "last_scan_timestamp": 1772882791.2470815,
+  "scan_sequence": 132,
+  "last_scan_timestamp": 1773216604.9184794,
   "auto_scan_enabled": true,
   "ua_scan_limit": 3
 }
