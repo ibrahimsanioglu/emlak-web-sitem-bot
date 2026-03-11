@@ -7,6 +7,8 @@ import hashlib
 import hmac
 from urllib.parse import urlparse, urlunparse, urlencode
 import base64
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from datetime import datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 
@@ -101,30 +103,46 @@ def generate_bot_token(html, session=None):
                 "touch": False,
                 "ios": False,
                 "v": 2,
-                "res": "1920x1080",
+                "res": "1536x864", 
                 "plugins": 5,
                 "languages": 4,
                 "chromeRuntime": True,
-                "screenOk": True
+                "webglRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028A0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+                "canvasHash": "-pk8wnt",
+                "screenOk": True,
+                "screenWidth": 1536,
+                "screenHeight": 864,
+                "colorDepth": 32,
+                "notifPerm": "default",
+                "connection": "4g",
+                "touchSupport": False,
+                "perfTiming": True,
+                "audioOk": True,
+                "devtoolsProtocol": False,
+                "permApiOk": True,
+                "browserConsistent": True,
+                "fontCount": 11,
+                "honeypotTriggered": False,
+                "keyboardDetected": False
             },
             "mouse": {
                 "natural": True,
-                "score": 95,
-                "count": 45,
-                "angleVar": "0.1234",
-                "speedVar": "50.5678"
+                "score": 98,
+                "count": 52,
+                "angleVar": "0.12",
+                "speedVar": "48.5"
             },
             "timing": {
-                "pageLoad": random.randint(1500, 3000),
+                "pageLoad": random.randint(2500, 4000),
                 "now": int(time.time() * 1000)
             },
             "screen": {
-                "w": 1920,
-                "h": 1080,
-                "aw": 1920,
-                "ah": 1040,
-                "cd": 24,
-                "pd": 1
+                "w": 1536,
+                "h": 864,
+                "aw": 1536,
+                "ah": 816,
+                "cd": 32,
+                "pd": 1.25
             }
         }
         
@@ -167,13 +185,7 @@ def generate_bot_token(html, session=None):
                         pass
             except:
                 continue
-        if resp.status_code == 200:
-            res_json = resp.json()
-            if res_json.get("verified"):
-                print(f"[CRM API] Bot doğrulandı! Token: {res_json.get('token')[:10]}...", flush=True)
-                return res_json.get("token")
-        
-        print(f"[CRM API] Doğrulama başarısız: {resp.status_code} - {resp.text}", flush=True)
+        # Hata Giderme: Loop bittikten sonra tekrar parse etmeye çalışma
         return None
     except Exception as e:
         print(f"[CRM API] Token hata: {e}", flush=True)
