@@ -94,16 +94,13 @@ def generate_bot_token(html, session=None):
     try:
         hk, ch = get_dynamic_crm_keys(html)
         
-        # Gelişmiş signals (Subagent sniffing ile güncellendi)
+        # Sinyalleri Sniff sonuçlarına göre BİREBİR eşle
         payload = {
             "ch": ch,
             "signals": {
                 "webdriver": False,
-                "brave": False,
-                "touch": False,
-                "ios": False,
-                "v": 2,
-                "res": "1536x864", 
+                "cdc": False,
+                "automation": False,
                 "plugins": 5,
                 "languages": 4,
                 "chromeRuntime": True,
@@ -125,15 +122,9 @@ def generate_bot_token(html, session=None):
                 "honeypotTriggered": False,
                 "keyboardDetected": False
             },
-            "mouse": {
-                "natural": True,
-                "score": 98,
-                "count": 52,
-                "angleVar": "0.12",
-                "speedVar": "48.5"
-            },
+            "mouse": { "natural": False, "score": 0, "count": 0 },
             "timing": {
-                "pageLoad": random.randint(2500, 4000),
+                "pageLoad": random.randint(2000, 4000),
                 "now": int(time.time() * 1000)
             },
             "screen": {
@@ -154,11 +145,16 @@ def generate_bot_token(html, session=None):
             "hmac": signature
         }
         
+        ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        if session:
+            # Session'daki User-Agent'ı kullan (FlareSolverr çerezleri için kritik)
+            ua = session.headers.get("User-Agent", ua)
+
         v_headers = {
             "Host": CRM_HOST,
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "User-Agent": ua,
             "Referer": "https://www.makrolife.com.tr/ilanlar"
         }
         
@@ -175,15 +171,23 @@ def generate_bot_token(html, session=None):
                 else:
                     resp = requests.post(v_url, json=token_data, headers=v_headers, timeout=10, verify=False)
                 
-                if resp.status_code == 200:
-                    try:
-                        res_json = resp.json()
-                        if res_json.get("verified"):
-                            print(f"[CRM API] Bot doğrulandı! ({v_url}) Token: {res_json.get('token')[:10]}...", flush=True)
-                            return res_json.get("token")
-                    except:
-                        pass
-            except:
+                if resp.status_code != 200:
+                    print(f"[CRM API Handshake] {v_url} - Status: {resp.status_code}", flush=True)
+                    if resp.status_code == 403:
+                        print(f"[CRM API Handshake] Response: {resp.text[:200]}", flush=True)
+                    continue
+
+                try:
+                    res_json = resp.json()
+                    if res_json.get("verified"):
+                        print(f"[CRM API] Bot doğrulandı! ({v_url}) Token: {res_json.get('token')[:10]}...", flush=True)
+                        return res_json.get("token")
+                    else:
+                        print(f"[CRM API] Doğrulama başarısız (status 200 ama verified: false): {resp.text}", flush=True)
+                except:
+                    print(f"[CRM API] JSON Parse Hatası ({v_url}): {resp.text[:200]}", flush=True)
+            except Exception as e:
+                print(f"[CRM API Handshake] {v_url} Hata: {e}", flush=True)
                 continue
         # Hata Giderme: Loop bittikten sonra tekrar parse etmeye çalışma
         return None
@@ -575,6 +579,9 @@ def fetch_listings_via_flaresolverr():
             if result and result.get("content"):
                 # Session oluştur ve çerezleri yükle
                 fs_session = requests.Session()
+                ua = result.get("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+                fs_session.headers["User-Agent"] = ua
+                
                 if "cookies" in result:
                     for c in result["cookies"]:
                         fs_session.cookies.set(c["name"], c["value"])
