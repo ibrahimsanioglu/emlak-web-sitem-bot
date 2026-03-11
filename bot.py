@@ -87,8 +87,8 @@ def get_dynamic_crm_keys(html):
     except:
         return "0f458f08614f3d45c8468c02c387b74acfeeda1d7c7ddd30f5f3766775e565f2", "eb2117f8921f63ba8b3fe84f3b82b879"
 
-def generate_bot_token(html):
-    """CRM API için HMAC imzalı bot token oluşturur"""
+def generate_bot_token(html, session=None):
+    """CRM API için HMAC imzalı bot token oluşturur. Opsiyonel olarak session (cookies) kullanır."""
     try:
         hk, ch = get_dynamic_crm_keys(html)
         
@@ -127,26 +127,6 @@ def generate_bot_token(html):
                 "pd": 1
             }
         }
-            "mouse": {
-                "natural": True,
-                "score": 95,
-                "count": 45,
-                "angleVar": "0.1234",
-                "speedVar": "50.5678"
-            },
-            "timing": {
-                "pageLoad": random.randint(1500, 3000),
-                "now": int(time.time() * 1000)
-            },
-            "screen": {
-                "w": 1920,
-                "h": 1080,
-                "aw": 1920,
-                "ah": 1040,
-                "cd": 24,
-                "pd": 1
-            }
-        }
         
         payload_str = json.dumps(payload, separators=(',', ':'))
         signature = hmac.new(hk.encode(), payload_str.encode(), hashlib.sha256).hexdigest()
@@ -156,15 +136,37 @@ def generate_bot_token(html):
             "hmac": signature
         }
         
-        verify_url = f"https://{CRM_BACKEND_IP}/api/bot-verify.php"
-        headers = {
+        v_headers = {
             "Host": CRM_HOST,
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Referer": "https://www.makrolife.com.tr/ilanlar"
         }
         
-        resp = requests.post(verify_url, json=token_data, headers=headers, timeout=10, verify=False)
+        # Önce gerçek domain'i dene (Session varsa), yoksa IP'yi dene
+        verify_urls = [
+            "https://www.makrolife.com.tr/api/bot-verify.php",
+            f"https://{CRM_BACKEND_IP}/api/bot-verify.php"
+        ]
+        
+        for v_url in verify_urls:
+            try:
+                if session:
+                    resp = session.post(v_url, json=token_data, headers=v_headers, timeout=10, verify=False)
+                else:
+                    resp = requests.post(v_url, json=token_data, headers=v_headers, timeout=10, verify=False)
+                
+                if resp.status_code == 200:
+                    try:
+                        res_json = resp.json()
+                        if res_json.get("verified"):
+                            print(f"[CRM API] Bot doğrulandı! ({v_url}) Token: {res_json.get('token')[:10]}...", flush=True)
+                            return res_json.get("token")
+                    except:
+                        pass
+            except:
+                continue
         if resp.status_code == 200:
             res_json = resp.json()
             if res_json.get("verified"):
@@ -177,15 +179,15 @@ def generate_bot_token(html):
         print(f"[CRM API] Token hata: {e}", flush=True)
         return None
 
-def fetch_from_crm_api(tokens, bot_token):
+def fetch_from_crm_api(tokens, bot_token, session=None):
     """Token listesi kullanarak gerçek ilan verilerini CRM API'den çeker"""
     try:
-        api_url = f"https://{CRM_BACKEND_IP}/api/ilan-verileri.php"
+        api_url = f"https://www.makrolife.com.tr/api/ilan-verileri.php"
         headers = {
-            "Host": CRM_HOST,
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Referer": "https://www.makrolife.com.tr/ilanlar"
         }
         
         payload = {
@@ -194,7 +196,28 @@ def fetch_from_crm_api(tokens, bot_token):
             "recaptcha": "" 
         }
         
-        resp = requests.post(api_url, json=payload, headers=headers, timeout=15, verify=False)
+        if session:
+            resp = session.post(api_url, json=payload, headers=headers, timeout=15, verify=False)
+        else:
+            resp = requests.post(api_url, json=payload, headers=headers, timeout=15, verify=False)
+        
+        if resp.status_code == 200:
+            res_json = resp.json()
+            if res_json.get("success"):
+                return res_json.get("data", {})
+        
+        # IP yedek olarak dene
+        api_url_ip = f"https://{CRM_BACKEND_IP}/api/ilan-verileri.php"
+        headers["Host"] = CRM_HOST
+        if session:
+            resp = session.post(api_url_ip, json=payload, headers=headers, timeout=15, verify=False)
+        else:
+            resp = requests.post(api_url_ip, json=payload, headers=headers, timeout=15, verify=False)
+            
+        if resp.status_code == 200:
+            res_json = resp.json()
+            if res_json.get("success"):
+                return res_json.get("data", {})
         if resp.status_code == 200:
             res_json = resp.json()
             if res_json.get("success"):
@@ -220,15 +243,26 @@ def fetch_listings_from_crm_api_complete():
 
     # 1. İlk sayfayı çekerek anahtarları ve bot token'ı al
     try:
-        init_resp = session.get(f"https://{CRM_BACKEND_IP}/ilanlar", timeout=15, verify=False)
-        bot_token = generate_bot_token(init_resp.text)
-    except Exception as e:
-        print(f"[CRM API] Başlangıç hatası: {e}", flush=True)
-        return None
+        init_resp = session.get(f"https://www.makrolife.com.tr/ilanlar", timeout=15)
+        bot_token = generate_bot_token(init_resp.text, session=session)
+    except:
+        try:
+            init_resp = session.get(f"https://{CRM_BACKEND_IP}/ilanlar", timeout=15, verify=False)
+            bot_token = generate_bot_token(init_resp.text, session=session)
+        except Exception as e:
+            print(f"[CRM API] Başlangıç hatası: {e}", flush=True)
+            return None
 
     if not bot_token:
         print("[CRM API] Bot token alınamadı, API taraması yapılamaz.", flush=True)
         return None
+
+    results = []
+    seen_codes = set()
+    page_num = 0
+    MAX_PAGES = 100
+    
+    print("[CRM API] İlan taraması başlıyor (Doğrudan Backend IP üzerinden)...", flush=True)
 
     while page_num < MAX_PAGES:
         if SCAN_STOP_REQUESTED:
@@ -408,7 +442,7 @@ def fetch_listings_via_flaresolverr():
     
     print("[FLARESOLVERR] İlan taraması başlıyor...", flush=True)
     
-    def process_page_html(html, page_num, result_dict=None):
+    def process_page_html(html, page_num, result_dict=None, bot_token=None):
         """Sayfa HTML'inden data-token'ları çıkarıp API'den verileri çeker ve results'a ekler"""
         nonlocal results, seen_codes
         page_new = 0
@@ -458,13 +492,13 @@ def fetch_listings_via_flaresolverr():
             headers['X-CSRF-TOKEN'] = csrf_token
             
         # API hem JSON hem de _token bekliyor olabilir
-        json_payload = {"tokens": tokens}
+        json_payload = {"tokens": tokens, "bt": bot_token, "recaptcha": ""}
         if csrf_token:
             json_payload["_token"] = csrf_token
             
         try:
             api_url = "https://www.makrolife.com.tr/api/ilan-verileri.php"
-            resp = requests.post(api_url, json=json_payload, headers=headers, cookies=cookies_dict, timeout=30)
+            resp = requests.post(api_url, json=json_payload, headers=headers, cookies=cookies_dict, timeout=30, verify=False)
             
             if resp.status_code == 200:
                 try:
@@ -512,6 +546,7 @@ def fetch_listings_via_flaresolverr():
     
     # ============ ANA TARAMA DÖNGÜSÜ ============
     base_result_dict = None  # Sayfa 1'den gelen FlareSolverr session verilerini saklamak için
+    current_bot_token = None
     
     while page_num < MAX_PAGES:
         if SCAN_STOP_REQUESTED:
@@ -525,6 +560,13 @@ def fetch_listings_via_flaresolverr():
             print(f"[FLARESOLVERR SAYFA 1] {URL}", flush=True)
             result = fetch_via_flaresolverr(page_url)
             base_result_dict = result
+            if result and result.get("content"):
+                # Session oluştur ve çerezleri yükle
+                fs_session = requests.Session()
+                if "cookies" in result:
+                    for c in result["cookies"]:
+                        fs_session.cookies.set(c["name"], c["value"])
+                current_bot_token = generate_bot_token(result["content"], session=fs_session)
         else:
             print(f"[FLARESOLVERR SAYFA {page_num}] AJAX tetikleniyor...", flush=True)
             if not base_result_dict:
