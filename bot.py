@@ -71,25 +71,62 @@ FLARESOLVERR_URL = os.getenv("FLARESOLVERR_URL", "")
 USE_FLARESOLVERR = os.getenv("USE_FLARESOLVERR", "true").lower() == "true"
 
 # === CRM API SABİTLERİ (Cloudflare Bypass) ===
-CRM_BACKEND_IP = "91.151.89.225"
+CRM_BACKEND_IP = "91.151.95.84"
 CRM_HOST = "www.makrolife.com.tr"
-CRM_HK = "cced0bd4e4929b9ea99bd3c1cf2427e7a569f3a98eccb4bbba267dd390ceb521"
-CRM_CH = "e72bb785a9da74113384700f62013809"
 
-def generate_bot_token():
+def get_dynamic_crm_keys(html):
+    """HTML içerisinden güncel hk ve ch anahtarlarını ayıklar"""
+    try:
+        import re
+        hk_match = re.search(r"hk\s*[:=]\s*['\"]([^'\"]+)['\"]", html)
+        ch_match = re.search(r"ch\s*[:=]\s*['\"]([^'\"]+)['\"]", html)
+        
+        hk = hk_match.group(1) if hk_match else "0f458f08614f3d45c8468c02c387b74acfeeda1d7c7ddd30f5f3766775e565f2"
+        ch = ch_match.group(1) if ch_match else "eb2117f8921f63ba8b3fe84f3b82b879"
+        return hk, ch
+    except:
+        return "0f458f08614f3d45c8468c02c387b74acfeeda1d7c7ddd30f5f3766775e565f2", "eb2117f8921f63ba8b3fe84f3b82b879"
+
+def generate_bot_token(html):
     """CRM API için HMAC imzalı bot token oluşturur"""
     try:
-        # Rastgele mouse analizi simülasyonu (Analiz modunda deşifre edildi)
+        hk, ch = get_dynamic_crm_keys(html)
+        
+        # Gelişmiş signals (Subagent sniffing ile güncellendi)
         payload = {
-            "ch": CRM_CH,
+            "ch": ch,
             "signals": {
                 "webdriver": False,
                 "brave": False,
                 "touch": False,
                 "ios": False,
                 "v": 2,
-                "res": "1920x1080"
+                "res": "1920x1080",
+                "plugins": 5,
+                "languages": 4,
+                "chromeRuntime": True,
+                "screenOk": True
             },
+            "mouse": {
+                "natural": True,
+                "score": 95,
+                "count": 45,
+                "angleVar": "0.1234",
+                "speedVar": "50.5678"
+            },
+            "timing": {
+                "pageLoad": random.randint(1500, 3000),
+                "now": int(time.time() * 1000)
+            },
+            "screen": {
+                "w": 1920,
+                "h": 1080,
+                "aw": 1920,
+                "ah": 1040,
+                "cd": 24,
+                "pd": 1
+            }
+        }
             "mouse": {
                 "natural": True,
                 "score": 95,
@@ -112,14 +149,14 @@ def generate_bot_token():
         }
         
         payload_str = json.dumps(payload, separators=(',', ':'))
-        signature = hmac.new(CRM_HK.encode(), payload_str.encode(), hashlib.sha256).hexdigest()
+        signature = hmac.new(hk.encode(), payload_str.encode(), hashlib.sha256).hexdigest()
         
         token_data = {
             "payload": payload,
             "hmac": signature
         }
         
-        verify_url = f"http://{CRM_BACKEND_IP}/api/bot-verify.php"
+        verify_url = f"https://{CRM_BACKEND_IP}/api/bot-verify.php"
         headers = {
             "Host": CRM_HOST,
             "Content-Type": "application/json",
@@ -127,7 +164,7 @@ def generate_bot_token():
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         }
         
-        resp = requests.post(verify_url, json=token_data, headers=headers, timeout=10)
+        resp = requests.post(verify_url, json=token_data, headers=headers, timeout=10, verify=False)
         if resp.status_code == 200:
             res_json = resp.json()
             if res_json.get("verified"):
@@ -143,7 +180,7 @@ def generate_bot_token():
 def fetch_from_crm_api(tokens, bot_token):
     """Token listesi kullanarak gerçek ilan verilerini CRM API'den çeker"""
     try:
-        api_url = f"http://{CRM_BACKEND_IP}/api/ilan-verileri.php"
+        api_url = f"https://{CRM_BACKEND_IP}/api/ilan-verileri.php"
         headers = {
             "Host": CRM_HOST,
             "Content-Type": "application/json",
@@ -154,10 +191,10 @@ def fetch_from_crm_api(tokens, bot_token):
         payload = {
             "tokens": tokens,
             "bt": bot_token,
-            "recaptcha": "" # CRM tarafında zorunlu olmayabilir veya aşılabilir
+            "recaptcha": "" 
         }
         
-        resp = requests.post(api_url, json=payload, headers=headers, timeout=15)
+        resp = requests.post(api_url, json=payload, headers=headers, timeout=15, verify=False)
         if resp.status_code == 200:
             res_json = resp.json()
             if res_json.get("success"):
@@ -173,19 +210,6 @@ def fetch_listings_from_crm_api_complete():
     """CRM API üzerinden tüm ilanları çekmek için ana fonksiyon"""
     import re
     
-    # 1. Bot Token Al
-    bot_token = generate_bot_token()
-    if not bot_token:
-        print("[CRM API] Bot token alınamadı, API taraması yapılamaz.", flush=True)
-        return None
-    
-    results = []
-    seen_codes = set()
-    page_num = 0
-    MAX_PAGES = 100
-    
-    print("[CRM API] İlan taraması başlıyor (Doğrudan Backend IP üzerinden)...", flush=True)
-    
     # Oturum ve Cookie yönetimi için requests Session
     session = requests.Session()
     session.headers.update({
@@ -194,17 +218,29 @@ def fetch_listings_from_crm_api_complete():
         "X-Requested-With": "XMLHttpRequest"
     })
 
+    # 1. İlk sayfayı çekerek anahtarları ve bot token'ı al
+    try:
+        init_resp = session.get(f"https://{CRM_BACKEND_IP}/ilanlar", timeout=15, verify=False)
+        bot_token = generate_bot_token(init_resp.text)
+    except Exception as e:
+        print(f"[CRM API] Başlangıç hatası: {e}", flush=True)
+        return None
+
+    if not bot_token:
+        print("[CRM API] Bot token alınamadı, API taraması yapılamaz.", flush=True)
+        return None
+
     while page_num < MAX_PAGES:
         if SCAN_STOP_REQUESTED:
             break
         
         page_num += 1
         # Sayfayı backend IP üzerinden çek (Cloudflare bypass)
-        page_url = f"http://{CRM_BACKEND_IP}/ilanlar" + (f"?sayfa={page_num}" if page_num > 1 else "")
+        page_url = f"https://{CRM_BACKEND_IP}/ilanlar" + (f"?sayfa={page_num}" if page_num > 1 else "")
         print(f"[CRM API SAYFA {page_num}] {page_url}", flush=True)
         
         try:
-            resp = session.get(page_url, timeout=20)
+            resp = session.get(page_url, timeout=20, verify=False)
             if resp.status_code != 200:
                 print(f"[CRM API] Sayfa hatası: {resp.status_code}", flush=True)
                 break
