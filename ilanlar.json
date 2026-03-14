@@ -5999,10 +5999,15 @@
       "new": 0,
       "price_changes": 0,
       "deleted": 0
+    },
+    "2026-03-14": {
+      "new": 0,
+      "price_changes": 0,
+      "deleted": 0
     }
   },
-  "scan_sequence": 146,
-  "last_scan_timestamp": 1773417611.6164782,
+  "scan_sequence": 147,
+  "last_scan_timestamp": 1773471612.7250443,
   "auto_scan_enabled": true,
   "ua_scan_limit": 3
 }
