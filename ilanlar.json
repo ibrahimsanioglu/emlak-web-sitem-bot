@@ -33,8 +33,13 @@
       "new": 0,
       "price_changes": 0,
       "deleted": 0
+    },
+    "2026-03-24": {
+      "new": 0,
+      "price_changes": 0,
+      "deleted": 0
     }
   },
-  "scan_sequence": 21,
-  "last_scan_timestamp": 1773990012.10017
+  "scan_sequence": 22,
+  "last_scan_timestamp": 1774357209.1546159
 }
